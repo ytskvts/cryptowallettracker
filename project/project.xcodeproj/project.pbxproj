@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157D3042750E22D00859472 /* SignUpViewController.swift */; };
 		01676982274FE2F000D707E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01676981274FE2F000D707E2 /* GoogleService-Info.plist */; };
 		0172B13327451707008617DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172B13227451707008617DE /* AppDelegate.swift */; };
 		0172B13527451707008617DE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172B13427451707008617DE /* SceneDelegate.swift */; };
-		0172B13727451707008617DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172B13627451707008617DE /* ViewController.swift */; };
+		0172B13727451707008617DE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172B13627451707008617DE /* SignInViewController.swift */; };
 		0172B13A27451707008617DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0172B13827451707008617DE /* Main.storyboard */; };
 		0172B13C27451709008617DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0172B13B27451709008617DE /* Assets.xcassets */; };
 		0172B13F27451709008617DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0172B13D27451709008617DE /* LaunchScreen.storyboard */; };
@@ -18,11 +19,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0157D3042750E22D00859472 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		01676981274FE2F000D707E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0172B12F27451707008617DE /* project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0172B13227451707008617DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0172B13427451707008617DE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0172B13627451707008617DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0172B13627451707008617DE /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		0172B13927451707008617DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0172B13B27451709008617DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0172B13E27451709008617DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -68,7 +70,8 @@
 				01676981274FE2F000D707E2 /* GoogleService-Info.plist */,
 				0172B13227451707008617DE /* AppDelegate.swift */,
 				0172B13427451707008617DE /* SceneDelegate.swift */,
-				0172B13627451707008617DE /* ViewController.swift */,
+				0172B13627451707008617DE /* SignInViewController.swift */,
+				0157D3042750E22D00859472 /* SignUpViewController.swift */,
 				0172B13827451707008617DE /* Main.storyboard */,
 				0172B13B27451709008617DE /* Assets.xcassets */,
 				0172B13D27451709008617DE /* LaunchScreen.storyboard */,
@@ -210,9 +213,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0172B13727451707008617DE /* ViewController.swift in Sources */,
+				0172B13727451707008617DE /* SignInViewController.swift in Sources */,
 				0172B13327451707008617DE /* AppDelegate.swift in Sources */,
 				0172B13527451707008617DE /* SceneDelegate.swift in Sources */,
+				0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
