@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SignInViewController: UIViewController {
 
@@ -15,6 +16,9 @@ class SignInViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Email"
+        //MARK: textField.placeholder add constraint
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.blue.cgColor
         return textField
     }()
     
@@ -22,6 +26,10 @@ class SignInViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
+        //MARK: textField.placeholder add constraint
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.blue.cgColor
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -49,16 +57,29 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(emailTextField)
-        createEmailTextFieldConstraint()
         view.addSubview(passwordTextField)
-        createPasswordTextFieldConstraint()
         view.addSubview(logInButton)
-        createLogInButtonConstraint()
         view.addSubview(transitionToSignUpScreenButton)
+        
+        logInButton.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
+        transitionToSignUpScreenButton.addTarget(self, action: #selector(didTapTransitionToSignUpScreenButton), for: .touchUpInside)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createEmailTextFieldConstraint()
+        createPasswordTextFieldConstraint()
+        createLogInButtonConstraint()
         createTransitionToSignUpScreenButtonConstraint()
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //faceid
+        //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) == true { ... }
+        
+        emailTextField.becomeFirstResponder()
+    }
     
 // MARK: Bad setup for constraints, in future change for stackview
     func createEmailTextFieldConstraint() {
@@ -97,6 +118,46 @@ class SignInViewController: UIViewController {
         ])
     }
     // MARK: ---------------------------------------------------------------------------------------------------------
-
+    
+    @objc private func didTaplogInButton() {
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            print("Missing field data")
+            return
+        }
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] result, error in
+            guard let strongSelf = self else {
+                return
+            }
+            guard error == nil else {
+                strongSelf.showCreateAccount()
+                let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.errorInput()} ))
+                strongSelf.present(alert, animated: true)
+                
+                return
+            }
+            
+            print("You have signed in")
+        })
+        
+    }
+    
+    @objc private func didTapTransitionToSignUpScreenButton() {
+        print("didTapTransitionToSignUpScreenButton")
+    }
+    
+    func showCreateAccount() {
+        
+    }
+    
+    func errorInput() {
+        emailTextField.text =  ""
+        passwordTextField.text = ""
+        
+    }
+    
+    
 }
 
