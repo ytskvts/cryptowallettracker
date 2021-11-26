@@ -33,6 +33,15 @@ class SignInViewController: UIViewController {
         return textField
     }()
     
+    private let errorLabel : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ""
+        label.isHidden = true
+        label.textColor = .red
+        return label
+    }()
+    
     private let logInButton : UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -58,6 +67,7 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
+        view.addSubview(errorLabel)
         view.addSubview(logInButton)
         view.addSubview(transitionToSignUpScreenButton)
         
@@ -69,6 +79,7 @@ class SignInViewController: UIViewController {
         super.viewDidLayoutSubviews()
         createEmailTextFieldConstraint()
         createPasswordTextFieldConstraint()
+        createErrorLabelConstraint()
         createLogInButtonConstraint()
         createTransitionToSignUpScreenButtonConstraint()
     }
@@ -100,12 +111,21 @@ class SignInViewController: UIViewController {
         ])
     }
     
+    func createErrorLabelConstraint() {
+        NSLayoutConstraint.activate([
+            errorLabel.topAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: 40),
+            errorLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            errorLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            errorLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
     func createLogInButtonConstraint() {
         NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: 50),
+            logInButton.topAnchor.constraint(equalTo: errorLabel.topAnchor, constant: 30),
             logInButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50),
             logInButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50),
-            logInButton.heightAnchor.constraint(equalToConstant: 40)
+            logInButton.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -114,33 +134,46 @@ class SignInViewController: UIViewController {
             transitionToSignUpScreenButton.topAnchor.constraint(equalTo: logInButton.topAnchor, constant: 40),
             transitionToSignUpScreenButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50),
             transitionToSignUpScreenButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50),
-            transitionToSignUpScreenButton.heightAnchor.constraint(equalToConstant: 40)
+            transitionToSignUpScreenButton.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     // MARK: ---------------------------------------------------------------------------------------------------------
     
     @objc private func didTaplogInButton() {
-        guard let email = emailTextField.text, !email.isEmpty,
-              let password = passwordTextField.text, !password.isEmpty else {
-            print("Missing field data")
-            return
+        errorLabel.text = ""
+        errorLabel.isHidden = true
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else {return}
+        
+        if (email.isEmpty && password.isEmpty) {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the all fields"
+        } else if email.isEmpty {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the email field"
+        } else if password.isEmpty {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the password field"
+        } else {
+            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] result, error in
+                guard let strongSelf = self else {
+                    return
+                }
+                guard error == nil else {
+                    strongSelf.showCreateAccount()
+                    let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.errorInput()} ))
+                    strongSelf.present(alert, animated: true)
+                    
+                    return
+                }
+                
+                print("You have signed in")
+            })
+        
         }
         
-        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] result, error in
-            guard let strongSelf = self else {
-                return
-            }
-            guard error == nil else {
-                strongSelf.showCreateAccount()
-                let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.errorInput()} ))
-                strongSelf.present(alert, animated: true)
-                
-                return
-            }
-            
-            print("You have signed in")
-        })
+        
         
     }
     
