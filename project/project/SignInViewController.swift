@@ -160,9 +160,8 @@ class SignInViewController: UIViewController {
                     return
                 }
                 guard error == nil else {
-                    strongSelf.showCreateAccount()
                     let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.errorInput()} ))
+                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputFields()} ))
                     strongSelf.present(alert, animated: true)
                     
                     return
@@ -179,16 +178,18 @@ class SignInViewController: UIViewController {
     
     @objc private func didTapTransitionToSignUpScreenButton() {
         print("didTapTransitionToSignUpScreenButton")
-    }
-    
-    func showCreateAccount() {
+        cleanInputFields()
+        present(SignUpViewController(), animated: true, completion: nil)
         
     }
     
-    func errorInput() {
+  
+    
+    func cleanInputFields() {
         emailTextField.text =  ""
         passwordTextField.text = ""
-        
+        errorLabel.text = ""
+        errorLabel.isHidden = true
     }
     
     

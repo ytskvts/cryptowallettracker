@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157D3042750E22D00859472 /* SignUpViewController.swift */; };
+		0157D30727511D7200859472 /* ValidationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157D30627511D7200859472 /* ValidationProvider.swift */; };
 		01676982274FE2F000D707E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01676981274FE2F000D707E2 /* GoogleService-Info.plist */; };
 		0172B13327451707008617DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172B13227451707008617DE /* AppDelegate.swift */; };
 		0172B13527451707008617DE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172B13427451707008617DE /* SceneDelegate.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		0157D3042750E22D00859472 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		0157D30627511D7200859472 /* ValidationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationProvider.swift; sourceTree = "<group>"; };
 		01676981274FE2F000D707E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0172B12F27451707008617DE /* project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0172B13227451707008617DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				01676981274FE2F000D707E2 /* GoogleService-Info.plist */,
 				0172B13227451707008617DE /* AppDelegate.swift */,
 				0172B13427451707008617DE /* SceneDelegate.swift */,
+				0157D30627511D7200859472 /* ValidationProvider.swift */,
 				0172B13627451707008617DE /* SignInViewController.swift */,
 				0157D3042750E22D00859472 /* SignUpViewController.swift */,
 				0172B13827451707008617DE /* Main.storyboard */,
@@ -215,6 +218,7 @@
 			files = (
 				0172B13727451707008617DE /* SignInViewController.swift in Sources */,
 				0172B13327451707008617DE /* AppDelegate.swift in Sources */,
+				0157D30727511D7200859472 /* ValidationProvider.swift in Sources */,
 				0172B13527451707008617DE /* SceneDelegate.swift in Sources */,
 				0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */,
 			);

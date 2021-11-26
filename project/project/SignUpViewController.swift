@@ -6,24 +6,183 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SignUpViewController: UIViewController {
 
+    private let emailTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Email"
+        //MARK: textField.placeholder add constraint
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.blue.cgColor
+        return textField
+    }()
+    
+    private let passwordTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Password"
+        //MARK: textField.placeholder add constraint
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.blue.cgColor
+        textField.isSecureTextEntry = true
+        return textField
+    }()
+    
+    private let confirmPasswordTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Confirm password"
+        //MARK: textField.placeholder add constraint
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.blue.cgColor
+        textField.isSecureTextEntry = true
+        return textField
+    }()
+    
+    private let errorLabel : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = ""
+        label.isHidden = true
+        label.textColor = .red
+        return label
+    }()
+    
+    private let signUpButton : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Sign Up", for: .normal)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(emailTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(confirmPasswordTextField)
+        view.addSubview(errorLabel)
+        view.addSubview(signUpButton)
+        
+        signUpButton.addTarget(self, action: #selector(didTapSignUpButton), for: .touchUpInside)
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createEmailTextFieldConstraint()
+        createPasswordTextFieldConstraint()
+        createConfirmPasswordTextFieldConstraint()
+        createErrorLabelConstraint()
+        createSignUpButtonConstraint()
     }
-    */
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //faceid
+        //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) == true { ... }
+        
+        emailTextField.becomeFirstResponder()
+    }
+    
+    func createEmailTextFieldConstraint() {
+        NSLayoutConstraint.activate([
+            emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            emailTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            emailTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            emailTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    func createPasswordTextFieldConstraint() {
+        NSLayoutConstraint.activate([
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.topAnchor, constant: 40),
+            passwordTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            passwordTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    func createConfirmPasswordTextFieldConstraint() {
+            NSLayoutConstraint.activate([
+                confirmPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: 40),
+                confirmPasswordTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+                confirmPasswordTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+                confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 30)
+            ])
+        }
+    
+    func createErrorLabelConstraint() {
+        NSLayoutConstraint.activate([
+            errorLabel.topAnchor.constraint(equalTo: confirmPasswordTextField.topAnchor, constant: 40),
+            errorLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            errorLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            errorLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
+    func createSignUpButtonConstraint() {
+        NSLayoutConstraint.activate([
+            signUpButton.topAnchor.constraint(equalTo: errorLabel.topAnchor, constant: 30),
+            signUpButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50),
+            signUpButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50),
+            signUpButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+
+    @objc private func didTapSignUpButton() {
+        print("didTapSignUpButton")
+        errorLabel.text = ""
+        errorLabel.isHidden = true
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else {return}
+        
+        if (email.isEmpty && password.isEmpty) {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the all fields"
+        } else if email.isEmpty {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the email field"
+        } else if password.isEmpty {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the password field"
+        } else {
+            let isValid = Validation(email: email, password: password).isValidInput()
+            if isValid.1 {
+                FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] result, error in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    guard error == nil else {
+                        let alert = UIAlertController(title: "Error", message: "Unable to register", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputFields()} ))
+                        strongSelf.present(alert, animated: true)
+                        return
+                    }
+                    
+                    print("You have sign up in")
+                })
+                
+            } else {
+                errorLabel.isHidden = false
+                errorLabel.text = isValid.0
+            }
+            
+        
+        }
+        
+    }
+    
+    func cleanInputFields() {
+        emailTextField.text =  ""
+        passwordTextField.text = ""
+        errorLabel.text = ""
+        errorLabel.isHidden = true
+    }
 
 }
