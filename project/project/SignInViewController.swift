@@ -142,26 +142,16 @@ class SignInViewController: UIViewController {
     @objc private func didTaplogInButton() {
         errorLabel.text = ""
         errorLabel.isHidden = true
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text else {return}
+        let isValid = Validation(emailTextField: emailTextField, passwordTextField: passwordTextField, confirmPasswordTextField: nil, errorLabel: errorLabel)
         
-        if (email.isEmpty && password.isEmpty) {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the all fields"
-        } else if email.isEmpty {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the email field"
-        } else if password.isEmpty {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the password field"
-        } else {
-            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] result, error in
+        if isValid.isFieldsFilled(){
+            FirebaseAuth.Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [weak self] result, error in
                 guard let strongSelf = self else {
                     return
                 }
                 guard error == nil else {
                     let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputFields()} ))
+                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignInFields()} ))
                     strongSelf.present(alert, animated: true)
                     
                     return
@@ -178,14 +168,14 @@ class SignInViewController: UIViewController {
     
     @objc private func didTapTransitionToSignUpScreenButton() {
         print("didTapTransitionToSignUpScreenButton")
-        cleanInputFields()
+        cleanInputSignInFields()
         present(SignUpViewController(), animated: true, completion: nil)
         
     }
     
   
     
-    func cleanInputFields() {
+    func cleanInputSignInFields() {
         emailTextField.text =  ""
         passwordTextField.text = ""
         errorLabel.text = ""

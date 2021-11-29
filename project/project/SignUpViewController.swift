@@ -114,7 +114,7 @@ class SignUpViewController: UIViewController {
                 confirmPasswordTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
                 confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 30)
             ])
-        }
+    }
     
     func createErrorLabelConstraint() {
         NSLayoutConstraint.activate([
@@ -139,54 +139,34 @@ class SignUpViewController: UIViewController {
         print("didTapSignUpButton")
         errorLabel.text = ""
         errorLabel.isHidden = true
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text,
-              let confirmPassword = confirmPasswordTextField.text else {return}
+        let isValid = Validation(emailTextField: emailTextField, passwordTextField: passwordTextField, confirmPasswordTextField: confirmPasswordTextField, errorLabel: errorLabel)
         
-        if (email.isEmpty && password.isEmpty && confirmPassword.isEmpty) {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the all fields"
-        } else if email.isEmpty {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the email field"
-        } else if password.isEmpty {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the password field"
-        } else if confirmPassword.isEmpty {
-            errorLabel.isHidden = false
-            errorLabel.text = "Fill the confirm password field"
-        } else {
-            let isValid = Validation(email: email, password: password, confirmPassword: confirmPassword).isValidInput()
-            if isValid.1 {
-                FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] result, error in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    guard error == nil else {
-                        let alert = UIAlertController(title: "Error", message: "Unable to register", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputFields()} ))
-                        strongSelf.present(alert, animated: true)
-                        return
-                    }
-                    
-                    print("You have sign up in")
-                })
-                
-            } else {
-                errorLabel.isHidden = false
-                errorLabel.text = isValid.0
-            }
+        if isValid.isFieldsFilled() && isValid.isValidInput(){
+            FirebaseAuth.Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!,
+                                                completion: { [weak self] result, error in
+                guard let strongSelf = self else {return}
+                guard error == nil else {
+                    let alert = UIAlertController(title: "Error", message: "Unable to register", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignUpFields()} ))
+                    strongSelf.present(alert, animated: true)
+                    return
+                }
+                print("You have sign up in")
+                // save email and password
+                strongSelf.cleanInputSignUpFields()
+            })
             
-        
         }
-        
     }
     
-    func cleanInputFields() {
+    func cleanInputSignUpFields() {
         emailTextField.text =  ""
         passwordTextField.text = ""
         errorLabel.text = ""
         errorLabel.isHidden = true
+        if confirmPasswordTextField.text != nil {
+            confirmPasswordTextField.text = ""
+        }
     }
 
 }

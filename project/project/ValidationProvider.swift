@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 
 protocol ValidationProtocol {
-    var email: String {get set}
-    var password: String {get set}
+    var emailTextField: UITextField {get set}
+    var passwordTextField: UITextField {get set}
+    var confirmPasswordTextField: UITextField? {get set}
     
     
     func isValidMail() -> Bool
@@ -19,22 +20,24 @@ protocol ValidationProtocol {
 
 }
 
-class Validation: ValidationProtocol {
+class Validation {
     
-    var email: String
-    var password: String
-    var confirmPassword: String?
+    var emailTextField: UITextField
+    var passwordTextField: UITextField
+    var confirmPasswordTextField: UITextField?
+    var errorLabel: UILabel
     
-    init(email: String, password: String, confirmPassword: String?) {
-        self.email = email
-        self.password = password
-        self.confirmPassword = confirmPassword
+    init(emailTextField: UITextField, passwordTextField: UITextField, confirmPasswordTextField: UITextField?, errorLabel: UILabel) {
+        self.emailTextField = emailTextField
+        self.passwordTextField = passwordTextField
+        self.confirmPasswordTextField = confirmPasswordTextField
+        self.errorLabel = errorLabel
     }
     
     func isValidMail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
+        return emailPred.evaluate(with: emailTextField.text)
     }
     
     func isValidPassword() -> Bool {
@@ -45,25 +48,72 @@ class Validation: ValidationProtocol {
         //  min 8 characters total
         let passwordRegx = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&<>*~:`-]).{8,}$"
         let passwordCheck = NSPredicate(format: "SELF MATCHES %@",passwordRegx)
-        return passwordCheck.evaluate(with: password)
+        return passwordCheck.evaluate(with: passwordTextField.text)
     }
     
-    func isValidInput() -> (String, Bool) {
-        if !isValidMail() {
-            return ("Incorrect email", false)
+    
+    
+    func isFieldsFilled() -> Bool {
+        if emailTextField.text != nil && passwordTextField.text != nil && (confirmPasswordTextField != nil ? confirmPasswordTextField!.text != nil : true){
+            if (emailTextField.text!.isEmpty && passwordTextField.text!.isEmpty && (confirmPasswordTextField != nil ? confirmPasswordTextField!.text!.isEmpty : true)){
+                  errorLabel.isHidden = false
+                  errorLabel.text = "Fill the all fields"
+                  return false
+              } else if emailTextField.text!.isEmpty {
+                  errorLabel.isHidden = false
+                  errorLabel.text = "Fill the email field"
+                  return false
+              } else if passwordTextField.text!.isEmpty {
+                  errorLabel.isHidden = false
+                  errorLabel.text = "Fill the password field"
+                  return false
+              } else if (confirmPasswordTextField != nil ? (confirmPasswordTextField!.text != nil ? confirmPasswordTextField!.text!.isEmpty : false) : false) {
+                  errorLabel.isHidden = false
+                  errorLabel.text = "Fill the confirm password field"
+                  return false
+              }
+              errorLabel.text = ""
+              errorLabel.isHidden = true
+              return true
+        } else {
+            errorLabel.text = "Fill the confirm password field"
+            errorLabel.isHidden = false
+            return false
         }
-        if !isValidPassword() {
-            return ("Incorrect password", false)
-        }
-        if !isValidMail() && !isValidPassword() {
-            return ("Incorrect email and password", false)
-        }
-        if confirmPassword != nil {
-            if password != confirmPassword {
-                return ("Confirm password is't the same", false)
+  
+    }
+    
+    func isValidInput() -> Bool {
+        if isFieldsFilled() {
+            if !isValidMail() {
+                errorLabel.text = "Incorrect email"
+                errorLabel.isHidden = false
+                return false
             }
+            if !isValidPassword() {
+                errorLabel.text = "Incorrect password"
+                errorLabel.isHidden = false
+                return false
+            }
+            if !isValidMail() && !isValidPassword() {
+                errorLabel.text = "Incorrect email and password"
+                errorLabel.isHidden = false
+                return false
+            }
+            if confirmPasswordTextField != nil {
+                if passwordTextField.text != confirmPasswordTextField!.text {
+                    errorLabel.text = "Confirm password is't the same"
+                    errorLabel.isHidden = false
+                    return false
+                }
+            }
+            errorLabel.text = ""
+            errorLabel.isHidden = true
+            return true
         }
-        return ("", true)
+        else {
+            return false
+        }
     }
     
     deinit {
