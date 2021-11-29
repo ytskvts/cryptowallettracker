@@ -60,7 +60,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .black
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(confirmPasswordTextField)
@@ -140,9 +140,10 @@ class SignUpViewController: UIViewController {
         errorLabel.text = ""
         errorLabel.isHidden = true
         guard let email = emailTextField.text,
-              let password = passwordTextField.text else {return}
+              let password = passwordTextField.text,
+              let confirmPassword = confirmPasswordTextField.text else {return}
         
-        if (email.isEmpty && password.isEmpty) {
+        if (email.isEmpty && password.isEmpty && confirmPassword.isEmpty) {
             errorLabel.isHidden = false
             errorLabel.text = "Fill the all fields"
         } else if email.isEmpty {
@@ -151,8 +152,11 @@ class SignUpViewController: UIViewController {
         } else if password.isEmpty {
             errorLabel.isHidden = false
             errorLabel.text = "Fill the password field"
+        } else if confirmPassword.isEmpty {
+            errorLabel.isHidden = false
+            errorLabel.text = "Fill the confirm password field"
         } else {
-            let isValid = Validation(email: email, password: password).isValidInput()
+            let isValid = Validation(email: email, password: password, confirmPassword: confirmPassword).isValidInput()
             if isValid.1 {
                 FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { [weak self] result, error in
                     guard let strongSelf = self else {

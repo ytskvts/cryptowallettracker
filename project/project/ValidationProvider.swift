@@ -23,10 +23,12 @@ class Validation: ValidationProtocol {
     
     var email: String
     var password: String
+    var confirmPassword: String?
     
-    init(email: String, password: String) {
+    init(email: String, password: String, confirmPassword: String?) {
         self.email = email
         self.password = password
+        self.confirmPassword = confirmPassword
     }
     
     func isValidMail() -> Bool {
@@ -51,14 +53,22 @@ class Validation: ValidationProtocol {
             return ("Incorrect email", false)
         }
         if !isValidPassword() {
-            return ("Incorrest password", false)
+            return ("Incorrect password", false)
         }
         if !isValidMail() && !isValidPassword() {
             return ("Incorrect email and password", false)
         }
+        if confirmPassword != nil {
+            if password != confirmPassword {
+                return ("Confirm password is't the same", false)
+            }
+        }
         return ("", true)
     }
-
+    
+    deinit {
+        print("deinit")
+    }
     
 }
 
