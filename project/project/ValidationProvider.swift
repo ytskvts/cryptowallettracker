@@ -9,35 +9,35 @@ import Foundation
 import UIKit
 
 protocol ValidationProtocol {
-    var emailTextField: UITextField {get set}
-    var passwordTextField: UITextField {get set}
-    var confirmPasswordTextField: UITextField? {get set}
+    var email: String {get set}
+    var password: String {get set}
+    var confirmPassword: String? {get set}
+   
     
+    init(email: String, password: String, confirmPassword: String?)
     
     func isValidMail() -> Bool
     func isValidPassword() -> Bool
+    func isFieldsFilled() -> (Bool, String)
     func isValidInput() -> (String, Bool)
-
 }
 
 class Validation {
     
-    var emailTextField: UITextField
-    var passwordTextField: UITextField
-    var confirmPasswordTextField: UITextField?
-    var errorLabel: UILabel
+    var email: String
+    var password: String
+    var confirmPassword: String?
     
-    init(emailTextField: UITextField, passwordTextField: UITextField, confirmPasswordTextField: UITextField?, errorLabel: UILabel) {
-        self.emailTextField = emailTextField
-        self.passwordTextField = passwordTextField
-        self.confirmPasswordTextField = confirmPasswordTextField
-        self.errorLabel = errorLabel
+    init(email: String, password: String, confirmPassword: String?) {
+        self.email = email
+        self.password = password
+        self.confirmPassword = confirmPassword
     }
     
     func isValidMail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: emailTextField.text)
+        return emailPred.evaluate(with: email)
     }
     
     func isValidPassword() -> Bool {
@@ -48,72 +48,49 @@ class Validation {
         //  min 8 characters total
         let passwordRegx = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&<>*~:`-]).{8,}$"
         let passwordCheck = NSPredicate(format: "SELF MATCHES %@",passwordRegx)
-        return passwordCheck.evaluate(with: passwordTextField.text)
+        return passwordCheck.evaluate(with: password)
     }
     
     
     
-    func isFieldsFilled() -> Bool {
-        if emailTextField.text != nil && passwordTextField.text != nil && (confirmPasswordTextField != nil ? confirmPasswordTextField!.text != nil : true){
-            if (emailTextField.text!.isEmpty && passwordTextField.text!.isEmpty && (confirmPasswordTextField != nil ? confirmPasswordTextField!.text!.isEmpty : true)){
-                  errorLabel.isHidden = false
-                  errorLabel.text = "Fill the all fields"
-                  return false
-              } else if emailTextField.text!.isEmpty {
-                  errorLabel.isHidden = false
-                  errorLabel.text = "Fill the email field"
-                  return false
-              } else if passwordTextField.text!.isEmpty {
-                  errorLabel.isHidden = false
-                  errorLabel.text = "Fill the password field"
-                  return false
-              } else if (confirmPasswordTextField != nil ? (confirmPasswordTextField!.text != nil ? confirmPasswordTextField!.text!.isEmpty : false) : false) {
-                  errorLabel.isHidden = false
-                  errorLabel.text = "Fill the confirm password field"
-                  return false
-              }
-              errorLabel.text = ""
-              errorLabel.isHidden = true
-              return true
+    func isFieldsFilled() -> (Bool, String) {
+        var errorStatus: (Bool, String) = (true, "")
+        if (email.isEmpty && password.isEmpty && (confirmPassword != nil ? confirmPassword!.isEmpty : true)){
+            errorStatus.0 = false
+            errorStatus.1 += "Fill the all fields."
         } else {
-            errorLabel.text = "Fill the confirm password field"
-            errorLabel.isHidden = false
-            return false
-        }
-  
+            if email.isEmpty {
+                errorStatus.0 = false
+                errorStatus.1 += "Fill the email field. "
+            }
+            if password.isEmpty {
+                errorStatus.0 = false
+                errorStatus.1 += "Fill the password field. "
+            }
+            if (confirmPassword != nil ? confirmPassword!.isEmpty : false) {
+                errorStatus.0 = false
+                errorStatus.1 += "Fill the confirm password field."
+            }
+        }  
+        return errorStatus
     }
     
-    func isValidInput() -> Bool {
-        if isFieldsFilled() {
-            if !isValidMail() {
-                errorLabel.text = "Incorrect email"
-                errorLabel.isHidden = false
-                return false
-            }
-            if !isValidPassword() {
-                errorLabel.text = "Incorrect password"
-                errorLabel.isHidden = false
-                return false
-            }
-            if !isValidMail() && !isValidPassword() {
-                errorLabel.text = "Incorrect email and password"
-                errorLabel.isHidden = false
-                return false
-            }
-            if confirmPasswordTextField != nil {
-                if passwordTextField.text != confirmPasswordTextField!.text {
-                    errorLabel.text = "Confirm password is't the same"
-                    errorLabel.isHidden = false
-                    return false
-                }
-            }
-            errorLabel.text = ""
-            errorLabel.isHidden = true
-            return true
+    func isValidInput() -> (Bool, String) {
+        var errorStatus: (Bool, String) = (true, "")
+        if !isValidMail() {
+            errorStatus.0 = false
+            errorStatus.1 += "Incorrect email. "
         }
-        else {
-            return false
+        if !isValidPassword() {
+            errorStatus.0 = false
+            errorStatus.1 += "Incorrect password. "
         }
+        
+        if (confirmPassword != nil ? confirmPassword != password : false) {
+            errorStatus.0 = false
+            errorStatus.1 += "Confirm password is't the same."
+        }
+        return errorStatus
     }
     
     deinit {

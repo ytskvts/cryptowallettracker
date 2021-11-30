@@ -139,23 +139,38 @@ class SignUpViewController: UIViewController {
         print("didTapSignUpButton")
         errorLabel.text = ""
         errorLabel.isHidden = true
-        let isValid = Validation(emailTextField: emailTextField, passwordTextField: passwordTextField, confirmPasswordTextField: confirmPasswordTextField, errorLabel: errorLabel)
         
-        if isValid.isFieldsFilled() && isValid.isValidInput(){
-            FirebaseAuth.Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!,
-                                                completion: { [weak self] result, error in
-                guard let strongSelf = self else {return}
-                guard error == nil else {
-                    let alert = UIAlertController(title: "Error", message: "Unable to register", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignUpFields()} ))
-                    strongSelf.present(alert, animated: true)
-                    return
-                }
-                print("You have sign up in")
-                // save email and password
-                strongSelf.cleanInputSignUpFields()
-            })
-            
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else {return}
+        
+        let isValid = Validation(email: email, password: password, confirmPassword: confirmPasswordTextField.text)
+        
+        if isValid.isFieldsFilled().0 {
+            if isValid.isValidInput().0 {
+                FirebaseAuth.Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!,
+                                                    completion: { [weak self] result, error in
+                    guard let strongSelf = self else {return}
+                    guard error == nil else {
+                        let alert = UIAlertController(title: "Error", message: "Unable to register", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignUpFields()} ))
+                        strongSelf.present(alert, animated: true)
+                        return
+                    }
+                    print("You have sign up in")
+                    // save email and password
+                    strongSelf.cleanInputSignUpFields()
+                })
+            } else {
+                errorLabel.text = isValid.isValidInput().1
+                errorLabel.isHidden = false
+                emailTextField.text =  ""
+                passwordTextField.text = ""
+                confirmPasswordTextField.text = ""
+            }
+                
+        } else {
+            errorLabel.text = isValid.isFieldsFilled().1
+            errorLabel.isHidden = false
         }
     }
     

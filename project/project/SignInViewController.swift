@@ -142,24 +142,35 @@ class SignInViewController: UIViewController {
     @objc private func didTaplogInButton() {
         errorLabel.text = ""
         errorLabel.isHidden = true
-        let isValid = Validation(emailTextField: emailTextField, passwordTextField: passwordTextField, confirmPasswordTextField: nil, errorLabel: errorLabel)
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else {return}
+              
         
-        if isValid.isFieldsFilled(){
-            FirebaseAuth.Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [weak self] result, error in
-                guard let strongSelf = self else {
-                    return
-                }
-                guard error == nil else {
-                    let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignInFields()} ))
-                    strongSelf.present(alert, animated: true)
+        let isValid = Validation(email: email, password: password, confirmPassword: nil)
+        
+        if isValid.isFieldsFilled().0 {
+            if isValid.isValidMail() {
+                FirebaseAuth.Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [weak self] result, error in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    guard error == nil else {
+                        let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignInFields()} ))
+                        strongSelf.present(alert, animated: true)
+                        
+                        return
+                    }
                     
-                    return
-                }
-                
-                print("You have signed in")
-            })
-        
+                    print("You have signed in")
+                })
+            } else {
+                errorLabel.text = "Incorrect email."
+                errorLabel.isHidden = false 
+            }
+        } else {
+            errorLabel.text = isValid.isFieldsFilled().1
+            errorLabel.isHidden = false
         }
         
         
