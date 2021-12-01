@@ -18,9 +18,13 @@ class SignInViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Email"
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         //MARK: textField.placeholder add constraint
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.blue.cgColor
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.clearButtonMode = .whileEditing
         return textField
     }()
@@ -65,6 +69,8 @@ class SignInViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Log In", for: .normal)
         button.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
+        button.isUserInteractionEnabled = false
+        button.alpha = 0.5
         return button
     }()
     
@@ -85,6 +91,8 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(errorLabel)
@@ -216,11 +224,73 @@ class SignInViewController: UIViewController {
         errorLabel.isHidden = true
     }
     
+    func checkForEnableLogInButton() {
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text else {return}
+        if  !email.isEmpty && !password.isEmpty {
+            logInButton.isUserInteractionEnabled = true
+            logInButton.alpha = 1
+            
+        } else {
+            logInButton.isUserInteractionEnabled = false
+            logInButton.alpha = 0.5
+        }
+    }
     
     
     
 }
 
 extension SignInViewController: UITextFieldDelegate {
+//
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//
+//    }
+//
+//
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//
+//    }
+//
+//
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//
+//    }
+//
+//
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+        checkForEnableLogInButton()
+        
+    }
+
     
+//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+//
+//    }
+
+    
+//
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//
+//    }
+//
+//
+//
+//    func textFieldDidChangeSelection(_ textField: UITextField) {
+//
+//    }
+//
+//
+//
+//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+//
+//    }
+//
+//
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        checkForEnableLogInButton()
+        return true
+    }
 }

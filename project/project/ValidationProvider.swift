@@ -48,7 +48,7 @@ class Validation {
         //  min 8 characters total
         let passwordRegx = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&<>*~:`-]).{8,}$"
         let passwordCheck = NSPredicate(format: "SELF MATCHES %@",passwordRegx)
-        return passwordCheck.evaluate(with: password)
+        return passwordCheck.evaluate(with: password) 
     }
     
     

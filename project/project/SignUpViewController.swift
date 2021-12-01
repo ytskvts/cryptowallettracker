@@ -14,6 +14,9 @@ class SignUpViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Email"
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         //MARK: textField.placeholder add constraint
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.blue.cgColor
