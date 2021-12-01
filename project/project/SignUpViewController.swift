@@ -17,11 +17,12 @@ class SignUpViewController: UIViewController {
         //MARK: textField.placeholder add constraint
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.blue.cgColor
+        textField.clearButtonMode = .whileEditing
         return textField
     }()
     
     private let passwordTextField: UITextField = {
-        let textField = UITextField()
+        let textField = PasswordTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
         //MARK: textField.placeholder add constraint
@@ -32,7 +33,7 @@ class SignUpViewController: UIViewController {
     }()
     
     private let confirmPasswordTextField: UITextField = {
-        let textField = UITextField()
+        let textField = PasswordTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Confirm password"
         //MARK: textField.placeholder add constraint

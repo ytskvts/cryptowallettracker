@@ -8,9 +8,11 @@
 import UIKit
 import FirebaseAuth
 
+
 class SignInViewController: UIViewController {
-
-
+    
+    
+    
     // MARK: Bad setup, in future do stackview
     private let emailTextField: UITextField = {
         let textField = UITextField()
@@ -19,19 +21,35 @@ class SignInViewController: UIViewController {
         //MARK: textField.placeholder add constraint
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.blue.cgColor
+        textField.clearButtonMode = .whileEditing
         return textField
     }()
     
     private let passwordTextField: UITextField = {
-        let textField = UITextField()
+        let textField = PasswordTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
         //MARK: textField.placeholder add constraint
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.blue.cgColor
-        textField.isSecureTextEntry = true
+        
+        
+        
         return textField
     }()
+    
+    
+    
+    
+//    private let toggleSecureTextButton: UIButton = {
+//        let button = UIButton(type: .custom)
+//        button.setImage(UIImage(named: "eye.slash"), for: .normal)
+//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+//        button.frame = CGRect(x: CGFloat(.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+//
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
     
     private let errorLabel : UILabel = {
         let label = UILabel()
@@ -46,6 +64,7 @@ class SignInViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Log In", for: .normal)
+        button.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
         return button
     }()
     
@@ -53,6 +72,7 @@ class SignInViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign Up", for: .normal)
+        button.addTarget(self, action: #selector(didTapTransitionToSignUpScreenButton), for: .touchUpInside)
         return button
     }()
     // MARK: ---------------------------------------------------------------------------------------------------------
@@ -71,8 +91,8 @@ class SignInViewController: UIViewController {
         view.addSubview(logInButton)
         view.addSubview(transitionToSignUpScreenButton)
         
-        logInButton.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
-        transitionToSignUpScreenButton.addTarget(self, action: #selector(didTapTransitionToSignUpScreenButton), for: .touchUpInside)
+        //logInButton.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
+//        transitionToSignUpScreenButton.addTarget(self, action: #selector(didTapTransitionToSignUpScreenButton), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -83,6 +103,8 @@ class SignInViewController: UIViewController {
         createLogInButtonConstraint()
         createTransitionToSignUpScreenButtonConstraint()
     }
+    
+  
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -140,6 +162,7 @@ class SignInViewController: UIViewController {
     // MARK: ---------------------------------------------------------------------------------------------------------
     
     @objc private func didTaplogInButton() {
+        print("logbtn")
         errorLabel.text = ""
         errorLabel.isHidden = true
         guard let email = emailTextField.text,
@@ -194,5 +217,10 @@ class SignInViewController: UIViewController {
     }
     
     
+    
+    
 }
 
+extension SignInViewController: UITextFieldDelegate {
+    
+}
