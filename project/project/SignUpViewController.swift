@@ -59,6 +59,7 @@ class SignUpViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign Up", for: .normal)
+        button.addTarget(self, action: #selector(didTapSignUpButton), for: .touchUpInside)
         return button
     }()
     
@@ -71,7 +72,13 @@ class SignUpViewController: UIViewController {
         view.addSubview(errorLabel)
         view.addSubview(signUpButton)
         
-        signUpButton.addTarget(self, action: #selector(didTapSignUpButton), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { nc in
+            self.view.frame.origin.y = -200
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { nc in
+            self.view.frame.origin.y = 0
+        }
 
         // Do any additional setup after loading the view.
     }
@@ -188,4 +195,11 @@ class SignUpViewController: UIViewController {
         }
     }
 
+    deinit {
+        //print("deinit")
+    }
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+    
 }

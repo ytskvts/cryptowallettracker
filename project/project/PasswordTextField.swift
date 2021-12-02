@@ -9,6 +9,24 @@ import UIKit
 
 class PasswordTextField: UITextField {
     
+    override var isSecureTextEntry: Bool {
+            didSet {
+                if isFirstResponder {
+                    _ = becomeFirstResponder()
+                }
+            }
+        }
+
+    override func becomeFirstResponder() -> Bool {
+
+        let success = super.becomeFirstResponder()
+        if isSecureTextEntry, let text = self.text {
+            self.text?.removeAll()
+            insertText(text)
+        }
+        return success
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -28,6 +46,7 @@ class PasswordTextField: UITextField {
         button.setImage(UIImage(systemName: "eye.slash"), for: .selected)
         rightView = button
         rightViewMode = .always
+        
         button.addTarget(self, action: #selector(showHidePassword(_:)), for: .touchUpInside)
     }
     

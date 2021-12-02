@@ -26,6 +26,7 @@ class SignInViewController: UIViewController {
         textField.layer.borderColor = UIColor.blue.cgColor
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = UIReturnKeyType.next
         return textField
     }()
     
@@ -36,24 +37,16 @@ class SignInViewController: UIViewController {
         //MARK: textField.placeholder add constraint
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.blue.cgColor
+        textField.returnKeyType = UIReturnKeyType.join
         
-        
-        
+
         return textField
     }()
     
     
     
     
-//    private let toggleSecureTextButton: UIButton = {
-//        let button = UIButton(type: .custom)
-//        button.setImage(UIImage(named: "eye.slash"), for: .normal)
-//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-//        button.frame = CGRect(x: CGFloat(.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-//
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
+
     
     private let errorLabel : UILabel = {
         let label = UILabel()
@@ -83,12 +76,6 @@ class SignInViewController: UIViewController {
     }()
     // MARK: ---------------------------------------------------------------------------------------------------------
     
-    
-    
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
@@ -98,9 +85,15 @@ class SignInViewController: UIViewController {
         view.addSubview(errorLabel)
         view.addSubview(logInButton)
         view.addSubview(transitionToSignUpScreenButton)
-        
-        //logInButton.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
-//        transitionToSignUpScreenButton.addTarget(self, action: #selector(didTapTransitionToSignUpScreenButton), for: .touchUpInside)
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { nc in
+            self.view.frame.origin.y = -200
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { nc in
+            self.view.frame.origin.y = 0
+        }
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: nil, queue: nil) { nc in
+            self.checkForEnableLogInButton()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -175,37 +168,29 @@ class SignInViewController: UIViewController {
         errorLabel.isHidden = true
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {return}
-              
-        
         let isValid = Validation(email: email, password: password, confirmPassword: nil)
-        
-        if isValid.isFieldsFilled().0 {
-            if isValid.isValidMail() {
-                FirebaseAuth.Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: { [weak self] result, error in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    guard error == nil else {
-                        let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignInFields()} ))
-                        strongSelf.present(alert, animated: true)
-                        
-                        return
-                    }
+
+        if isValid.isValidMail() {
+            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] result, error in
+                guard let strongSelf = self else {
+                    return
+                }
+                guard error == nil else {
+                    let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignInFields()} ))
+                    strongSelf.present(alert, animated: true)
                     
-                    print("You have signed in")
-                })
-            } else {
-                errorLabel.text = "Incorrect email."
-                errorLabel.isHidden = false 
-            }
+                    return
+                }
+                
+                print("You have signed in")
+            })
         } else {
-            errorLabel.text = isValid.isFieldsFilled().1
+            errorLabel.text = "Incorrect email."
             errorLabel.isHidden = false
+            emailTextField.text =  ""
+            passwordTextField.text = ""
         }
-        
-        
-        
     }
     
     @objc private func didTapTransitionToSignUpScreenButton() {
@@ -214,8 +199,6 @@ class SignInViewController: UIViewController {
         present(SignUpViewController(), animated: true, completion: nil)
         
     }
-    
-  
     
     func cleanInputSignInFields() {
         emailTextField.text =  ""
@@ -244,7 +227,15 @@ class SignInViewController: UIViewController {
 extension SignInViewController: UITextFieldDelegate {
 //
 //    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//
+//        if textField == passwordTextField {
+//            if logInButton.isUserInteractionEnabled == false {
+//                passwordTextField.enablesReturnKeyAutomatically = false
+//            } else {
+//                passwordTextField.enablesReturnKeyAutomatically = true
+//            }
+//            
+//        }
+//        return true
 //    }
 //
 //
@@ -289,8 +280,14 @@ extension SignInViewController: UITextFieldDelegate {
 //
 //
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        checkForEnableLogInButton()
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        }
+        if textField == passwordTextField {
+            if logInButton.isUserInteractionEnabled == true {
+                didTaplogInButton()
+            }
+        }
         return true
     }
 }
