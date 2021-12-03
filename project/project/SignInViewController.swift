@@ -8,23 +8,16 @@
 import UIKit
 import FirebaseAuth
 
-
 class SignInViewController: UIViewController {
-    
-    
     
     // MARK: Bad setup, in future do stackview
     private let emailTextField: UITextField = {
-        let textField = UITextField()
+        let textField = CustomTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Email"
         textField.keyboardType = .emailAddress
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
-        //MARK: textField.placeholder add constraint
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.blue.cgColor
-        textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = UIReturnKeyType.next
         return textField
@@ -34,19 +27,9 @@ class SignInViewController: UIViewController {
         let textField = PasswordTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
-        //MARK: textField.placeholder add constraint
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.blue.cgColor
-        textField.returnKeyType = UIReturnKeyType.join
-        
-
+        textField.returnKeyType = UIReturnKeyType.go
         return textField
     }()
-    
-    
-    
-    
-
     
     private let errorLabel : UILabel = {
         let label = UILabel()
@@ -58,7 +41,7 @@ class SignInViewController: UIViewController {
     }()
     
     private let logInButton : UIButton = {
-        let button = UIButton()
+        let button = AuthorizationButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Log In", for: .normal)
         button.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
@@ -67,24 +50,29 @@ class SignInViewController: UIViewController {
         return button
     }()
     
+    
     private let transitionToSignUpScreenButton : UIButton = {
-        let button = UIButton()
+        let button = AuthorizationButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign Up", for: .normal)
         button.addTarget(self, action: #selector(didTapTransitionToSignUpScreenButton), for: .touchUpInside)
         return button
     }()
-    // MARK: ---------------------------------------------------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(errorLabel)
         view.addSubview(logInButton)
         view.addSubview(transitionToSignUpScreenButton)
+        
+        configureTapGesture()
+        
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { nc in
             self.view.frame.origin.y = -200
         }
@@ -105,14 +93,12 @@ class SignInViewController: UIViewController {
         createTransitionToSignUpScreenButtonConstraint()
     }
     
-  
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //faceid
         //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) == true { ... }
+        //else emailTextField.becomeFirstResponder()
         
-        emailTextField.becomeFirstResponder()
     }
     
 // MARK: Bad setup for constraints, in future change for stackview
@@ -160,14 +146,15 @@ class SignInViewController: UIViewController {
             transitionToSignUpScreenButton.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
-    // MARK: ---------------------------------------------------------------------------------------------------------
     
     @objc private func didTaplogInButton() {
         print("logbtn")
         errorLabel.text = ""
         errorLabel.isHidden = true
+        
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {return}
+        
         let isValid = Validation(email: email, password: password, confirmPassword: nil)
 
         if isValid.isValidMail() {
@@ -177,9 +164,11 @@ class SignInViewController: UIViewController {
                 }
                 guard error == nil else {
                     let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in strongSelf.cleanInputSignInFields()} ))
+                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in
+                        strongSelf.cleanInputSignInFields()
+                        strongSelf.emailTextField.becomeFirstResponder()
+                    } ))
                     strongSelf.present(alert, animated: true)
-                    
                     return
                 }
                 
@@ -190,14 +179,26 @@ class SignInViewController: UIViewController {
             errorLabel.isHidden = false
             emailTextField.text =  ""
             passwordTextField.text = ""
+            checkForEnableLogInButton()
+            emailTextField.becomeFirstResponder()
         }
     }
     
+    //MARK: here
     @objc private func didTapTransitionToSignUpScreenButton() {
         print("didTapTransitionToSignUpScreenButton")
         cleanInputSignInFields()
+        view.endEditing(true)
         present(SignUpViewController(), animated: true, completion: nil)
-        
+    }
+    
+    private func configureTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleTap() {
+        view.endEditing(true)
     }
     
     func cleanInputSignInFields() {
@@ -219,66 +220,15 @@ class SignInViewController: UIViewController {
             logInButton.alpha = 0.5
         }
     }
-    
-    
-    
 }
 
 extension SignInViewController: UITextFieldDelegate {
-//
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        if textField == passwordTextField {
-//            if logInButton.isUserInteractionEnabled == false {
-//                passwordTextField.enablesReturnKeyAutomatically = false
-//            } else {
-//                passwordTextField.enablesReturnKeyAutomatically = true
-//            }
-//            
-//        }
-//        return true
-//    }
-//
-//
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//
-//    }
-//
-//
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//
-//    }
-//
-//
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
-        checkForEnableLogInButton()
-        
-    }
 
-    
-//    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-//
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        textField.resignFirstResponder()
+//        checkForEnableLogInButton()
 //    }
 
-    
-//
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//
-//    }
-//
-//
-//
-//    func textFieldDidChangeSelection(_ textField: UITextField) {
-//
-//    }
-//
-//
-//
-//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-//
-//    }
-//
-//
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
             passwordTextField.becomeFirstResponder()
