@@ -148,6 +148,7 @@ class SignInViewController: UIViewController {
     }
     
     @objc private func didTaplogInButton() {
+        present(CoinsListViewController(), animated: true, completion: nil)
         print("logbtn")
         errorLabel.text = ""
         errorLabel.isHidden = true
