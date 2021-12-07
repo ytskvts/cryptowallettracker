@@ -172,6 +172,9 @@ class SignUpViewController: UIViewController {
                     return
                 }
                 print("You have sign up in")
+                let vc = CoinsListViewController()
+                vc.modalPresentationStyle = .fullScreen
+                strongSelf.present(vc, animated: true, completion: nil)
                 // save email and password
                 //strongSelf.cleanInputSignUpFields()
             })

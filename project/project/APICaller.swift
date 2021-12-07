@@ -13,7 +13,7 @@ final class APICaller {
     private init() {}
     
     public func getAllCryptoData(completion: @escaping (Result<[Coin], Error>) -> Void) {
-        guard let url = URL(string: firstPartOfURL + measurementCurrency + secondPartOfURL + namesOfCoins + lastPartOfURl) else {return}
+        guard let url = URL(string: requestUrl) else {return}
         
         let task = URLSession.shared.dataTask(with: url) {data, _, error in
             guard let data = data, error == nil else {return}

@@ -50,23 +50,46 @@ class CoinsListViewController: UIViewController, UITableViewDelegate, UITableVie
     @objc func getCurrencies() {
         APICaller.shared.getAllCryptoData { [weak self] result in
             switch result {
-                case .success(let models):
+            case .success(let models):
                 print(models.count)
                 self?.viewModels = models.compactMap({
                     //Numberformatter
-                    let price = $0.current_price 
+                    var currentPrice = $0.current_price
+                    var convertPrice: String
+                    if currentPrice.truncatingRemainder(dividingBy: 1) != 0 {
+                        currentPrice = Double(round(currentPrice * 1000) / 1000)
+                        convertPrice = String(format: "%.2f", currentPrice)
+                    } else {
+                        convertPrice = "\(Int(currentPrice))"
+                    }
+                    print(type(of: $0.current_price))
+                    print(type(of: $0.image))
+                    let imageData = try! Data(contentsOf: URL(string: $0.image)!)
+                    let image = UIImage(data: imageData)
+                    return CoinTableViewCellViewModel(name: $0.name, symbol: $0.symbol, currentPrice: convertPrice + " $", image: (image ?? UIImage(systemName: "eye"))!, highDayPrice: $0.high_24h, lowDayPrice: $0.low_24h, priceChangeDay: $0.price_change_24h, priceChangePercentageDay: $0.price_change_percentage_24h)
                     
-                    CoinTableViewCellViewModel(name: $0.name, symbol: $0.symbol, currentPrice: CoinsListViewController.numberFormatter.string(from: NSNumber(floatLiteral: Double(price))))
                 })
                 DispatchQueue.main.async {
                     self?.coinsListTableView.reloadData()
                 }
-                case .failure(let error): print(error)
+            case .failure(let error):
+                print(error)
             }
         }
     }
     
-    
+    func showDetailVC(indexPath: IndexPath) {
+//        if let navigationcontroller = navigationController {
+//            let detailVC = DetailCoinViewController()
+//            detailVC.configure(with: viewModels[indexPath.row])
+//            navigationcontroller.pushViewController(detailVC, animated: true)
+//
+//
+//        }
+        let detailVC = DetailCoinViewController()
+        detailVC.configure(with: viewModels[indexPath.row])
+        present(detailVC, animated: true, completion: nil)
+    }
     
     
     
@@ -89,6 +112,10 @@ class CoinsListViewController: UIViewController, UITableViewDelegate, UITableVie
         return 70
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showDetailVC(indexPath: indexPath)
+        
+    }
     /*
     // MARK: - Navigation
 

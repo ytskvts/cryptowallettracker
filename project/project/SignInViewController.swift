@@ -148,7 +148,8 @@ class SignInViewController: UIViewController {
     }
     
     @objc private func didTaplogInButton() {
-        present(CoinsListViewController(), animated: true, completion: nil)
+        
+        
         print("logbtn")
         errorLabel.text = ""
         errorLabel.isHidden = true
@@ -174,6 +175,10 @@ class SignInViewController: UIViewController {
                 }
                 
                 print("You have signed in")
+                let vc = CoinsListViewController()
+                vc.modalPresentationStyle = .fullScreen
+                strongSelf.present(vc, animated: true, completion: nil)
+                
             })
         } else {
             errorLabel.text = "Incorrect email."
