@@ -48,13 +48,12 @@ class SignUpViewController: UIViewController {
         return label
     }()
     
-    private let signUpButton : UIButton = {
+    private let signUpButton : AuthorizationButton = {
         let button = AuthorizationButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign Up", for: .normal)
         button.addTarget(self, action: #selector(didTapSignUpButton), for: .touchUpInside)
-        button.isUserInteractionEnabled = false
-        button.alpha = 0.5
+        button.disableButton()
         return button
     }()
     
@@ -102,6 +101,7 @@ class SignUpViewController: UIViewController {
         
     }
     
+//MARK: Constraints
     func createEmailTextFieldConstraint() {
         NSLayoutConstraint.activate([
             emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
@@ -121,12 +121,12 @@ class SignUpViewController: UIViewController {
     }
     
     func createConfirmPasswordTextFieldConstraint() {
-            NSLayoutConstraint.activate([
-                confirmPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: 40),
-                confirmPasswordTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
-                confirmPasswordTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
-                confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 30)
-            ])
+        NSLayoutConstraint.activate([
+            confirmPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: 40),
+            confirmPasswordTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            confirmPasswordTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            confirmPasswordTextField.heightAnchor.constraint(equalToConstant: 30)
+        ])
     }
     
     func createErrorLabelConstraint() {
@@ -157,9 +157,9 @@ class SignUpViewController: UIViewController {
               let confirmPassword = confirmPasswordTextField.text else {return}
         
         let isValid = Validation(email: email, password: password, confirmPassword: confirmPassword)
-
+        // isValidInput return (isHaveMistake Bool, errorLabelText String)
         if isValid.isValidInput().0 {
-            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password,
+            FirebaseAuth.Auth.auth().createUser(withEmail: isValid.email, password: isValid.password,
                                                 completion: { [weak self] result, error in
                 guard let strongSelf = self else {return}
                 guard error == nil else {
@@ -172,11 +172,13 @@ class SignUpViewController: UIViewController {
                     return
                 }
                 print("You have sign up in")
+                //fix
                 let vc = CoinsListViewController()
                 vc.modalPresentationStyle = .fullScreen
                 strongSelf.present(vc, animated: true, completion: nil)
                 // save email and password
-                //strongSelf.cleanInputSignUpFields()
+                // strongSelf.cleanInputSignUpFields()
+                // maybe do transiton on SignIn screen
             })
         } else {
             errorLabel.text = isValid.isValidInput().1
@@ -189,6 +191,7 @@ class SignUpViewController: UIViewController {
         }
     }
     
+    //hide keyboard
     private func configureTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
@@ -211,30 +214,28 @@ class SignUpViewController: UIViewController {
               let password = passwordTextField.text,
               let confirmPassword = confirmPasswordTextField.text else {return}
         if  !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty {
-            signUpButton.isUserInteractionEnabled = true
-            signUpButton.alpha = 1
-            
+            signUpButton.enableButton()
         } else {
-            signUpButton.isUserInteractionEnabled = false
-            signUpButton.alpha = 0.5
+            signUpButton.disableButton()
         }
     }
-
 }
 
 extension SignUpViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTextField {
+
+        switch textField {
+        case emailTextField:
             passwordTextField.becomeFirstResponder()
-        }
-        if textField == passwordTextField {
+        case passwordTextField:
             confirmPasswordTextField.becomeFirstResponder()
-        }
-        if textField == confirmPasswordTextField {
+        case confirmPasswordTextField:
             if signUpButton.isUserInteractionEnabled == true {
                 didTapSignUpButton()
             }
+        default:
+            print("some problems in UITextFieldDelegate method(SignUpViewController)")
         }
         return true
     }

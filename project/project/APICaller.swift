@@ -20,7 +20,6 @@ final class APICaller {
             do {
                 // decode responce
                 let coins = try JSONDecoder().decode([Coin].self, from: data)
-                
                 completion(.success(coins))
             }
             catch {
