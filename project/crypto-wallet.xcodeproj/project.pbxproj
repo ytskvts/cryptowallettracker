@@ -158,7 +158,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0172B12A27451707008617DE /* Build configuration list for PBXProject "crypto wallet" */;
+			buildConfigurationList = 0172B12A27451707008617DE /* Build configuration list for PBXProject "crypto-wallet" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -451,7 +451,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0172B12A27451707008617DE /* Build configuration list for PBXProject "crypto wallet" */ = {
+		0172B12A27451707008617DE /* Build configuration list for PBXProject "crypto-wallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0172B14127451709008617DE /* Debug */,

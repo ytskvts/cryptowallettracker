@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:crypto wallet.xcodeproj">
+      location = "group:/Users/dzmitry/Documents/cryptowallettracker/project/crypto-wallet.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
