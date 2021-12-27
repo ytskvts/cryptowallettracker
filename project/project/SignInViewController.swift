@@ -10,6 +10,8 @@ import FirebaseAuth
 
 class SignInViewController: UIViewController {
     
+    var signInPresenter: SignInPresenterProtocol!
+    
     // MARK: Bad setup, in future do stackview
     private let emailTextField: UITextField = {
         let textField = CustomTextField()
@@ -162,19 +164,12 @@ class SignInViewController: UIViewController {
                     return
                 }
                 guard error == nil else {
-                    let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in
-                        strongSelf.cleanInputSignInFields()
-                        strongSelf.emailTextField.becomeFirstResponder()
-                    } ))
-                    strongSelf.present(alert, animated: true)
+                    strongSelf.showAlert()
                     return
                 }
                 print("You have signed in")
                 //MARK: rewrite this as man
-                let vc = CoinsListViewController()
-                vc.modalPresentationStyle = .fullScreen
-                strongSelf.present(vc, animated: true, completion: nil)
+                strongSelf.navigateToMainScreen()
             })
         } else {
             errorLabel.text = "Incorrect email."
@@ -235,4 +230,23 @@ extension SignInViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+
+extension SignInViewController: SignInViewProtocol {
+    func navigateToMainScreen() {
+        let vc = CoinsListViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in
+            self.cleanInputSignInFields()
+            self.emailTextField.becomeFirstResponder()
+        } ))
+        self.present(alert, animated: true)
+    }
+    
+    
 }

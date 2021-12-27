@@ -6,5 +6,10 @@
 //
 
 protocol SignInPresenterProtocol {
+    
+    init(signInViewController: SignInViewProtocol, validator: ValidationProtocol)
+    
     func logIn(email: String, password: String)
+    
+    
 }
