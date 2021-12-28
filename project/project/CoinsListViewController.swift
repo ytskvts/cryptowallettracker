@@ -84,6 +84,7 @@ class CoinsListViewController: UIViewController {
     
     func showDetailVC(indexPath: IndexPath) {
         let detailVC = DetailCoinViewController()
+        print(viewModels[indexPath.row])
         detailVC.configure(with: viewModels[indexPath.row])
         present(detailVC, animated: true, completion: nil)
     }
