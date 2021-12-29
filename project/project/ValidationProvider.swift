@@ -51,30 +51,6 @@ class Validation {
         return passwordCheck.evaluate(with: password) 
     }
     
-    
-    
-    func isFieldsFilled() -> (Bool, String) {
-        var errorStatus: (Bool, String) = (true, "")
-        if (email.isEmpty && password.isEmpty && (confirmPassword != nil ? confirmPassword!.isEmpty : true)){
-            errorStatus.0 = false
-            errorStatus.1 += "Fill the all fields."
-        } else {
-            if email.isEmpty {
-                errorStatus.0 = false
-                errorStatus.1 += "Fill the email field. "
-            }
-            if password.isEmpty {
-                errorStatus.0 = false
-                errorStatus.1 += "Fill the password field. "
-            }
-            if (confirmPassword != nil ? confirmPassword!.isEmpty : false) {
-                errorStatus.0 = false
-                errorStatus.1 += "Fill the confirm password field."
-            }
-        }  
-        return errorStatus
-    }
-    
     func isValidInput() -> (Bool, String) {
         var errorStatus: (Bool, String) = (true, "")
         if !isValidMail() {

@@ -40,18 +40,16 @@ class SignInViewController: UIViewController {
         return label
     }()
     
-    private let logInButton : UIButton = {
+    private let logInButton : AuthorizationButton = {
         let button = AuthorizationButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Log In", for: .normal)
         button.addTarget(self, action: #selector(didTaplogInButton), for: .touchUpInside)
-        button.isUserInteractionEnabled = false
-        button.alpha = 0.5
+        button.disableButton()
         return button
     }()
     
-    
-    private let transitionToSignUpScreenButton : UIButton = {
+    private let transitionToSignUpScreenButton : AuthorizationButton = {
         let button = AuthorizationButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign Up", for: .normal)
@@ -96,7 +94,7 @@ class SignInViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //faceid
-        //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) == true { ... }
+        //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) { ... }
         //else emailTextField.becomeFirstResponder()
         
     }
@@ -148,6 +146,7 @@ class SignInViewController: UIViewController {
     }
     
     @objc private func didTaplogInButton() {
+        
         print("logbtn")
         errorLabel.text = ""
         errorLabel.isHidden = true
@@ -158,7 +157,7 @@ class SignInViewController: UIViewController {
         let isValid = Validation(email: email, password: password, confirmPassword: nil)
 
         if isValid.isValidMail() {
-            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] result, error in
+            FirebaseAuth.Auth.auth().signIn(withEmail: isValid.email, password: isValid.password, completion: { [weak self] result, error in
                 guard let strongSelf = self else {
                     return
                 }
@@ -171,8 +170,11 @@ class SignInViewController: UIViewController {
                     strongSelf.present(alert, animated: true)
                     return
                 }
-                
                 print("You have signed in")
+                //MARK: rewrite this as man
+                let vc = CoinsListViewController()
+                vc.modalPresentationStyle = .fullScreen
+                strongSelf.present(vc, animated: true, completion: nil)
             })
         } else {
             errorLabel.text = "Incorrect email."
@@ -184,7 +186,6 @@ class SignInViewController: UIViewController {
         }
     }
     
-    //MARK: here
     @objc private func didTapTransitionToSignUpScreenButton() {
         print("didTapTransitionToSignUpScreenButton")
         cleanInputSignInFields()
@@ -212,31 +213,25 @@ class SignInViewController: UIViewController {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else {return}
         if  !email.isEmpty && !password.isEmpty {
-            logInButton.isUserInteractionEnabled = true
-            logInButton.alpha = 1
-            
+            logInButton.enableButton()
         } else {
-            logInButton.isUserInteractionEnabled = false
-            logInButton.alpha = 0.5
+            logInButton.disableButton()
         }
     }
 }
 
 extension SignInViewController: UITextFieldDelegate {
 
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        textField.resignFirstResponder()
-//        checkForEnableLogInButton()
-//    }
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTextField {
+        switch textField {
+        case emailTextField:
             passwordTextField.becomeFirstResponder()
-        }
-        if textField == passwordTextField {
+        case passwordTextField:
             if logInButton.isUserInteractionEnabled == true {
                 didTaplogInButton()
             }
+        default:
+            print("some problems in UITextFieldDelegate method(SignInViewController)")
         }
         return true
     }

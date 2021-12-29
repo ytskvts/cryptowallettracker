@@ -8,6 +8,7 @@
 import UIKit
 
 class CustomTextField: UITextField {
+    
     var textPadding = UIEdgeInsets(
             top: 5,
             left: 10,
@@ -25,15 +26,12 @@ class CustomTextField: UITextField {
         setupStyle()
     }
     
-    
     func setupStyle() {
         self.layer.borderWidth = 1
         self.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
         self.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
         self.layer.cornerRadius = 3
     }
-    
-    
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let rect = super.textRect(forBounds: bounds)
@@ -48,19 +46,17 @@ class CustomTextField: UITextField {
     override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
         return CGRect(x: bounds.width - 35, y: 0, width: 30 , height: bounds.height)
     }
-    
-    
 }
 
 class PasswordTextField: CustomTextField {
     
     override var isSecureTextEntry: Bool {
-            didSet {
-                if isFirstResponder {
-                    _ = becomeFirstResponder()
-                }
+        didSet {
+            if isFirstResponder {
+                _ = becomeFirstResponder()
             }
         }
+    }
 
     override func becomeFirstResponder() -> Bool {
 
@@ -84,7 +80,6 @@ class PasswordTextField: CustomTextField {
     
     private func setup() {
         self.isSecureTextEntry = true
-        
         //show/hide button
         let button = UIButton(frame: CGRect(x: self.frame.size.width - 25, y: 5, width: 30, height: 30))
         button.setImage(UIImage(systemName: "eye"), for: .normal)
@@ -92,8 +87,6 @@ class PasswordTextField: CustomTextField {
         button.imageView?.tintColor = #colorLiteral(red: 0.3204267323, green: 0.3202443123, blue: 0.3293273449, alpha: 1)
         rightView = button
         rightViewMode = .always
-        
-        
         button.addTarget(self, action: #selector(showHidePassword(_:)), for: .touchUpInside)
     }
     
@@ -101,10 +94,10 @@ class PasswordTextField: CustomTextField {
         sender.isSelected = !sender.isSelected
         self.isSecureTextEntry = !sender.isSelected
     }
-    
 }
 
 class AuthorizationButton: UIButton {
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -115,9 +108,19 @@ class AuthorizationButton: UIButton {
         setup()
     }
     
-    
     func setup() {
         self.backgroundColor = #colorLiteral(red: 0, green: 0.5942070484, blue: 0.9925900102, alpha: 1)
         self.layer.cornerRadius = 3
+    }
+    
+    func disableButton() {
+        self.isUserInteractionEnabled = false
+        self.alpha = 0.5
+
+    }
+    
+    func enableButton() {
+        self.isUserInteractionEnabled = true
+        self.alpha = 1
     }
 }
