@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157D3042750E22D00859472 /* SignUpViewController.swift */; };
 		0157D30727511D7200859472 /* ValidationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157D30627511D7200859472 /* ValidationProvider.swift */; };
+		0159E62F277C877700411F96 /* AuthorizationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159E62E277C877700411F96 /* AuthorizationTextField.swift */; };
+		0159E631277C87D400411F96 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159E630277C87D400411F96 /* PasswordTextField.swift */; };
+		0159E633277C881E00411F96 /* AuthorizationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159E632277C881E00411F96 /* AuthorizationButton.swift */; };
 		016576672779A75800BAF64B /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016576662779A75800BAF64B /* SignInPresenter.swift */; };
 		016576692779A89B00BAF64B /* SignInViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016576682779A89B00BAF64B /* SignInViewProtocol.swift */; };
 		0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */; };
 		01676982274FE2F000D707E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01676981274FE2F000D707E2 /* GoogleService-Info.plist */; };
 		016807A4275F89020057CAFC /* DetailCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016807A3275F89020057CAFC /* DetailCoinViewController.swift */; };
-		016A487A275A230B006FFA40 /* CustomUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A4879275A230B006FFA40 /* CustomUIElements.swift */; };
 		016D70BB275E2B290048D540 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016D70BA275E2B290048D540 /* CoinModel.swift */; };
 		016D70BD275E30BE0048D540 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016D70BC275E30BE0048D540 /* APICaller.swift */; };
 		016D70BF275E321D0048D540 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016D70BE275E321D0048D540 /* Constants.swift */; };
@@ -34,12 +36,14 @@
 /* Begin PBXFileReference section */
 		0157D3042750E22D00859472 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		0157D30627511D7200859472 /* ValidationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationProvider.swift; sourceTree = "<group>"; };
+		0159E62E277C877700411F96 /* AuthorizationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationTextField.swift; sourceTree = "<group>"; };
+		0159E630277C87D400411F96 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
+		0159E632277C881E00411F96 /* AuthorizationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationButton.swift; sourceTree = "<group>"; };
 		016576662779A75800BAF64B /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		016576682779A89B00BAF64B /* SignInViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewProtocol.swift; sourceTree = "<group>"; };
 		0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationProviderProtocol.swift; sourceTree = "<group>"; };
 		01676981274FE2F000D707E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		016807A3275F89020057CAFC /* DetailCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewController.swift; sourceTree = "<group>"; };
-		016A4879275A230B006FFA40 /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
 		016D70BA275E2B290048D540 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
 		016D70BC275E30BE0048D540 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		016D70BE275E321D0048D540 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -72,6 +76,150 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0159E61D277C50AD00411F96 /* DetailCoinModule */ = {
+			isa = PBXGroup;
+			children = (
+				0159E61E277C50C800411F96 /* View */,
+				0159E61F277C50D600411F96 /* Presenter */,
+			);
+			path = DetailCoinModule;
+			sourceTree = "<group>";
+		};
+		0159E61E277C50C800411F96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				016807A3275F89020057CAFC /* DetailCoinViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0159E61F277C50D600411F96 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0159E620277C511400411F96 /* SignInModule */ = {
+			isa = PBXGroup;
+			children = (
+				0159E621277C512C00411F96 /* View */,
+				0159E622277C513400411F96 /* Presenter */,
+			);
+			path = SignInModule;
+			sourceTree = "<group>";
+		};
+		0159E621277C512C00411F96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0172B13627451707008617DE /* SignInViewController.swift */,
+				016576682779A89B00BAF64B /* SignInViewProtocol.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0159E622277C513400411F96 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				016576662779A75800BAF64B /* SignInPresenter.swift */,
+				0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0159E623277C521400411F96 /* SignUpModule */ = {
+			isa = PBXGroup;
+			children = (
+				0159E625277C522B00411F96 /* View */,
+				0159E624277C522300411F96 /* Presenter */,
+			);
+			path = SignUpModule;
+			sourceTree = "<group>";
+		};
+		0159E624277C522300411F96 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0159E625277C522B00411F96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0157D3042750E22D00859472 /* SignUpViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0159E626277C627200411F96 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				0157D30627511D7200859472 /* ValidationProvider.swift */,
+				0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		0159E627277C63F400411F96 /* CoinListModule */ = {
+			isa = PBXGroup;
+			children = (
+				0159E628277C640600411F96 /* View */,
+				0159E629277C642800411F96 /* Presenter */,
+			);
+			path = CoinListModule;
+			sourceTree = "<group>";
+		};
+		0159E628277C640600411F96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				016D70C0275E43B40048D540 /* CoinsListViewController.swift */,
+				016D70C2275E44D10048D540 /* CoinTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0159E629277C642800411F96 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		0159E62A277C86A300411F96 /* CustomUIElements */ = {
+			isa = PBXGroup;
+			children = (
+				0159E62D277C86DD00411F96 /* Views */,
+				0159E62C277C86D200411F96 /* TextFields */,
+				0159E62B277C86B200411F96 /* Buttons */,
+			);
+			path = CustomUIElements;
+			sourceTree = "<group>";
+		};
+		0159E62B277C86B200411F96 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				0159E632277C881E00411F96 /* AuthorizationButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		0159E62C277C86D200411F96 /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				0159E62E277C877700411F96 /* AuthorizationTextField.swift */,
+				0159E630277C87D400411F96 /* PasswordTextField.swift */,
+			);
+			path = TextFields;
+			sourceTree = "<group>";
+		};
+		0159E62D277C86DD00411F96 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				01722509277B309700A19880 /* DetailCoinView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		0172B12627451707008617DE = {
 			isa = PBXGroup;
 			children = (
@@ -93,28 +241,22 @@
 		0172B13127451707008617DE /* project */ = {
 			isa = PBXGroup;
 			children = (
-				01676981274FE2F000D707E2 /* GoogleService-Info.plist */,
-				0172B13227451707008617DE /* AppDelegate.swift */,
+				0159E620277C511400411F96 /* SignInModule */,
+				0159E623277C521400411F96 /* SignUpModule */,
+				0159E627277C63F400411F96 /* CoinListModule */,
+				0159E61D277C50AD00411F96 /* DetailCoinModule */,
+				0159E626277C627200411F96 /* Providers */,
+				0159E62A277C86A300411F96 /* CustomUIElements */,
 				0172B13427451707008617DE /* SceneDelegate.swift */,
-				0157D30627511D7200859472 /* ValidationProvider.swift */,
-				0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */,
-				0172B13627451707008617DE /* SignInViewController.swift */,
-				0157D3042750E22D00859472 /* SignUpViewController.swift */,
-				016D70C0275E43B40048D540 /* CoinsListViewController.swift */,
-				016D70C2275E44D10048D540 /* CoinTableViewCell.swift */,
+				0172B13227451707008617DE /* AppDelegate.swift */,
 				0172B13827451707008617DE /* Main.storyboard */,
-				0172B13B27451709008617DE /* Assets.xcassets */,
 				0172B13D27451709008617DE /* LaunchScreen.storyboard */,
+				01676981274FE2F000D707E2 /* GoogleService-Info.plist */,
 				0172B14027451709008617DE /* Info.plist */,
-				016A4879275A230B006FFA40 /* CustomUIElements.swift */,
+				0172B13B27451709008617DE /* Assets.xcassets */,
 				016D70BA275E2B290048D540 /* CoinModel.swift */,
 				016D70BC275E30BE0048D540 /* APICaller.swift */,
 				016D70BE275E321D0048D540 /* Constants.swift */,
-				016807A3275F89020057CAFC /* DetailCoinViewController.swift */,
-				01722509277B309700A19880 /* DetailCoinView.swift */,
-				0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */,
-				016576662779A75800BAF64B /* SignInPresenter.swift */,
-				016576682779A89B00BAF64B /* SignInViewProtocol.swift */,
 			);
 			path = project;
 			sourceTree = "<group>";
@@ -253,12 +395,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */,
+				0159E633277C881E00411F96 /* AuthorizationButton.swift in Sources */,
+				0159E62F277C877700411F96 /* AuthorizationTextField.swift in Sources */,
 				0172250A277B309700A19880 /* DetailCoinView.swift in Sources */,
 				016807A4275F89020057CAFC /* DetailCoinViewController.swift in Sources */,
 				016D70C3275E44D10048D540 /* CoinTableViewCell.swift in Sources */,
-				016A487A275A230B006FFA40 /* CustomUIElements.swift in Sources */,
 				016576672779A75800BAF64B /* SignInPresenter.swift in Sources */,
 				0172B13727451707008617DE /* SignInViewController.swift in Sources */,
+				0159E631277C87D400411F96 /* PasswordTextField.swift in Sources */,
 				0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */,
 				0172B13327451707008617DE /* AppDelegate.swift in Sources */,
 				016576692779A89B00BAF64B /* SignInViewProtocol.swift in Sources */,
