@@ -17,6 +17,9 @@
 		0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */; };
 		01676982274FE2F000D707E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01676981274FE2F000D707E2 /* GoogleService-Info.plist */; };
 		016807A4275F89020057CAFC /* DetailCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016807A3275F89020057CAFC /* DetailCoinViewController.swift */; };
+		016AE40A2784A03800D7D3CB /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016AE4092784A03800D7D3CB /* WalletViewController.swift */; };
+		016AE40C2784A05300D7D3CB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016AE40B2784A05300D7D3CB /* SettingsViewController.swift */; };
+		016AE40F2784AF4700D7D3CB /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016AE40E2784AF4700D7D3CB /* TabBarController.swift */; };
 		016D70BB275E2B290048D540 /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016D70BA275E2B290048D540 /* CoinModel.swift */; };
 		016D70BD275E30BE0048D540 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016D70BC275E30BE0048D540 /* APICaller.swift */; };
 		016D70BF275E321D0048D540 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016D70BE275E321D0048D540 /* Constants.swift */; };
@@ -42,6 +45,9 @@
 		0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationProviderProtocol.swift; sourceTree = "<group>"; };
 		01676981274FE2F000D707E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		016807A3275F89020057CAFC /* DetailCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewController.swift; sourceTree = "<group>"; };
+		016AE4092784A03800D7D3CB /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		016AE40B2784A05300D7D3CB /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		016AE40E2784AF4700D7D3CB /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		016D70BA275E2B290048D540 /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
 		016D70BC275E30BE0048D540 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		016D70BE275E321D0048D540 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -216,6 +222,62 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		016AE40327849A0F00D7D3CB /* WalletModule */ = {
+			isa = PBXGroup;
+			children = (
+				016AE40427849A2900D7D3CB /* View */,
+				016AE40527849A3A00D7D3CB /* Presenter */,
+			);
+			path = WalletModule;
+			sourceTree = "<group>";
+		};
+		016AE40427849A2900D7D3CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				016AE4092784A03800D7D3CB /* WalletViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		016AE40527849A3A00D7D3CB /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		016AE40627849F9A00D7D3CB /* SettingsModule */ = {
+			isa = PBXGroup;
+			children = (
+				016AE40727849FF600D7D3CB /* View */,
+				016AE40827849FFF00D7D3CB /* Presenter */,
+			);
+			path = SettingsModule;
+			sourceTree = "<group>";
+		};
+		016AE40727849FF600D7D3CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				016AE40B2784A05300D7D3CB /* SettingsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		016AE40827849FFF00D7D3CB /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		016AE40D2784AF0400D7D3CB /* TabBarModule */ = {
+			isa = PBXGroup;
+			children = (
+				016AE40E2784AF4700D7D3CB /* TabBarController.swift */,
+			);
+			path = TabBarModule;
+			sourceTree = "<group>";
+		};
 		0172B12627451707008617DE = {
 			isa = PBXGroup;
 			children = (
@@ -237,11 +299,14 @@
 		0172B13127451707008617DE /* project */ = {
 			isa = PBXGroup;
 			children = (
+				016AE40D2784AF0400D7D3CB /* TabBarModule */,
 				0173EB0227833ACD006BD79A /* Application */,
 				0159E620277C511400411F96 /* SignInModule */,
 				0159E623277C521400411F96 /* SignUpModule */,
 				0159E627277C63F400411F96 /* CoinListModule */,
 				0159E61D277C50AD00411F96 /* DetailCoinModule */,
+				016AE40327849A0F00D7D3CB /* WalletModule */,
+				016AE40627849F9A00D7D3CB /* SettingsModule */,
 				0159E626277C627200411F96 /* Providers */,
 				0159E62A277C86A300411F96 /* CustomUIElements */,
 				0173EB0327833B51006BD79A /* Resources */,
@@ -406,8 +471,10 @@
 				0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */,
 				0159E633277C881E00411F96 /* AuthorizationButton.swift in Sources */,
 				0159E62F277C877700411F96 /* AuthorizationTextField.swift in Sources */,
+				016AE40C2784A05300D7D3CB /* SettingsViewController.swift in Sources */,
 				0172250A277B309700A19880 /* DetailCoinView.swift in Sources */,
 				016807A4275F89020057CAFC /* DetailCoinViewController.swift in Sources */,
+				016AE40A2784A03800D7D3CB /* WalletViewController.swift in Sources */,
 				016D70C3275E44D10048D540 /* CoinTableViewCell.swift in Sources */,
 				016576672779A75800BAF64B /* SignInPresenter.swift in Sources */,
 				0172B13727451707008617DE /* SignInViewController.swift in Sources */,
@@ -419,6 +486,7 @@
 				0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */,
 				016D70BB275E2B290048D540 /* CoinModel.swift in Sources */,
 				016D70C1275E43B40048D540 /* CoinsListViewController.swift in Sources */,
+				016AE40F2784AF4700D7D3CB /* TabBarController.swift in Sources */,
 				016D70BD275E30BE0048D540 /* APICaller.swift in Sources */,
 				016D70BF275E321D0048D540 /* Constants.swift in Sources */,
 			);

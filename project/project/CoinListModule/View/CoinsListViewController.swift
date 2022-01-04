@@ -30,6 +30,7 @@ class CoinsListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Coins"
         view.addSubview(coinsListTableView)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
@@ -41,6 +42,9 @@ class CoinsListViewController: UIViewController {
         super.viewDidLayoutSubviews()
         coinsListTableView.frame = view.bounds
     }
+    
+    
+ 
     
     @objc func getCurrencies() {
         APICaller.shared.getAllCryptoData { [weak self] result in

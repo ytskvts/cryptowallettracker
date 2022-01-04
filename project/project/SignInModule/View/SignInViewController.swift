@@ -233,8 +233,14 @@ extension SignInViewController: UITextFieldDelegate {
 }
 
 extension SignInViewController: SignInViewProtocol {
+//    func navigateToMainScreen() {
+//        let vc = CoinsListViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
+//    }
+    
     func navigateToMainScreen() {
-        let vc = CoinsListViewController()
+        let vc = TabBarController()
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
