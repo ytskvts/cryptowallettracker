@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class CoinsListViewController: UIViewController {
  
@@ -89,6 +88,17 @@ class CoinsListViewController: UIViewController {
         present(detailVC, animated: true, completion: nil)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 extension CoinsListViewController: UITableViewDelegate{
     
