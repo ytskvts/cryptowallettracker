@@ -5,12 +5,15 @@
 //  Created by Dzmitry on 17.11.21.
 //
 
+import LocalAuthentication
 import UIKit
 import FirebaseAuth
 
 class SignInViewController: UIViewController {
     
     var signInPresenter: SignInPresenterProtocol!
+    
+    
     
     // MARK: Bad setup, in future do stackview
     private let emailTextField: UITextField = {
@@ -95,6 +98,7 @@ class SignInViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        biometric()
         //faceid
         //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) { ... }
         //else emailTextField.becomeFirstResponder()
@@ -169,6 +173,7 @@ class SignInViewController: UIViewController {
                 }
                 print("You have signed in")
                 //MARK: rewrite this as man
+                strongSelf.saveDataToKeychain(email: email, password: password)
                 strongSelf.navigateToMainScreen()
             })
         } else {
@@ -213,6 +218,45 @@ class SignInViewController: UIViewController {
             logInButton.disableButton()
         }
     }
+    
+    func setDataFromKeychain() {
+        emailTextField.text = KeychainWrapper.standard.string(forKey: "email") ?? ""
+        passwordTextField.text = KeychainWrapper.standard.string(forKey: "password") ?? ""
+    }
+    
+    func saveDataToKeychain(email: String, password: String) {
+        KeychainWrapper.standard.set(emailTextField.text ?? "", forKey: "email")
+        KeychainWrapper.standard.set(passwordTextField.text ?? "", forKey: "password")
+    }
+    
+    func biometric() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Identify yourself!"
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        self?.setDataFromKeychain()
+                        self?.didTaplogInButton()
+                    } else {
+                        // error
+                        let ac = UIAlertController(title: "Authentication failed", message: "You couldn't be verified. Please try again.", preferredStyle: .alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .default))
+                        self?.present(ac, animated: true)
+                    }
+                }
+            }
+        } else {
+            // no biometry
+            let ac = UIAlertController(title: "Biometry unavailable", message: "Your device isn't configured for biometric authentication.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
 }
 
 extension SignInViewController: UITextFieldDelegate {
