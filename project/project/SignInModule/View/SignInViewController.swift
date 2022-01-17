@@ -187,8 +187,10 @@ class SignInViewController: UIViewController {
     }
     
     @objc private func didTapTransitionToSignUpScreenButton() {
+        
         print("didTapTransitionToSignUpScreenButton")
         cleanInputSignInFields()
+        checkForEnableLogInButton()
         view.endEditing(true)
         present(SignUpViewController(), animated: true, completion: nil)
     }
