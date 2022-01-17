@@ -239,14 +239,23 @@ class SignInViewController: UIViewController {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
                 DispatchQueue.main.async {
                     if success {
-                        self?.setDataFromKeychain()
-                        self?.didTaplogInButton()
-                    } else {
-                        // error
-                        let ac = UIAlertController(title: "Authentication failed", message: "You couldn't be verified. Please try again.", preferredStyle: .alert)
-                        ac.addAction(UIAlertAction(title: "OK", style: .default))
-                        self?.present(ac, animated: true)
+                        if Auth.auth().currentUser != nil {
+                            print("user is signed in")
+                            guard let self = self else {return}
+                            self.navigateToMainScreen()
+                        }
+                        else {
+                            self?.setDataFromKeychain()
+                            self?.checkForEnableLogInButton()
+                        }
+                        
                     }
+//                    else {
+//                        // error
+//                        let ac = UIAlertController(title: "Authentication failed", message: "You couldn't be verified. Please try again.", preferredStyle: .alert)
+//                        ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                        self?.present(ac, animated: true)
+//                    }
                 }
             }
         } else {
