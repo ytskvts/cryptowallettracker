@@ -11,6 +11,7 @@ class CoinsListViewController: UIViewController {
  
     //MARK: just for minimum viable product
     private var viewModels = [CoinTableViewCellViewModel]()
+    private var numberOfPage: Int = 1
     
     private let coinsListTableView: UITableView = {
         let tableView = UITableView()
@@ -34,6 +35,7 @@ class CoinsListViewController: UIViewController {
         view.addSubview(coinsListTableView)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
+        coinsListTableView.prefetchDataSource = self
         getCurrencies()
         // Do any additional setup after loading the view.
     }
@@ -47,10 +49,11 @@ class CoinsListViewController: UIViewController {
  
     
     @objc func getCurrencies() {
-        APICaller.shared.getAllCryptoData { [weak self] result in
+        APICaller.shared.getAllCryptoData(numberOfPage: numberOfPage) { [weak self] result in
             switch result {
             case .success(let models):
-                self?.viewModels = models.compactMap({
+                var newModels = [CoinTableViewCellViewModel]()
+                newModels = models.compactMap({
                     // use Numberformatter instead of this
                     var currentPrice = $0.current_price
                     var convertPrice: String
@@ -76,6 +79,7 @@ class CoinsListViewController: UIViewController {
                         return nil
                     }
                 })
+                self?.viewModels.append(contentsOf: newModels)
                 DispatchQueue.main.async {
                     self?.coinsListTableView.reloadData()
                 }
@@ -129,4 +133,17 @@ extension CoinsListViewController: UITableViewDataSource {
         return cell
         
     }
+}
+
+extension CoinsListViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print(numberOfPage)
+        if numberOfPage < 58 {
+            numberOfPage += 1
+            getCurrencies()
+        }
+        
+    }
+    
+    
 }
