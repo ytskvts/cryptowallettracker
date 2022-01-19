@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: correct this
+#warning("Correct this")
 struct CoinTableViewCellViewModel {
     
     let name: String

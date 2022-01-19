@@ -12,7 +12,7 @@ class SignUpViewController: UIViewController {
 
     // MARK: Bad setup, in future do stackview
     private let emailTextField: UITextField = {
-        let textField = CustomTextField()
+        let textField = AuthorizationTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Email"
         textField.keyboardType = .emailAddress

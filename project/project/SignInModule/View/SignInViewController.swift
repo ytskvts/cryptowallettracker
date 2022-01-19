@@ -5,14 +5,19 @@
 //  Created by Dzmitry on 17.11.21.
 //
 
+import LocalAuthentication
 import UIKit
 import FirebaseAuth
 
 class SignInViewController: UIViewController {
     
+    var signInPresenter: SignInPresenterProtocol!
+    
+    
+    
     // MARK: Bad setup, in future do stackview
     private let emailTextField: UITextField = {
-        let textField = CustomTextField()
+        let textField = AuthorizationTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Email"
         textField.keyboardType = .emailAddress
@@ -93,6 +98,7 @@ class SignInViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        biometric()
         //faceid
         //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) { ... }
         //else emailTextField.becomeFirstResponder()
@@ -162,19 +168,13 @@ class SignInViewController: UIViewController {
                     return
                 }
                 guard error == nil else {
-                    let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in
-                        strongSelf.cleanInputSignInFields()
-                        strongSelf.emailTextField.becomeFirstResponder()
-                    } ))
-                    strongSelf.present(alert, animated: true)
+                    strongSelf.showAlert()
                     return
                 }
                 print("You have signed in")
                 //MARK: rewrite this as man
-                let vc = CoinsListViewController()
-                vc.modalPresentationStyle = .fullScreen
-                strongSelf.present(vc, animated: true, completion: nil)
+                strongSelf.saveDataToKeychain(email: email, password: password)
+                strongSelf.navigateToMainScreen()
             })
         } else {
             errorLabel.text = "Incorrect email."
@@ -218,6 +218,54 @@ class SignInViewController: UIViewController {
             logInButton.disableButton()
         }
     }
+    
+    func setDataFromKeychain() {
+        emailTextField.text = KeychainWrapper.standard.string(forKey: "email") ?? ""
+        passwordTextField.text = KeychainWrapper.standard.string(forKey: "password") ?? ""
+    }
+    
+    func saveDataToKeychain(email: String, password: String) {
+        KeychainWrapper.standard.set(emailTextField.text ?? "", forKey: "email")
+        KeychainWrapper.standard.set(passwordTextField.text ?? "", forKey: "password")
+    }
+    
+    func biometric() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Identify yourself!"
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        if Auth.auth().currentUser != nil {
+                            print("user is signed in")
+                            guard let self = self else {return}
+                            self.navigateToMainScreen()
+                        }
+                        else {
+                            self?.setDataFromKeychain()
+                            self?.checkForEnableLogInButton()
+                        }
+                        
+                    }
+//                    else {
+//                        // error
+//                        let ac = UIAlertController(title: "Authentication failed", message: "You couldn't be verified. Please try again.", preferredStyle: .alert)
+//                        ac.addAction(UIAlertAction(title: "OK", style: .default))
+//                        self?.present(ac, animated: true)
+//                    }
+                }
+            }
+        } else {
+            // no biometry
+            let ac = UIAlertController(title: "Biometry unavailable", message: "Your device isn't configured for biometric authentication.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
 }
 
 extension SignInViewController: UITextFieldDelegate {
@@ -235,4 +283,29 @@ extension SignInViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+
+extension SignInViewController: SignInViewProtocol {
+//    func navigateToMainScreen() {
+//        let vc = CoinsListViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
+//    }
+    
+    func navigateToMainScreen() {
+        let vc = TabBarController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in
+            self.cleanInputSignInFields()
+            self.emailTextField.becomeFirstResponder()
+        } ))
+        self.present(alert, animated: true)
+    }
+    
+    
 }

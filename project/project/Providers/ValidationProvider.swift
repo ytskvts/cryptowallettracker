@@ -8,21 +8,9 @@
 import Foundation
 import UIKit
 
-protocol ValidationProtocol {
-    var email: String {get set}
-    var password: String {get set}
-    var confirmPassword: String? {get set}
-   
-    
-    init(email: String, password: String, confirmPassword: String?)
-    
-    func isValidMail() -> Bool
-    func isValidPassword() -> Bool
-    func isFieldsFilled() -> (Bool, String)
-    func isValidInput() -> (String, Bool)
-}
 
-class Validation {
+
+struct Validation: ValidationProtocol {
     
     var email: String
     var password: String
@@ -61,18 +49,12 @@ class Validation {
             errorStatus.0 = false
             errorStatus.1 += "Incorrect password. "
         }
-        
         if (confirmPassword != nil ? confirmPassword != password : false) {
             errorStatus.0 = false
             errorStatus.1 += "Confirm password is't the same."
         }
         return errorStatus
     }
-    
-    deinit {
-        print("deinit")
-    }
-    
 }
 
 

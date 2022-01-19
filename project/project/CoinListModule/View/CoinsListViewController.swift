@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class CoinsListViewController: UIViewController {
  
@@ -31,6 +30,7 @@ class CoinsListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Coins"
         view.addSubview(coinsListTableView)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
@@ -42,6 +42,9 @@ class CoinsListViewController: UIViewController {
         super.viewDidLayoutSubviews()
         coinsListTableView.frame = view.bounds
     }
+    
+    
+ 
     
     @objc func getCurrencies() {
         APICaller.shared.getAllCryptoData { [weak self] result in
@@ -84,10 +87,22 @@ class CoinsListViewController: UIViewController {
     
     func showDetailVC(indexPath: IndexPath) {
         let detailVC = DetailCoinViewController()
+        print(viewModels[indexPath.row])
         detailVC.configure(with: viewModels[indexPath.row])
         present(detailVC, animated: true, completion: nil)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 extension CoinsListViewController: UITableViewDelegate{
     
