@@ -65,15 +65,15 @@ class CoinsListViewController: UIViewController {
                     }
                     do {
                         let imageData = try Data(contentsOf: URL(string: $0.image)!)
-                                            let image = UIImage(data: imageData)
-                                            return CoinTableViewCellViewModel(name: $0.name,
-                                                                              symbol: $0.symbol,
-                                                                              currentPrice: convertPrice + " $",
-                                                                              image: image ?? UIImage(systemName: "eye")!,
-                                                                              highDayPrice: $0.high_24h,
-                                                                              lowDayPrice: $0.low_24h,
-                                                                              priceChangeDay: $0.price_change_24h,
-                                                                              priceChangePercentageDay: $0.price_change_percentage_24h)
+                        let image = UIImage(data: imageData)
+                        return CoinTableViewCellViewModel(name: $0.name,
+                                                          symbol: $0.symbol,
+                                                          currentPrice: convertPrice + " $",
+                                                          image: image ?? UIImage(systemName: "eye")!,
+                                                          highDayPrice: $0.high_24h,
+                                                          lowDayPrice: $0.low_24h,
+                                                          priceChangeDay: $0.price_change_24h,
+                                                          priceChangePercentageDay: $0.price_change_percentage_24h)
                     } catch {
                         print(error)
                         return nil

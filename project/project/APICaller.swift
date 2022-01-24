@@ -7,6 +7,22 @@
 
 import Foundation
 
+enum TypeOfSort: String {
+    case marketCap = "market_cap_desc"
+    case volume = "volume_desc"
+    case popular = "gecko_desc"
+}
+
+enum TypeOfRequest {
+    case searchingRequest(searchingText: String)
+    case allCurrencies(sortBy: TypeOfSort, numberOfPage: Int)
+    case favouriteCoins(IDs: [String])
+}
+
+struct SearchingModel: Decodable {
+    let id: String
+}
+
 final class APICaller {
     static let shared = APICaller()
     
@@ -27,5 +43,51 @@ final class APICaller {
             }
         }
         task.resume()
+    }
+    
+    
+    private func getIDs(getIDsURL: URL, completion: @escaping (Result<[SearchingModel], Error>) -> Void) {
+        let task = URLSession.shared.dataTask(with: getIDsURL) {data, _, error in
+            guard let data = data, error == nil else {return}
+            do {
+                // decode responce
+                let searchingModels = try JSONDecoder().decode([SearchingModel].self, from: data)
+                completion(.success(searchingModels))
+            }
+            catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    func buildURL(requestType: TypeOfRequest) -> String {
+        switch requestType {
+        case .searchingRequest(let searchingText):
+            guard let url = URL(string: "https://api.coingecko.com/api/v3/search?query=" + searchingText.lowercased()) else {return ""}
+            var newModels = [SearchingModel]()
+            getIDs(getIDsURL: url) { [weak self] result in
+                switch result {
+                case .success(let models):
+                    newModels = models.compactMap({
+                        return SearchingModel(id: $0.id)
+                    })
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            var requestString = ""
+            for model in newModels {
+                requestString += "\(model.id)%2C"
+            }
+            let index = requestString.index(requestString.endIndex, offsetBy: -3)
+            
+            requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+            return requestString
+        case .allCurrencies(let sortBy, let numberOfPage):
+            <#code#>
+        case .favouriteCoins(let IDs):
+            <#code#>
+        }
     }
 }
