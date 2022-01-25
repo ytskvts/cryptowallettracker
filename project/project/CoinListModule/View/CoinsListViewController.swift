@@ -49,7 +49,8 @@ class CoinsListViewController: UIViewController {
  
     
     @objc func getCurrencies() {
-        APICaller.shared.getAllCryptoData(numberOfPage: numberOfPage) { [weak self] result in
+        let requestType = TypeOfRequest.allCurrencies(sortBy: .marketCap, numberOfPage: numberOfPage)
+        APICaller.shared.doRequest(requestType: requestType) { [weak self] result in
             switch result {
             case .success(let models):
                 var newModels = [CoinTableViewCellViewModel]()
@@ -87,6 +88,44 @@ class CoinsListViewController: UIViewController {
                 print(error)
             }
         }
+//        APICaller.shared.getAllCryptoData(numberOfPage: numberOfPage) { [weak self] result in
+//            switch result {
+//            case .success(let models):
+//                var newModels = [CoinTableViewCellViewModel]()
+//                newModels = models.compactMap({
+//                    // use Numberformatter instead of this
+//                    var currentPrice = $0.current_price
+//                    var convertPrice: String
+//                    if currentPrice.truncatingRemainder(dividingBy: 1) != 0 {
+//                        currentPrice = Double(round(currentPrice * 1000) / 1000)
+//                        convertPrice = String(format: "%.2f", currentPrice)
+//                    } else {
+//                        convertPrice = "\(Int(currentPrice))"
+//                    }
+//                    do {
+//                        let imageData = try Data(contentsOf: URL(string: $0.image)!)
+//                        let image = UIImage(data: imageData)
+//                        return CoinTableViewCellViewModel(name: $0.name,
+//                                                          symbol: $0.symbol,
+//                                                          currentPrice: convertPrice + " $",
+//                                                          image: image ?? UIImage(systemName: "eye")!,
+//                                                          highDayPrice: $0.high_24h,
+//                                                          lowDayPrice: $0.low_24h,
+//                                                          priceChangeDay: $0.price_change_24h,
+//                                                          priceChangePercentageDay: $0.price_change_percentage_24h)
+//                    } catch {
+//                        print(error)
+//                        return nil
+//                    }
+//                })
+//                self?.viewModels.append(contentsOf: newModels)
+//                DispatchQueue.main.async {
+//                    self?.coinsListTableView.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
     
     func showDetailVC(indexPath: IndexPath) {
