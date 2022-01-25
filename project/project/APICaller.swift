@@ -14,7 +14,7 @@ enum TypeOfSort: String {
 }
 
 enum TypeOfRequest {
-    case searchingRequest(searchingText: String)
+    case searchingRequest(searchingText: String, sortBy: TypeOfSort)
     case allCurrencies(sortBy: TypeOfSort, numberOfPage: Int)
     case favouriteCoins(IDs: [String])
 }
@@ -61,9 +61,9 @@ final class APICaller {
         task.resume()
     }
     
-    func buildURL(requestType: TypeOfRequest) -> String {
+    func buildURLString(requestType: TypeOfRequest) -> String {
         switch requestType {
-        case .searchingRequest(let searchingText):
+        case .searchingRequest(let searchingText, let sortBy):
             guard let url = URL(string: "https://api.coingecko.com/api/v3/search?query=" + searchingText.lowercased()) else {return ""}
             var newModels = [SearchingModel]()
             getIDs(getIDsURL: url) { [weak self] result in
@@ -82,12 +82,18 @@ final class APICaller {
             }
             let index = requestString.index(requestString.endIndex, offsetBy: -3)
             
-            requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+            requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=\(sortBy)&per_page=100&page=1&sparkline=false"
             return requestString
         case .allCurrencies(let sortBy, let numberOfPage):
-            <#code#>
+            return "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=\(sortBy)&per_page=20&page=\(numberOfPage)&sparkline=false"
         case .favouriteCoins(let IDs):
-            <#code#>
+            var requestString = ""
+            for id in IDs {
+                requestString += "\(id)%2C"
+            }
+            let index = requestString.index(requestString.endIndex, offsetBy: -3)
+            requestString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+            return requestString
         }
     }
 }
