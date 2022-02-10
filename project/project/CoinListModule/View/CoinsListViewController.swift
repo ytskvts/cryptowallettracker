@@ -49,7 +49,7 @@ class CoinsListViewController: UIViewController {
         view.addSubview(coinsListTableView)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
-        //coinsListTableView.prefetchDataSource = self
+        coinsListTableView.prefetchDataSource = self
         //searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -93,10 +93,10 @@ class CoinsListViewController: UIViewController {
                                                           symbol: $0.symbol,
                                                           currentPrice: convertPrice + " $",
                                                           image: image ?? UIImage(systemName: "eye")!,
-                                                          highDayPrice: $0.high_24h,
-                                                          lowDayPrice: $0.low_24h,
-                                                          priceChangeDay: $0.price_change_24h,
-                                                          priceChangePercentageDay: $0.price_change_percentage_24h)
+                                                          highDayPrice: $0.high_24h ?? 0,
+                                                          lowDayPrice: $0.low_24h ?? 0,
+                                                          priceChangeDay: $0.price_change_24h ?? 0,
+                                                          priceChangePercentageDay: $0.price_change_percentage_24h ?? 0)
                     } catch {
                         print(error)
                         return nil
@@ -208,21 +208,21 @@ extension CoinsListViewController: UITableViewDataSource {
     }
 }
 
-//extension CoinsListViewController: UITableViewDataSourcePrefetching {
-//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-//        print(numberOfPage)
-//        if !isSearching {
-//            if numberOfPage < 58 {
-//                numberOfPage += 1
-//                getCurrencies()
-//            }
-//        }
-//
-//
-//    }
-//
-//
-//}
+extension CoinsListViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print(numberOfPage)
+        if !isSearching {
+            if numberOfPage < 58 {
+                numberOfPage += 1
+                getCurrencies()
+            }
+        }
+
+
+    }
+
+
+}
 
 //extension CoinsListViewController: UISearchResultsUpdating {
 //    func updateSearchResults(for searchController: UISearchController) {
@@ -235,6 +235,7 @@ extension CoinsListViewController: UITableViewDataSource {
 extension CoinsListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         isSearching = true
+        self.searchingModeViewModels = []
         guard let searchText = searchBar.text else {return}
         let requestType = TypeOfRequest.searchingRequest(searchingText: searchText, sortBy: .marketCap)
         APICaller.shared.doRequest(requestType: requestType) { [weak self] result in
@@ -259,10 +260,10 @@ extension CoinsListViewController: UISearchBarDelegate {
                                                           symbol: $0.symbol,
                                                           currentPrice: convertPrice + " $",
                                                           image: image ?? UIImage(systemName: "eye")!,
-                                                          highDayPrice: $0.high_24h,
-                                                          lowDayPrice: $0.low_24h,
-                                                          priceChangeDay: $0.price_change_24h,
-                                                          priceChangePercentageDay: $0.price_change_percentage_24h)
+                                                          highDayPrice: $0.high_24h ?? 0,
+                                                          lowDayPrice: $0.low_24h ?? 0,
+                                                          priceChangeDay: $0.price_change_24h ?? 0,
+                                                          priceChangePercentageDay: $0.price_change_percentage_24h ?? 0)
                     } catch {
                         print(error)
                         print("eh")
@@ -270,7 +271,7 @@ extension CoinsListViewController: UISearchBarDelegate {
                     }
                 })
                 self?.searchingModeViewModels.append(contentsOf: newModels)
-                print(self?.searchingModeViewModels)
+                //print(self?.searchingModeViewModels)
                 DispatchQueue.main.async {
                     self?.coinsListTableView.reloadData()
                 }
@@ -289,8 +290,8 @@ extension CoinsListViewController: UISearchBarDelegate {
     
   
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        //isSearching = true
-        
-    }
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        //isSearching = true
+//
+//    }
 }

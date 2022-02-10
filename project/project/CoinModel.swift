@@ -46,10 +46,10 @@ struct Coin: Codable {
 //    let market_cap_rank: Int
 //    let fully_diluted_valuation: Int
 //    let total_volume: Int
-    let high_24h: Double
-    let low_24h: Double
-    let price_change_24h: Double
-    let price_change_percentage_24h: Double
+    let high_24h: Double?
+    let low_24h: Double?
+    let price_change_24h: Double?
+    let price_change_percentage_24h: Double?
 //    let circulating_supply: Int
 //    let ath: Double
 //    let ath_change_percentage: Double
