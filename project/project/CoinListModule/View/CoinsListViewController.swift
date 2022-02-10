@@ -13,8 +13,11 @@ class CoinsListViewController: UIViewController {
     private var usualViewModels = [CoinTableViewCellViewModel]()
     private var searchingModeViewModels = [CoinTableViewCellViewModel]()
     private var numberOfPage: Int = 1
+    private var chosenTypeOfSort = TypeOfSort.marketCap
     
     private let searchController = UISearchController(searchResultsController: nil)
+    
+    
     
 //    private var searchBarIsEmpty: Bool {
 //        guard let text = searchController.searchBar.text else {return false}
@@ -27,8 +30,30 @@ class CoinsListViewController: UIViewController {
     
     private var isSearching: Bool = false
     
+    private let describeTypeOfSortLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sort by:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let typeOfSortTextField: UITextField = {
+        let textField = UITextField()
+        textField.text = "Market capitalization"
+        textField.addTarget(self, action: #selector(CoinsListViewController.textFieldDidChange(_:)), for: .editingChanged)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImageView(image: UIImage(systemName: "chevron.down"))
+//        let rightView = UIView()
+//        rightView.addSubview(image!)
+        textField.rightView = image
+        textField.rightViewMode = .always
+        return textField
+    }()
+    
     private let coinsListTableView: UITableView = {
         let tableView = UITableView()
+        //tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.register(CoinTableViewCell.self, forCellReuseIdentifier: CoinTableViewCell.identifier)
         return tableView
     }()
@@ -47,9 +72,19 @@ class CoinsListViewController: UIViewController {
         super.viewDidLoad()
         title = "Coins"
         view.addSubview(coinsListTableView)
+//        view.addSubview(describeTypeOfSortLabel)
+//        view.addSubview(typeOfSortTextField)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
         coinsListTableView.prefetchDataSource = self
+        let headerView = UIView(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: coinsListTableView.frame.width,
+                                              height: 25))
+        coinsListTableView.tableHeaderView = headerView
+        headerView.addSubview(describeTypeOfSortLabel)
+        headerView.addSubview(typeOfSortTextField)
+       
         //searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -65,9 +100,49 @@ class CoinsListViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         coinsListTableView.frame = view.bounds
+        createDescribeTypeOfSortLabelConstraint()
+        createTypeOfSortTextFieldConstraint()
+        //createCoinsListTableViewConstraint()
     }
     
+
     
+    func createDescribeTypeOfSortLabelConstraint() {
+        NSLayoutConstraint.activate([
+            describeTypeOfSortLabel.topAnchor.constraint(equalTo: coinsListTableView.topAnchor, constant: 5),
+            describeTypeOfSortLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            describeTypeOfSortLabel.widthAnchor.constraint(equalToConstant: 70),
+            describeTypeOfSortLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+
+    func createTypeOfSortTextFieldConstraint() {
+        NSLayoutConstraint.activate([
+            typeOfSortTextField.topAnchor.constraint(equalTo: describeTypeOfSortLabel.topAnchor),
+            typeOfSortTextField.leftAnchor.constraint(equalTo: describeTypeOfSortLabel.rightAnchor, constant: 5),
+            typeOfSortTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            typeOfSortTextField.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
+//    func createCoinsListTableViewConstraint() {
+//        NSLayoutConstraint.activate([
+//            coinsListTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+//            coinsListTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+//            coinsListTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+//            coinsListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//        ])
+//    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if textField.text == "Market capitalization" {
+            chosenTypeOfSort = .marketCap
+        } else if textField.text == "Volume" {
+            chosenTypeOfSort = .volume
+        } else if textField.text == "Popular" {
+            chosenTypeOfSort = .popular
+        }
+    }
  
     
     @objc func getCurrencies() {
@@ -183,9 +258,36 @@ extension CoinsListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showDetailVC(indexPath: indexPath)
     }
+    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 25
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = UIView(frame: CGRect(x: 0,
+//                                                  y: 0,
+//                                                  width: tableView.frame.width,
+//                                                  height: 25))
+//        headerView.addSubview(describeTypeOfSortLabel)
+//        NSLayoutConstraint.activate([
+//            describeTypeOfSortLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),
+//            describeTypeOfSortLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 10),
+//            describeTypeOfSortLabel.widthAnchor.constraint(equalToConstant: 70),
+//            describeTypeOfSortLabel.heightAnchor.constraint(equalToConstant: 20)
+//        ])
+//        headerView.addSubview(typeOfSortTextField)
+//        NSLayoutConstraint.activate([
+//            typeOfSortTextField.topAnchor.constraint(equalTo: describeTypeOfSortLabel.topAnchor),
+//            typeOfSortTextField.leftAnchor.constraint(equalTo: describeTypeOfSortLabel.rightAnchor, constant: 5),
+//            typeOfSortTextField.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -10),
+//            typeOfSortTextField.heightAnchor.constraint(equalToConstant: 20)
+//        ])
+//        return headerView
+//    }
 }
 
 extension CoinsListViewController: UITableViewDataSource {
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
