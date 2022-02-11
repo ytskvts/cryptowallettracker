@@ -11,6 +11,29 @@ enum TypeOfSort: String {
     case marketCap = "market_cap_desc"
     case volume = "volume_desc"
     case popular = "gecko_desc"
+    
+    var name: String {
+        switch self {
+        case .marketCap:
+            return "Market capitalization"
+        case .volume:
+            return "Volume"
+        case .popular:
+            return "Popular"
+        }
+    }
+    init?(rawValue: String) {
+        switch rawValue {
+        case TypeOfSort.marketCap.name:
+            self = .marketCap
+        case TypeOfSort.volume.name:
+            self = .volume
+        case TypeOfSort.popular.name:
+            self = .popular
+        default:
+            return nil
+        }
+    }
 }
 
 enum TypeOfRequest {

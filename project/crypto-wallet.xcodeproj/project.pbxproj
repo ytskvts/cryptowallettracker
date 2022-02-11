@@ -12,6 +12,7 @@
 		0159E62F277C877700411F96 /* AuthorizationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159E62E277C877700411F96 /* AuthorizationTextField.swift */; };
 		0159E631277C87D400411F96 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159E630277C87D400411F96 /* PasswordTextField.swift */; };
 		0159E633277C881E00411F96 /* AuthorizationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159E632277C881E00411F96 /* AuthorizationButton.swift */; };
+		01654FF627B651540030ADEB /* TypeOfSortTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01654FF527B651540030ADEB /* TypeOfSortTextField.swift */; };
 		016576672779A75800BAF64B /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016576662779A75800BAF64B /* SignInPresenter.swift */; };
 		016576692779A89B00BAF64B /* SignInViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016576682779A89B00BAF64B /* SignInViewProtocol.swift */; };
 		0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */; };
@@ -42,6 +43,7 @@
 		0159E62E277C877700411F96 /* AuthorizationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationTextField.swift; sourceTree = "<group>"; };
 		0159E630277C87D400411F96 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		0159E632277C881E00411F96 /* AuthorizationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationButton.swift; sourceTree = "<group>"; };
+		01654FF527B651540030ADEB /* TypeOfSortTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeOfSortTextField.swift; sourceTree = "<group>"; };
 		016576662779A75800BAF64B /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		016576682779A89B00BAF64B /* SignInViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewProtocol.swift; sourceTree = "<group>"; };
 		0165766A2779AC5F00BAF64B /* ValidationProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationProviderProtocol.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			children = (
 				0159E62E277C877700411F96 /* AuthorizationTextField.swift */,
 				0159E630277C87D400411F96 /* PasswordTextField.swift */,
+				01654FF527B651540030ADEB /* TypeOfSortTextField.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				016D70C1275E43B40048D540 /* CoinsListViewController.swift in Sources */,
 				016AE40F2784AF4700D7D3CB /* TabBarController.swift in Sources */,
 				016D70BD275E30BE0048D540 /* APICaller.swift in Sources */,
+				01654FF627B651540030ADEB /* TypeOfSortTextField.swift in Sources */,
 				016D70BF275E321D0048D540 /* Constants.swift in Sources */,
 				017E795527906CB8004C5B2C /* KeychainItemAccessibility.swift in Sources */,
 				017E795727906CE3004C5B2C /* KeychainWrapper.swift in Sources */,

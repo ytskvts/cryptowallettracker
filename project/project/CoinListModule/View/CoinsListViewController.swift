@@ -15,6 +15,9 @@ class CoinsListViewController: UIViewController {
     private var numberOfPage: Int = 1
     private var chosenTypeOfSort = TypeOfSort.marketCap
     
+    let namesOfSort = ["Market capitalization", "Volume", "Popular"]
+
+    
     private let searchController = UISearchController(searchResultsController: nil)
     
     
@@ -38,9 +41,9 @@ class CoinsListViewController: UIViewController {
     }()
     
     private let typeOfSortTextField: UITextField = {
-        let textField = UITextField()
+        let textField = TypeOfSortTextField()
         textField.text = "Market capitalization"
-        textField.addTarget(self, action: #selector(CoinsListViewController.textFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(CoinsListViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImageView(image: UIImage(systemName: "chevron.down"))
 //        let rightView = UIView()
@@ -48,6 +51,12 @@ class CoinsListViewController: UIViewController {
         textField.rightView = image
         textField.rightViewMode = .always
         return textField
+    }()
+    
+    var typeOfSortPicker: UIPickerView = {
+        let pickerView = UIPickerView()
+        
+        return pickerView
     }()
     
     private let coinsListTableView: UITableView = {
@@ -77,6 +86,10 @@ class CoinsListViewController: UIViewController {
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
         coinsListTableView.prefetchDataSource = self
+        typeOfSortPicker.delegate = self
+        typeOfSortPicker.dataSource = self
+        typeOfSortTextField.text = namesOfSort[0]
+        typeOfSortTextField.inputView = typeOfSortPicker
         let headerView = UIView(frame: CGRect(x: 0,
                                               y: 0,
                                               width: coinsListTableView.frame.width,
@@ -135,18 +148,24 @@ class CoinsListViewController: UIViewController {
 //    }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if textField.text == "Market capitalization" {
-            chosenTypeOfSort = .marketCap
-        } else if textField.text == "Volume" {
-            chosenTypeOfSort = .volume
-        } else if textField.text == "Popular" {
-            chosenTypeOfSort = .popular
+        print("fuck")
+        guard let text = textField.text,
+              let sortingType = TypeOfSort(rawValue: text) else {
+                  return }
+        chosenTypeOfSort = sortingType
+        if isSearching {
+            
+        } else {
+            numberOfPage = 1
+            self.usualViewModels = []
+            getCurrencies()
         }
+        print("fwefgwe")
     }
  
     
     @objc func getCurrencies() {
-        let requestType = TypeOfRequest.allCurrencies(sortBy: .marketCap, numberOfPage: numberOfPage)
+        let requestType = TypeOfRequest.allCurrencies(sortBy: chosenTypeOfSort, numberOfPage: numberOfPage)
         APICaller.shared.doRequest(requestType: requestType) { [weak self] result in
             switch result {
             case .success(let models):
@@ -226,6 +245,7 @@ class CoinsListViewController: UIViewController {
     }
     
     func showDetailVC(indexPath: IndexPath) {
+        typeOfSortTextField.resignFirstResponder()
         let detailVC = DetailCoinViewController()
         print("showDetailVC")
         if isSearching {
@@ -305,6 +325,7 @@ extension CoinsListViewController: UITableViewDataSource {
         } else {
             cell.configure(with: usualViewModels[indexPath.row])
         }
+        cell.selectionStyle = .none
         return cell
         
     }
@@ -312,7 +333,6 @@ extension CoinsListViewController: UITableViewDataSource {
 
 extension CoinsListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print(numberOfPage)
         if !isSearching {
             if numberOfPage < 58 {
                 numberOfPage += 1
@@ -339,7 +359,7 @@ extension CoinsListViewController: UISearchBarDelegate {
         isSearching = true
         self.searchingModeViewModels = []
         guard let searchText = searchBar.text else {return}
-        let requestType = TypeOfRequest.searchingRequest(searchingText: searchText, sortBy: .marketCap)
+        let requestType = TypeOfRequest.searchingRequest(searchingText: searchText, sortBy: chosenTypeOfSort)
         APICaller.shared.doRequest(requestType: requestType) { [weak self] result in
             switch result {
             case .success(let models):
@@ -396,4 +416,27 @@ extension CoinsListViewController: UISearchBarDelegate {
 //        //isSearching = true
 //
 //    }
+}
+
+extension CoinsListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return namesOfSort.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return namesOfSort[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        //typeOfSortTextField.text = namesOfSort[row]
+        typeOfSortTextField.text = ""
+        typeOfSortTextField.insertText(namesOfSort[row])
+        typeOfSortTextField.resignFirstResponder()
+        
+    }
+    
 }
