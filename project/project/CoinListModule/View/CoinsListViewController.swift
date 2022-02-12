@@ -149,6 +149,10 @@ class CoinsListViewController: UIViewController {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         print("fuck")
+        let label = UILabel()
+        let gr = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        label.addGestureRecognizer(gr)
+        
         guard let text = textField.text,
               let sortingType = TypeOfSort(rawValue: text) else {
                   return }
@@ -161,6 +165,10 @@ class CoinsListViewController: UIViewController {
             getCurrencies()
         }
         print("fwefgwe")
+    }
+    
+    @objc func labelTapped() {
+        
     }
  
     
@@ -333,6 +341,9 @@ extension CoinsListViewController: UITableViewDataSource {
 
 extension CoinsListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let lastIndexPath = indexPaths.last,
+              usualViewModels.count - 1 > lastIndexPath.row else { return }
+        
         if !isSearching {
             if numberOfPage < 58 {
                 numberOfPage += 1
