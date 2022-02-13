@@ -1,20 +1,18 @@
 //
-//  CoinListViewPresenter.swift
+//  CoinListViewPresenterProtocol.swift
 //  project
 //
-//  Created by Dzmitry on 12.02.22.
+//  Created by Dzmitry on 13.02.22.
 //
 
 import Foundation
 
-enum SearchBarButtonType {
+enum SearchBarButtonTapType {
     case cancel
-    case search
+    case search(String?)
 }
 
-protocol CoinListViewPresenterType {
-    
-    
+protocol CoinsListViewPresenterProtocol {
     
     var viewData: [CoinTableViewCellViewModel] { get }
     
@@ -27,7 +25,7 @@ protocol CoinListViewPresenterType {
     
     
     //MARK: - SearchBar
-    func searchBarButtonClicked(_ type: SearchBarButtonType)
+    func searchBarButtonClicked(_ type: SearchBarButtonTapType)
     
     //MARK: - TableView
     func prefetchRows(at indexPaths: [IndexPath])
@@ -36,6 +34,3 @@ protocol CoinListViewPresenterType {
     func getNavigationTitle() -> String
     func getSearchBarPlaceholder() -> String
 }
-
-
-

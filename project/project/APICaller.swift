@@ -59,14 +59,14 @@ final class APICaller {
     
     private init() {}
     
-    public func getAllCryptoData(numberOfPage: Int, completion: @escaping (Result<[Coin], Error>) -> Void) {
+    public func getAllCryptoData(numberOfPage: Int, completion: @escaping (Result<[CoinModel], Error>) -> Void) {
         guard let url = URL(string: requestUrlFirstPart + String(numberOfPage) + requestUrlLastPart) else {return}
         
         let task = URLSession.shared.dataTask(with: url) {data, _, error in
             guard let data = data, error == nil else {return}
             do {
                 // decode responce
-                let coins = try JSONDecoder().decode([Coin].self, from: data)
+                let coins = try JSONDecoder().decode([CoinModel].self, from: data)
                 completion(.success(coins))
             }
             catch {
@@ -144,7 +144,7 @@ final class APICaller {
         }
     }
     
-    public func doRequest(requestType: TypeOfRequest, completion: @escaping (Result<[Coin], Error>) -> Void) {
+    public func doRequest(requestType: TypeOfRequest, completion: @escaping (Result<[CoinModel], Error>) -> Void) {
         let urlString = buildURLString(requestType: requestType)
         //print(urlString)
         guard let url = URL(string: urlString) else {return}
@@ -153,7 +153,7 @@ final class APICaller {
             guard let data = data, error == nil else {return}
             do {
                 // decode responce
-                let coins = try JSONDecoder().decode([Coin].self, from: data)
+                let coins = try JSONDecoder().decode([CoinModel].self, from: data)
                 completion(.success(coins))
             }
             catch {

@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Coin: Codable {
+struct CoinModel: Codable {
 //    {
 //        "id": "bitcoin",
 //        "symbol": "btc",

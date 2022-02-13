@@ -7,7 +7,14 @@
 
 import UIKit
 
-class CoinsListViewController: UIViewController {
+class CoinsListViewController: UIViewController, CoinsListViewProtocol {
+    
+    func tableViewReloadData() {
+        
+    }
+    
+    
+    var coinsListViewPresenter: CoinsListViewPresenterProtocol!
  
     //MARK: just for minimum viable product
     private var usualViewModels = [CoinTableViewCellViewModel]()
@@ -15,7 +22,7 @@ class CoinsListViewController: UIViewController {
     private var numberOfPage: Int = 1
     private var chosenTypeOfSort = TypeOfSort.marketCap
     
-    let namesOfSort = ["Market capitalization", "Volume", "Popular"]
+//    let namesOfSort = ["Market capitalization", "Volume", "Popular"]
 
     
     private let searchController = UISearchController(searchResultsController: nil)
@@ -39,6 +46,17 @@ class CoinsListViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private let typeOfSortLabel: UILabel = {
+        let label = UILabel()
+        let gr = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        label.addGestureRecognizer(gr)
+        return label
+    }()
+    
+    @objc func labelTapped() {
+        
+    }
     
     private let typeOfSortTextField: UITextField = {
         let textField = TypeOfSortTextField()
@@ -149,9 +167,9 @@ class CoinsListViewController: UIViewController {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         print("fuck")
-        let label = UILabel()
-        let gr = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
-        label.addGestureRecognizer(gr)
+        //let label = UILabel()
+        //let gr = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        //label.addGestureRecognizer(gr)
         
         guard let text = textField.text,
               let sortingType = TypeOfSort(rawValue: text) else {
@@ -167,10 +185,13 @@ class CoinsListViewController: UIViewController {
         print("fwefgwe")
     }
     
-    @objc func labelTapped() {
+//    @objc func labelTapped() {
+//
+//    }
+ 
+    func setSortLabelText(name: String) {
         
     }
- 
     
     @objc func getCurrencies() {
         let requestType = TypeOfRequest.allCurrencies(sortBy: chosenTypeOfSort, numberOfPage: numberOfPage)
@@ -431,15 +452,15 @@ extension CoinsListViewController: UISearchBarDelegate {
 
 extension CoinsListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return coinsListViewPresenter.getAmountOfPickerViewComponents()
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return namesOfSort.count
+        return coinsListViewPresenter.getAmountOfPickerViewRows(in: component)
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return namesOfSort[row]
+        return coinsListViewPresenter.getPickerViewTitle(for: row)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
