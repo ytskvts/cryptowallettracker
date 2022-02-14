@@ -9,8 +9,10 @@ import UIKit
 
 struct CoinModelParser {
     
-    func parseToViewModels(models: [CoinModel]) -> [CoinTableViewCellViewModel] {
-        models.compactMap({
+    let models: [CoinModel]
+    
+    func parseToViewModels() -> [CoinTableViewCellViewModel] {
+        self.models.compactMap({
             // use Numberformatter instead of this
             var currentPrice = $0.current_price
             var convertPrice: String

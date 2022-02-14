@@ -14,20 +14,31 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     var chosenTypeOfSort: TypeOfSort = .marketCap {
         didSet {
             //обновить название лейбла сортирoвки
+            view?.setTitleForTypeOfSortLabel(name: chosenTypeOfSort.name)
+            #warning("возможно понадобится сделать во вьюхе метод, который будет чекать измениться ли значение лэйбла сортировки, но это если при выборе в пикере той сортировки, которая уже стоит всё равно срабатывает дидсет и тогда не нужно обнулять numberOfPage")
+            numbetOfPage = 1
+            
+            
         }
     }
+    
+    var numbetOfPage: Int = 1
     
     var viewData: [CoinTableViewCellViewModel] = [] {
         didSet { view?.tableViewReloadData() }
     }
     
-    let sortingNames: [String]
-    init(sortingNames: [String] = AppConstants
-            .CoinListScreenConstants
-            .sortingNames) {
-        
-        self.sortingNames = sortingNames
-    }
+//    let sortingNames: [String]
+//    init(sortingNames: [String] = AppConstants
+//            .CoinListScreenConstants
+//            .sortingNames) {
+//
+//        self.sortingNames = sortingNames
+//    }
+    
+    let sortingNames: [String] = AppConstants.CoinListScreenConstants.sortingNames
+    
+    
     func getPickerViewTitle(for row: Int) -> String {
         sortingNames[row]
     }
@@ -49,7 +60,7 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         case .search(let text):
             guard let text = text else { return }
             viewData = []
-            
+            getViewModels(typeOfRequest: .searchingRequest(searchingText: text, sortBy: chosenTypeOfSort), callback: <#T##(([CoinTableViewCellViewModel]) -> Void)##(([CoinTableViewCellViewModel]) -> Void)##([CoinTableViewCellViewModel]) -> Void#>)
 
         case .cancel:
             
@@ -61,15 +72,16 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     }
     
     func didSelectRow(at indexPath: IndexPath) {
-        
+        //view?.showDetailVC(indexPath: indexPath)
+        //переделать
     }
     
     func getNavigationTitle() -> String {
-        return ""
+        return "Coins"
     }
     
     func getSearchBarPlaceholder() -> String {
-        return ""
+        return "Search"
     }
     
 //    func updateViewData(with data: [CoinTableViewCellViewModel]) {
@@ -77,10 +89,19 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
 //        view?.tableViewReloadData()
 //    }
 //
-    func getViewModels(sortingType: ,
-                       numberOfPage: ,
+    func getViewModels(typeOfRequest: TypeOfRequest,
                        callback: @escaping (([CoinTableViewCellViewModel]) -> Void)){
-        APICaller.shared.
+        APICaller.shared.doRequest(requestType: typeOfRequest) { result in
+            var newModels = [CoinTableViewCellViewModel]()
+            switch result {
+            case .success(let models):
+//                var newModels = [CoinTableViewCellViewModel]()
+                newModels = CoinModelParser(models: models).parseToViewModels()
+                self.viewData.append(contentsOf: newModels)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 

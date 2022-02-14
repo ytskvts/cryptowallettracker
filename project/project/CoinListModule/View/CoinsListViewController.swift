@@ -13,6 +13,10 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         
     }
     
+    func setTitleForTypeOfSortLabel(name: String) {
+        typeOfSortLabel.text = name
+    }
+    
     
     var coinsListViewPresenter: CoinsListViewPresenterProtocol!
  
@@ -465,8 +469,10 @@ extension CoinsListViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //typeOfSortTextField.text = namesOfSort[row]
-        typeOfSortTextField.text = ""
-        typeOfSortTextField.insertText(namesOfSort[row])
+//        typeOfSortLabel.text =
+//        typeOfSortTextField.text = ""
+//        typeOfSortTextField.insertText(namesOfSort[row])
+        coinsListViewPresenter.didSelectRowInPickerView(component: component, row: row)
         typeOfSortTextField.resignFirstResponder()
         
     }
