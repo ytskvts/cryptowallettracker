@@ -9,16 +9,21 @@ import UIKit
 
 struct CoinModelParser {
     
-    let models: [CoinModel]
-    
-    func parseToViewModels() -> [CoinTableViewCellViewModel] {
-        self.models.compactMap({
+    func parseToViewModels(models: [CoinModel]) -> [CoinTableViewCellViewModel] {
+        models.compactMap({
             // use Numberformatter instead of this
             var currentPrice = $0.current_price
             var convertPrice: String
             if currentPrice.truncatingRemainder(dividingBy: 1) != 0 {
                 currentPrice = Double(round(currentPrice * 1000) / 1000)
                 convertPrice = String(format: "%.2f", currentPrice)
+                for letter in String(convertPrice.reversed()) {
+                    if letter == "0" || letter == "." {
+                        convertPrice.removeLast()
+                    } else {
+                        break
+                    }
+                }
             } else {
                 convertPrice = "\(Int(currentPrice))"
             }
@@ -36,7 +41,6 @@ struct CoinModelParser {
                                                   priceChangePercentageDay: $0.price_change_percentage_24h ?? 0)
             } catch {
                 print(error)
-                print("eh")
                 return nil
             }
         })

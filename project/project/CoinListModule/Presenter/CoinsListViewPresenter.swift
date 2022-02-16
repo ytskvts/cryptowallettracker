@@ -11,33 +11,53 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     
     weak var view: CoinsListViewProtocol?
     
+    var isSearching: Bool = false
+    var numberOfPage: Int = 1 {
+        didSet {
+            if numberOfPage == 1 {
+                viewData = []
+            }
+            getViewModels(typeOfRequest: .allCurrencies(sortBy: chosenTypeOfSort, numberOfPage: numberOfPage), callback: updateViewData)
+        }
+    }
+    var viewData: [CoinTableViewCellViewModel] = [] {
+        didSet {
+            view?.tableViewReloadData()
+            if !isSearching {
+                tempViewData = oldValue
+            }
+        }
+    }
+    var tempViewData: [CoinTableViewCellViewModel] = []
     var chosenTypeOfSort: TypeOfSort = .marketCap {
         didSet {
             //обновить название лейбла сортирoвки
             view?.setTitleForTypeOfSortLabel(name: chosenTypeOfSort.name)
-            #warning("возможно понадобится сделать во вьюхе метод, который будет чекать измениться ли значение лэйбла сортировки, но это если при выборе в пикере той сортировки, которая уже стоит всё равно срабатывает дидсет и тогда не нужно обнулять numberOfPage")
-            numbetOfPage = 1
-            
-            
+            #warning("возможно понадобится сделать во вьюхе метод, который будет чекать изменится ли значение лэйбла сортировки, но это если при выборе в пикере той сортировки, которая уже стоит всё равно срабатывает дидсет и тогда не нужно обнулять numberOfPage")
+            if !isSearching {
+                resetPageNumber(oldChosenTypeOfSort: oldValue)
+            }
+        }
+    }
+    var tempChosenTypeOfSort: TypeOfSort?
+    let coinModelParser = CoinModelParser()
+    let sortingNames: [String] = AppConstants.CoinListScreenConstants.sortingNames
+    
+    init(view: CoinsListViewProtocol) {
+        self.view = view
+    }
+    
+    func resetPageNumber(oldChosenTypeOfSort: TypeOfSort) {
+        if chosenTypeOfSort != oldChosenTypeOfSort {
+            numberOfPage = 1
         }
     }
     
-    var numbetOfPage: Int = 1
-    
-    var viewData: [CoinTableViewCellViewModel] = [] {
-        didSet { view?.tableViewReloadData() }
+    #warning("вызвать в вьюдидлоад")
+    func setDefaults() {
+        chosenTypeOfSort = .marketCap
+        numberOfPage = 1
     }
-    
-//    let sortingNames: [String]
-//    init(sortingNames: [String] = AppConstants
-//            .CoinListScreenConstants
-//            .sortingNames) {
-//
-//        self.sortingNames = sortingNames
-//    }
-    
-    let sortingNames: [String] = AppConstants.CoinListScreenConstants.sortingNames
-    
     
     func getPickerViewTitle(for row: Int) -> String {
         sortingNames[row]
@@ -59,16 +79,40 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         switch type {
         case .search(let text):
             guard let text = text else { return }
-            viewData = []
-            getViewModels(typeOfRequest: .searchingRequest(searchingText: text, sortBy: chosenTypeOfSort), callback: <#T##(([CoinTableViewCellViewModel]) -> Void)##(([CoinTableViewCellViewModel]) -> Void)##([CoinTableViewCellViewModel]) -> Void#>)
-
-        case .cancel:
             
+            viewData = [] // срабатывает дидсет у вьюдата и в темпвьюдата загружается старое значение вьюдаты
+            isSearching = true
+            getViewModels(typeOfRequest: .searchingRequest(searchingText: text, sortBy: chosenTypeOfSort)) { models in
+                self.viewData = models
+            }
+        case .cancel:
+            viewData = tempViewData
+            guard let tempChosenTypeOfSort = tempChosenTypeOfSort else {
+                return
+            }
+            chosenTypeOfSort = tempChosenTypeOfSort
+            isSearching = false
         }
     }
     
+    func searchBarShouldBeginEditing() -> Bool {
+        tempChosenTypeOfSort = chosenTypeOfSort
+        return true
+    }
+    
     func prefetchRows(at indexPaths: [IndexPath]) {
-        
+        guard let lastIndexPath = indexPaths.last,
+              viewData.count - 1 > lastIndexPath.row else { return }
+        if !self.isSearching {
+            if self.numberOfPage < 58 {
+                self.numberOfPage += 1
+//                getViewModels(typeOfRequest: .allCurrencies(sortBy: chosenTypeOfSort, numberOfPage: numberOfPage), callback: updateViewData)
+            }
+        }
+    }
+    
+    func updateViewData(with data: [CoinTableViewCellViewModel]) {
+        viewData.append(contentsOf: data)
     }
     
     func didSelectRow(at indexPath: IndexPath) {
@@ -84,20 +128,12 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         return "Search"
     }
     
-//    func updateViewData(with data: [CoinTableViewCellViewModel]) {
-//        viewData = data
-//        view?.tableViewReloadData()
-//    }
-//
     func getViewModels(typeOfRequest: TypeOfRequest,
-                       callback: @escaping (([CoinTableViewCellViewModel]) -> Void)){
+                            callback: @escaping (([CoinTableViewCellViewModel]) -> Void)){
         APICaller.shared.doRequest(requestType: typeOfRequest) { result in
-            var newModels = [CoinTableViewCellViewModel]()
             switch result {
             case .success(let models):
-//                var newModels = [CoinTableViewCellViewModel]()
-                newModels = CoinModelParser(models: models).parseToViewModels()
-                self.viewData.append(contentsOf: newModels)
+                callback(self.coinModelParser.parseToViewModels(models: models))
             case .failure(let error):
                 print(error)
             }

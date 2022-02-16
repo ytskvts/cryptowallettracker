@@ -16,6 +16,7 @@ protocol CoinsListViewPresenterProtocol {
     
     var viewData: [CoinTableViewCellViewModel] { get }
     
+    func setDefaults()
     //MARK: - PickerView
     func getPickerViewTitle(for row: Int) -> String
     #warning("implement UILabel")
@@ -26,6 +27,7 @@ protocol CoinsListViewPresenterProtocol {
     
     //MARK: - SearchBar
     func searchBarButtonClicked(_ type: SearchBarButtonTapType)
+    func searchBarShouldBeginEditing() -> Bool
     
     //MARK: - TableView
     func prefetchRows(at indexPaths: [IndexPath])
