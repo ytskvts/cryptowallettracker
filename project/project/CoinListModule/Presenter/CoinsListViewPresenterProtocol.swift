@@ -30,8 +30,9 @@ protocol CoinsListViewPresenterProtocol {
     func searchBarShouldBeginEditing() -> Bool
     
     //MARK: - TableView
-    func prefetchRows(at indexPaths: [IndexPath])
+    //func prefetchRows(at indexPaths: [IndexPath])
     func didSelectRow(at indexPath: IndexPath)
+    func willDisplay(forRowAt indexPath: IndexPath)
     
     func getNavigationTitle() -> String
     func getSearchBarPlaceholder() -> String

@@ -100,16 +100,15 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         return true
     }
     
-    func prefetchRows(at indexPaths: [IndexPath]) {
-        guard let lastIndexPath = indexPaths.last,
-              viewData.count - 1 > lastIndexPath.row else { return }
-        if !self.isSearching {
-            if self.numberOfPage < 58 {
-                self.numberOfPage += 1
-//                getViewModels(typeOfRequest: .allCurrencies(sortBy: chosenTypeOfSort, numberOfPage: numberOfPage), callback: updateViewData)
-            }
-        }
-    }
+//    func prefetchRows(at indexPaths: [IndexPath]) {
+//        guard let lastIndexPath = indexPaths.last,
+//              viewData.count - 1 > lastIndexPath.row else { return }
+//        if !self.isSearching {
+//            if self.numberOfPage < 58 {
+//                self.numberOfPage += 1
+//            }
+//        }
+//    }
     
     func updateViewData(with data: [CoinTableViewCellViewModel]) {
         viewData.append(contentsOf: data)
@@ -118,6 +117,17 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     func didSelectRow(at indexPath: IndexPath) {
         //view?.showDetailVC(indexPath: indexPath)
         //переделать
+    }
+    
+    func willDisplay(forRowAt indexPath: IndexPath) {
+        if !isSearching && numberOfPage < 58 {
+            if indexPath.row == viewData.count - 1 {
+                view?.setupActivityIndicator()
+                numberOfPage += 1
+            }
+        } else {
+            view?.stopActivityIndicator()
+        }
     }
     
     func getNavigationTitle() -> String {

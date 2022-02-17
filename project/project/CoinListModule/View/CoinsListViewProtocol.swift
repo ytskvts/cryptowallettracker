@@ -12,4 +12,6 @@ protocol CoinsListViewProtocol: AnyObject {
     func showDetailVC(indexPath: IndexPath)
     func tableViewReloadData()
     func setTitleForTypeOfSortLabel(name: String)
+    func setupActivityIndicator()
+    func stopActivityIndicator()
 }

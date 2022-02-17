@@ -139,7 +139,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
 //        view.addSubview(typeOfSortTextField)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
-        coinsListTableView.prefetchDataSource = self
+        //coinsListTableView.prefetchDataSource = self
         typeOfSortPicker.delegate = self
         typeOfSortPicker.dataSource = self
         coinsListViewPresenter.setDefaults()
@@ -199,6 +199,22 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         detailVC.configure(with: coinsListViewPresenter.viewData[indexPath.row])
         present(detailVC, animated: true, completion: nil)
     }
+    
+    func setupActivityIndicator() {
+            let spinner = UIActivityIndicatorView()
+            spinner.style = .large
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: coinsListTableView.bounds.width, height: CGFloat(44))
+
+            self.coinsListTableView.tableFooterView = spinner
+            self.coinsListTableView.tableFooterView?.isHidden = false
+    }
+    
+    func stopActivityIndicator() {
+        self.coinsListTableView.tableFooterView?.isHidden = true
+    }
+    
+    
 }
 
 extension CoinsListViewController: UITableViewDelegate{
@@ -209,6 +225,10 @@ extension CoinsListViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showDetailVC(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        coinsListViewPresenter.willDisplay(forRowAt: indexPath)
     }
 }
 
@@ -229,11 +249,11 @@ extension CoinsListViewController: UITableViewDataSource {
     }
 }
 
-extension CoinsListViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        coinsListViewPresenter.prefetchRows(at: indexPaths)
-    }
-}
+//extension CoinsListViewController: UITableViewDataSourcePrefetching {
+//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//        coinsListViewPresenter.prefetchRows(at: indexPaths)
+//    }
+//}
 
 extension CoinsListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
