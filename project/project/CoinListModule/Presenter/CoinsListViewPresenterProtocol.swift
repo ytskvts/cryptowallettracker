@@ -17,10 +17,12 @@ protocol CoinsListViewPresenterProtocol {
     var viewData: [CoinTableViewCellViewModel] { get }
     
     func setDefaults()
+    func refreshData(searchingText: String?)
+    func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController
     //MARK: - PickerView
     func getPickerViewTitle(for row: Int) -> String
     #warning("implement UILabel")
-    func didSelectRowInPickerView(component: Int, row: Int)
+    func didSelectRowInPickerView(component: Int, row: Int, searchingText: String?)
     func getAmountOfPickerViewComponents() -> Int
     func getAmountOfPickerViewRows(in component: Int) -> Int
     

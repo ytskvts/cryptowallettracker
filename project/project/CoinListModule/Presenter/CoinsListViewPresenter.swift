@@ -39,6 +39,34 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
             }
         }
     }
+    
+    func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController {
+        let detailVC = DetailCoinViewController()
+        detailVC.configure(with: viewData[indexPath.row])
+        return detailVC
+    }
+    
+    
+    private func updateSearchDataforCurrentSort(text: String?) {
+        guard let text = text else {
+            return
+        }
+        if isSearching {
+            viewData = [] 
+            isSearching = true
+            getViewModels(typeOfRequest: .searchingRequest(searchingText: text, sortBy: chosenTypeOfSort)) { models in
+                self.viewData = models
+            }
+        }
+    }
+    
+    func refreshData(searchingText: String?) {
+        if isSearching {
+            updateSearchDataforCurrentSort(text: searchingText)
+        } else {
+            numberOfPage = 1
+        }
+    }
     var tempChosenTypeOfSort: TypeOfSort?
     let coinModelParser = CoinModelParser()
     let sortingNames: [String] = AppConstants.CoinListScreenConstants.sortingNames
@@ -63,8 +91,9 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         sortingNames[row]
     }
     
-    func didSelectRowInPickerView(component: Int, row: Int) {
+    func didSelectRowInPickerView(component: Int, row: Int, searchingText: String?) {
         chosenTypeOfSort = TypeOfSort(rawValue: sortingNames[row]) ?? .marketCap
+        updateSearchDataforCurrentSort(text: searchingText)
     }
     
     func getAmountOfPickerViewComponents() -> Int {
@@ -118,6 +147,8 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         //view?.showDetailVC(indexPath: indexPath)
         //переделать
     }
+    
+    //func refreshTable()
     
     func willDisplay(forRowAt indexPath: IndexPath) {
         if !isSearching && numberOfPage < 58 {

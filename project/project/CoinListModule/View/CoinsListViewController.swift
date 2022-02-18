@@ -12,6 +12,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     func tableViewReloadData() {
         DispatchQueue.main.async {
             self.coinsListTableView.reloadData()
+            self.coinsListTableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -94,7 +95,25 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         return view
     }()
     
+    private var refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        //rc.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        rc.attributedTitle = NSAttributedString(string: "Refresh table...", attributes: nil)
+        return rc
+    }()
     
+    func setRefreshControl() {
+        if #available(iOS 10.0, *) {
+            coinsListTableView.refreshControl = refreshControl
+        } else {
+            coinsListTableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshControlAction), for: .valueChanged)
+    }
+    
+    @objc func refreshControlAction() {
+        coinsListViewPresenter.refreshData(searchingText: searchController.searchBar.text)
+    }
     
     func configureTableHeaderViewAndSet() {
         headerView = UIView(frame: CGRect(x: .zero,
@@ -142,27 +161,15 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         //coinsListTableView.prefetchDataSource = self
         typeOfSortPicker.delegate = self
         typeOfSortPicker.dataSource = self
+        setRefreshControl()
         coinsListViewPresenter.setDefaults()
-        //typeOfSortTextField.inputView = typeOfSortPicker
-//        let headerView = UIView(frame: CGRect(x: .zero,
-//                                              y: .zero,
-//                                              width: coinsListTableView.frame.width,
-//                                              height: 25))
-//       // coinsListTableView.tableHeaderView = headerView
-//        headerView.addSubview(describeTypeOfSortLabel)
-//        headerView.addSubview(typeOfSortLabel)
         configureTableHeaderViewAndSet()
         coinsListTableView.tableHeaderView = headerView
-        
-        //coinsListTableView.tableHeaderView = headerView
-        //searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = coinsListViewPresenter.getSearchBarPlaceholder()
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidLayoutSubviews() {
@@ -171,8 +178,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         createDescribeTypeOfSortLabelConstraint()
         createTypeOfSortLabelConstraint()
     }
-    
-
     
     func createDescribeTypeOfSortLabelConstraint() {
         NSLayoutConstraint.activate([
@@ -193,11 +198,8 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     }
     
     func showDetailVC(indexPath: IndexPath) {
-        //typeOfSortTextField.resignFirstResponder()
-        let detailVC = DetailCoinViewController()
-        print("showDetailVC")
-        detailVC.configure(with: coinsListViewPresenter.viewData[indexPath.row])
-        present(detailVC, animated: true, completion: nil)
+        let vc = coinsListViewPresenter.prepareDetailVC(indexPath: indexPath)
+        present(vc, animated: true, completion: nil)
     }
     
     func setupActivityIndicator() {
@@ -283,7 +285,7 @@ extension CoinsListViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        coinsListViewPresenter.didSelectRowInPickerView(component: component, row: row)
+        coinsListViewPresenter.didSelectRowInPickerView(component: component, row: row, searchingText: self.searchController.searchBar.text)
         
     }
 }
