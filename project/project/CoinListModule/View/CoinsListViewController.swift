@@ -80,14 +80,14 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     }()
     
     //MARK: do it later
-    static let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.locale = .current
-        formatter.allowsFloats = true
-        formatter.numberStyle = .currency
-        formatter.formatterBehavior = .default
-        return formatter
-    }()
+//    static let numberFormatter: NumberFormatter = {
+//        let formatter = NumberFormatter()
+//        formatter.locale = .current
+//        formatter.allowsFloats = true
+//        formatter.numberStyle = .currency
+//        formatter.formatterBehavior = .default
+//        return formatter
+//    }()
     
     private var headerView: UIView = {
         let view = UIView()

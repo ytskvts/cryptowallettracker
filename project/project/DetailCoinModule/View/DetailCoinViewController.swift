@@ -7,22 +7,28 @@
 
 import UIKit
 
-class DetailCoinViewController: UIViewController {
+class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     
-    private var detailCoinView = DetailCoinView()
+    var detailCoinViewPresenter: DetailCoinViewPresenterProtocol!
+    
+    //var detailCoinView = DetailCoinView()
 
     
     override func loadView() {
-        view = detailCoinView
+        //view = detailCoinView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
     }
     
 
-    func configure(with viewModel: CoinTableViewCellViewModel) {
-        detailCoinView.configureDetailVC(with: viewModel)
+//    func configure(with viewModel: CoinTableViewCellViewModel) {
+//        detailCoinView.configureDetailVC(with: viewModel)
+//    }
+    
+    func setupView(detailCoinView: DetailCoinView) {
+        view = detailCoinView
     }
 }

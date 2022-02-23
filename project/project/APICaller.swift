@@ -124,14 +124,14 @@ final class APICaller {
                 for coin in newModels.coins {
                     requestString += coin.id
                 }
-                requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString)&order=\(sortBy.rawValue)&per_page=100&page=1&sparkline=false"
+                requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString)&order=\(sortBy.rawValue)&per_page=100&page=1&sparkline=true"
             }
             print("searching request url: \(requestString)")
             return requestString
             
         case .allCurrencies(let sortBy, let numberOfPage):
-            print("all currencies request url: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=\(sortBy.rawValue)&per_page=20&page=\(numberOfPage)&sparkline=false")
-            return "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=\(sortBy.rawValue)&per_page=20&page=\(numberOfPage)&sparkline=false"
+            print("all currencies request url: https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=\(sortBy.rawValue)&per_page=20&page=\(numberOfPage)&sparkline=true")
+            return "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=\(sortBy.rawValue)&per_page=20&page=\(numberOfPage)&sparkline=true"
         case .favouriteCoins(let IDs):
             var requestString = ""
             for id in IDs {

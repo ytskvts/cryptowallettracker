@@ -38,7 +38,9 @@ struct CoinModelParser {
                                                   highDayPrice: $0.high_24h ?? 0,
                                                   lowDayPrice: $0.low_24h ?? 0,
                                                   priceChangeDay: $0.price_change_24h ?? 0,
-                                                  priceChangePercentageDay: $0.price_change_percentage_24h ?? 0)
+                                                  priceChangePercentageDay: $0.price_change_percentage_24h ?? 0,
+                                                  lastUpdated: $0.lastUpdated ?? nil,
+                                                  sparklineIn7D: $0.sparklineIn7D ?? nil)
             } catch {
                 print(error)
                 return nil
