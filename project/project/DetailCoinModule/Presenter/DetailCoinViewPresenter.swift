@@ -17,10 +17,15 @@ class DetailCoinViewPresenter: DetailCoinViewPresenterProtocol {
 //    var viewData: CoinTableViewCellViewModel? {
 //        didSet {
 //            if oldValue != nil {
-//                //CoinListViewPresenter.viewData[row] = viewData
+//                if isUpdating {
+//                    //CoinListViewPresenter.viewData[row] = viewData
+//                }
+//
 //            }
 //        }
 //    }
+    
+    
     
     var viewData: CoinTableViewCellViewModel?
     
@@ -41,5 +46,10 @@ class DetailCoinViewPresenter: DetailCoinViewPresenterProtocol {
         let detailCoinView = DetailCoinView()
         detailCoinView.configureDetailVC(with: viewData)
         view?.setupView(detailCoinView: detailCoinView)
+    }
+    
+    func getChartView() -> ChartView? {
+        guard let viewData = viewData else {return nil}
+        return ChartView(coin: viewData)
     }
 }

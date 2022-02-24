@@ -12,4 +12,6 @@ protocol DetailCoinViewPresenterProtocol {
     var viewData: CoinTableViewCellViewModel? { get }
     
     func configure(data: CoinTableViewCellViewModel)
+    
+    func getChartView() -> ChartView?
 }

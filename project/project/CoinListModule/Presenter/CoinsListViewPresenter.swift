@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     
@@ -43,9 +44,10 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController {
         let detailVC = DetailCoinViewController()
         //detailVC.configure(with: viewData[indexPath.row])
-        detailVC.detailCoinViewPresenter.configure(data: viewData[indexPath.row])
+        detailVC.detailCoinViewPresenter?.configure(data: viewData[indexPath.row])
         return detailVC
     }
+    
     
     
     private func updateSearchDataforCurrentSort(text: String?) {

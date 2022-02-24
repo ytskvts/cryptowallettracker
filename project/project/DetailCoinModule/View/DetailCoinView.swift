@@ -47,7 +47,7 @@ class DetailCoinView: UIView {
         return label
     }()
     
-    private let coinImageView: UIImageView = {
+    let coinImageView: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage()
         imageView.image = image
@@ -168,7 +168,7 @@ class DetailCoinView: UIView {
         return label
     }()
     
-    private lazy var labelsColumnStackView: UIStackView = {
+    lazy var labelsColumnStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution = UIStackView.Distribution.equalSpacing
