@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     
@@ -28,20 +27,9 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
 //    override func loadView() {
 //        //view = detailCoinView
 //    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let controller = UIHostingController(rootView: detailCoinViewPresenter?.getChartView())
-        controller.view.translatesAutoresizingMaskIntoConstraints = false
-        self.addChild(controller)
-        self.view.addSubview(controller.view)
-        controller.didMove(toParent: self)
-        NSLayoutConstraint.activate([
-            controller.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            controller.view.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5),
-            controller.view.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5),
-            controller.view.heightAnchor.constraint(equalToConstant: 200)
-        ])
         //detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
     }
     
@@ -50,12 +38,29 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
 //        detailCoinView.configureDetailVC(with: viewModel)
 //    }
     
+//    func setupView(detailCoinView: DetailCoinView) {
+//        view = detailCoinView
+//    }
     
-    func setupView(detailCoinView: DetailCoinView) {
-        view = detailCoinView
+    func configure(with data: CoinTableViewCellViewModel) {
+        detailCoinViewPresenter?.configure(data: data)
     }
     
-
-    
- 
+    func setupFields(viewData: CoinTableViewCellViewModel) {
+//        nameLabel.text = viewModel.name
+//        symbolLabel.text = viewModel.symbol
+//        currentPriceLabel.text = viewModel.currentPrice
+//        coinImageView.image = viewModel.image
+//        if viewModel.priceChangeDay > 0 {
+//            priceChangeDayLabel.textColor = .systemGreen
+//            priceChangeDayPercentLabel.textColor = .systemGreen
+//        } else {
+//            priceChangeDayLabel.textColor = .systemRed
+//            priceChangeDayPercentLabel.textColor = .systemRed
+//        }
+//        priceChangeDayLabel.text = "\(viewModel.priceChangeDay) $"
+//        priceChangeDayPercentLabel.text = "\(viewModel.priceChangePercentageDay) %"
+//        lowPriceDayLabel.text = "\(viewModel.lowDayPrice) $"
+//        highPriceDayLabel.text = "\(viewModel.highDayPrice) $"
+    }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol CoinsListViewProtocol: AnyObject {
     
-    func showDetailVC(indexPath: IndexPath)
+    func showDetailVC(data: CoinTableViewCellViewModel)
     func tableViewReloadData()
     func setTitleForTypeOfSortLabel(name: String)
     func setupActivityIndicator()

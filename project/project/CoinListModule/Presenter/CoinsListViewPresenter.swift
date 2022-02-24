@@ -10,6 +10,8 @@ import UIKit
 
 class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     
+    
+    
     weak var view: CoinsListViewProtocol?
     
     var isSearching: Bool = false
@@ -41,11 +43,14 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         }
     }
     
-    func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController {
-        let detailVC = DetailCoinViewController()
-        //detailVC.configure(with: viewData[indexPath.row])
-        detailVC.detailCoinViewPresenter?.configure(data: viewData[indexPath.row])
-        return detailVC
+//    func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController {
+//        let detailVC = DetailCoinViewController()
+//        detailVC.detailCoinViewPresenter?.configure(data: viewData[indexPath.row])
+//        return detailVC
+//    }
+    
+    func didSelectRow(at indexPath: IndexPath) {
+        view?.showDetailVC(data: viewData[indexPath.row])
     }
     
     
@@ -146,10 +151,10 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         viewData.append(contentsOf: data)
     }
     
-    func didSelectRow(at indexPath: IndexPath) {
-        //view?.showDetailVC(indexPath: indexPath)
-        //переделать
-    }
+//    func didSelectRow(at indexPath: IndexPath) {
+//        //view?.showDetailVC(indexPath: indexPath)
+//        //переделать
+//    }
     
     //func refreshTable()
     

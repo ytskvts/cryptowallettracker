@@ -18,7 +18,7 @@ protocol CoinsListViewPresenterProtocol {
     
     func setDefaults()
     func refreshData(searchingText: String?)
-    func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController
+    //func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController
     //MARK: - PickerView
     func getPickerViewTitle(for row: Int) -> String
     #warning("implement UILabel")

@@ -40,13 +40,21 @@ class DetailCoinViewPresenter: DetailCoinViewPresenterProtocol {
 //        view?.detailCoinView.configureDetailVC(with: viewData)
 //    }
     
+    
     func configure(data: CoinTableViewCellViewModel) {
         viewData = data
         guard let viewData = viewData else {return}
-        let detailCoinView = DetailCoinView()
-        detailCoinView.configureDetailVC(with: viewData)
-        view?.setupView(detailCoinView: detailCoinView)
+        view?.setupFields(viewData: viewData) // либо вообще в дидсет у вьюдата вставить это
     }
+    
+    #warning("zavtra sdelatb")
+//    func configure(data: CoinTableViewCellViewModel) {
+//        viewData = data
+//        guard let viewData = viewData else {return}
+//        let detailCoinView = DetailCoinView()
+//        detailCoinView.configureDetailVC(with: viewData)
+//        view?.setupView(detailCoinView: detailCoinView)
+//    }
     
     func getChartView() -> ChartView? {
         guard let viewData = viewData else {return nil}

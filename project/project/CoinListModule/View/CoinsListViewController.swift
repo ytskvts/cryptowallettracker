@@ -197,10 +197,13 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         ])
     }
     
-    func showDetailVC(indexPath: IndexPath) {
-        let vc = coinsListViewPresenter.prepareDetailVC(indexPath: indexPath)
+    func showDetailVC(data: CoinTableViewCellViewModel) {
+        let vc = DetailCoinViewController()
+        vc.configure(with: data)
         present(vc, animated: true, completion: nil)
     }
+    
+    
     
     func setupActivityIndicator() {
             let spinner = UIActivityIndicatorView()
@@ -215,8 +218,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     func stopActivityIndicator() {
         self.coinsListTableView.tableFooterView?.isHidden = true
     }
-    
-    
 }
 
 extension CoinsListViewController: UITableViewDelegate{
@@ -226,7 +227,7 @@ extension CoinsListViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        showDetailVC(indexPath: indexPath)
+        coinsListViewPresenter.didSelectRow(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
