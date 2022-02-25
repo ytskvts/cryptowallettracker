@@ -60,4 +60,8 @@ class DetailCoinViewPresenter: DetailCoinViewPresenterProtocol {
         guard let viewData = viewData else {return nil}
         return ChartView(coin: viewData)
     }
+    
+    func addToPortfolioButtonAction() {
+        view?.showVC()
+    }
 }

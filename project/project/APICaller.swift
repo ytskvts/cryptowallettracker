@@ -43,11 +43,11 @@ enum TypeOfRequest {
     case favouriteCoins(IDs: [String])
 }
 
-struct SearchingCoins: Codable {
+struct SearchingCoin: Codable {
     let id: String
 }
 struct SearchingModel: Codable {
-    let coins: [SearchingCoins]
+    let coins: [SearchingCoin]
 }
 
 //struct SearchingModel: Codable {

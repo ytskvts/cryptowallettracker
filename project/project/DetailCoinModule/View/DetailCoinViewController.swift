@@ -32,6 +32,36 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         chartViewController.view.backgroundColor = .black
     }
     
+    private let addToPortfolioButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+//        let imageConfig = UIImage.SymbolConfiguration(scale: .large)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
+        button.setImage(UIImage(systemName: "plus.square", withConfiguration: imageConfig), for: .normal)
+        button.addTarget(self, action: #selector(addToPortfolioButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func addToPortfolioButtonTapped() {
+        detailCoinViewPresenter?.addToPortfolioButtonAction()
+    }
+    
+    func showVC() {
+        #warning("dodelatb")
+//        let vc = UIViewController()
+//        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: self.view.bounds.width / 6)
+//        typeOfSortPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 10, height: self.view.bounds.height / 6)
+//        vc.view.addSubview(typeOfSortPicker)
+//        typeOfSortPicker.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+//        typeOfSortPicker.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
+//
+//        let alert = UIAlertController(title: "Select type of sort", message: "", preferredStyle: .actionSheet)
+//        alert.setValue(vc, forKey: "contentViewController")
+//        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
@@ -170,7 +200,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.leading
-        stackView.spacing = 40
+        stackView.spacing = 20
 //        stackView.addArrangedSubview(currentPriceDecribeLabel)
 //        stackView.addArrangedSubview(priceChangeDayDecribeLabel)
 //        stackView.addArrangedSubview(priceChangeDayPercentDecribeLabel)
@@ -185,7 +215,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.fill
-        stackView.spacing = 40
+        stackView.spacing = 20
         //stackView.addArrangedSubview(nameLabel)
         //stackView.addArrangedSubview(symbolLabel)
 //        stackView.addArrangedSubview(currentPriceLabel)
@@ -225,11 +255,13 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         setupChartViewController()
         configureStackViews()
         view.addSubview(coinImageView)
+        view.addSubview(addToPortfolioButton)
         view.addSubview(nameLabel)
         view.addSubview(symbolLabel)
         view.addSubview(labelsColumnStackView)
         view.addSubview(valuesColumnStackView)
         createCoinImageViewConstraint()
+        createAddToPortfolioButtonConstraint()
         createNameLabelConstraint()
         createSymbolLabelConstraint()
         createChartViewConstraint()
@@ -238,10 +270,19 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         
     }
     
+    func createAddToPortfolioButtonConstraint() {
+        NSLayoutConstraint.activate([
+            addToPortfolioButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            addToPortfolioButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            addToPortfolioButton.widthAnchor.constraint(equalToConstant: 50),
+            addToPortfolioButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
     func createChartViewConstraint() {
         guard let chartView = chartViewController?.view else {return}
         NSLayoutConstraint.activate([
-            chartView.topAnchor.constraint(equalTo: coinImageView.bottomAnchor, constant: 5),
+            chartView.topAnchor.constraint(equalTo: coinImageView.bottomAnchor, constant: 10),
             chartView.widthAnchor.constraint(equalTo: view.widthAnchor),
             chartView.heightAnchor.constraint(equalToConstant: 230)
         ])
@@ -253,7 +294,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
             labelsColumnStackView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 10),
             labelsColumnStackView.widthAnchor.constraint(equalToConstant: 200),
             labelsColumnStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            labelsColumnStackView.heightAnchor.constraint(equalToConstant: 390)
+            labelsColumnStackView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
@@ -263,7 +304,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
             valuesColumnStackView.topAnchor.constraint(equalTo: labelsColumnStackView.topAnchor),
             valuesColumnStackView.widthAnchor.constraint(equalToConstant: 100),
             valuesColumnStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            valuesColumnStackView.heightAnchor.constraint(equalToConstant: 390)
+            valuesColumnStackView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
@@ -282,7 +323,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             nameLabel.leftAnchor.constraint(equalTo: coinImageView.rightAnchor, constant: 20),
-            nameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            nameLabel.rightAnchor.constraint(equalTo: addToPortfolioButton.leftAnchor, constant: -10),
             nameLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }

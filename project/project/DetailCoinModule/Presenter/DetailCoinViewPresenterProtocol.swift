@@ -14,4 +14,6 @@ protocol DetailCoinViewPresenterProtocol {
     func configure(data: CoinTableViewCellViewModel)
     
     func getChartView() -> ChartView?
+    
+    func addToPortfolioButtonAction()
 }
