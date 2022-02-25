@@ -119,7 +119,7 @@ final class APICaller {
                     requestString += "\(coin.id)%2C"
                 }
                 let index = requestString.index(requestString.endIndex, offsetBy: -3)
-                requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=\(sortBy.rawValue)&per_page=100&page=1&sparkline=false"
+                requestString =  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=\(sortBy.rawValue)&per_page=100&page=1&sparkline=true"
             } else {
                 for coin in newModels.coins {
                     requestString += coin.id

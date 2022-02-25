@@ -342,6 +342,7 @@
 				016D70BA275E2B290048D540 /* CoinModel.swift */,
 				016D70BC275E30BE0048D540 /* APICaller.swift */,
 				016D70BE275E321D0048D540 /* Constants.swift */,
+				017A659B27B9381B0072F2BA /* CoinModelParser.swift */,
 				017E795827906D05004C5B2C /* KeychainWrapper */,
 			);
 			path = project;
@@ -362,7 +363,6 @@
 				0172B13D27451709008617DE /* LaunchScreen.storyboard */,
 				0172B14027451709008617DE /* Info.plist */,
 				0172B13B27451709008617DE /* Assets.xcassets */,
-				017A659B27B9381B0072F2BA /* CoinModelParser.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

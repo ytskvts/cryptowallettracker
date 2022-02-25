@@ -12,7 +12,7 @@ extension Color {
 }
 
 struct ColorTheme {
-    let green = Color("GreenColor")
-    let red = Color("RedColor")
-    let secondaryText = Color("SecondaryTextColor")
+    let green = Color.green
+    let red = Color.red
+    let secondaryText = Color.gray
 }
