@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class TypeOfSortTextField: UITextField {
+class CoinAddModuleTextField: UITextField {
     
     override func caretRect(for position: UITextPosition) -> CGRect {
         return CGRect.zero

@@ -44,6 +44,10 @@
 		0182435E27C67CAB00338512 /* DetailCoinViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182435D27C67CAB00338512 /* DetailCoinViewPresenter.swift */; };
 		0182436027C67CED00338512 /* DetailCoinViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182435F27C67CED00338512 /* DetailCoinViewPresenterProtocol.swift */; };
 		0182436227C67D2400338512 /* DetailCoinViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436127C67D2400338512 /* DetailCoinViewProtocol.swift */; };
+		0182436727CA39E300338512 /* CoinAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436627CA39E300338512 /* CoinAddViewController.swift */; };
+		0182436927CA39F600338512 /* CoinAddViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436827CA39F600338512 /* CoinAddViewProtocol.swift */; };
+		0182436B27CA3A1C00338512 /* CoinAddViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436A27CA3A1B00338512 /* CoinAddViewPresenter.swift */; };
+		0182436D27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436C27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift */; };
 		0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */; };
 		8967B11E1FB6797C9E5ADB6F /* Pods_project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEAF44201DDA84358A03231 /* Pods_project.framework */; };
 /* End PBXBuildFile section */
@@ -88,6 +92,10 @@
 		0182435D27C67CAB00338512 /* DetailCoinViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewPresenter.swift; sourceTree = "<group>"; };
 		0182435F27C67CED00338512 /* DetailCoinViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewPresenterProtocol.swift; sourceTree = "<group>"; };
 		0182436127C67D2400338512 /* DetailCoinViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoinViewProtocol.swift; sourceTree = "<group>"; };
+		0182436627CA39E300338512 /* CoinAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewController.swift; sourceTree = "<group>"; };
+		0182436827CA39F600338512 /* CoinAddViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewProtocol.swift; sourceTree = "<group>"; };
+		0182436A27CA3A1B00338512 /* CoinAddViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewPresenter.swift; sourceTree = "<group>"; };
+		0182436C27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewPresenterProtocol.swift; sourceTree = "<group>"; };
 		0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenterProtocol.swift; sourceTree = "<group>"; };
 		4C1352745AD678EDD988A64A /* Pods-project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project.debug.xcconfig"; path = "Target Support Files/Pods-project/Pods-project.debug.xcconfig"; sourceTree = "<group>"; };
 		8DEAF44201DDA84358A03231 /* Pods_project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,6 +335,7 @@
 		0172B13127451707008617DE /* project */ = {
 			isa = PBXGroup;
 			children = (
+				0182436327CA38E800338512 /* CoinAddModule */,
 				016AE40D2784AF0400D7D3CB /* TabBarModule */,
 				0173EB0227833ACD006BD79A /* Application */,
 				0159E620277C511400411F96 /* SignInModule */,
@@ -400,6 +409,33 @@
 				0182435827C6573C00338512 /* Color.swift */,
 			);
 			path = SwiftUIEnstensions;
+			sourceTree = "<group>";
+		};
+		0182436327CA38E800338512 /* CoinAddModule */ = {
+			isa = PBXGroup;
+			children = (
+				0182436427CA396600338512 /* View */,
+				0182436527CA396E00338512 /* Presenter */,
+			);
+			path = CoinAddModule;
+			sourceTree = "<group>";
+		};
+		0182436427CA396600338512 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0182436627CA39E300338512 /* CoinAddViewController.swift */,
+				0182436827CA39F600338512 /* CoinAddViewProtocol.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0182436527CA396E00338512 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				0182436A27CA3A1B00338512 /* CoinAddViewPresenter.swift */,
+				0182436C27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		23F78EE086B787BF77D67AF1 /* Frameworks */ = {
@@ -544,9 +580,12 @@
 				0182436027C67CED00338512 /* DetailCoinViewPresenterProtocol.swift in Sources */,
 				016807A4275F89020057CAFC /* DetailCoinViewController.swift in Sources */,
 				017BCF2E27C5060D00295578 /* ChartView.swift in Sources */,
+				0182436D27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift in Sources */,
 				016AE40A2784A03800D7D3CB /* WalletViewController.swift in Sources */,
+				0182436927CA39F600338512 /* CoinAddViewProtocol.swift in Sources */,
 				017A659C27B9381B0072F2BA /* CoinModelParser.swift in Sources */,
 				016D70C3275E44D10048D540 /* CoinTableViewCell.swift in Sources */,
+				0182436B27CA3A1C00338512 /* CoinAddViewPresenter.swift in Sources */,
 				017A659827B90AFB0072F2BA /* CoinsListViewPresenterProtocol.swift in Sources */,
 				016576672779A75800BAF64B /* SignInPresenter.swift in Sources */,
 				0172B13727451707008617DE /* SignInViewController.swift in Sources */,
@@ -561,6 +600,7 @@
 				016D70BB275E2B290048D540 /* CoinModel.swift in Sources */,
 				016D70C1275E43B40048D540 /* CoinsListViewController.swift in Sources */,
 				016AE40F2784AF4700D7D3CB /* TabBarController.swift in Sources */,
+				0182436727CA39E300338512 /* CoinAddViewController.swift in Sources */,
 				0182435E27C67CAB00338512 /* DetailCoinViewPresenter.swift in Sources */,
 				016D70BD275E30BE0048D540 /* APICaller.swift in Sources */,
 				0182436227C67D2400338512 /* DetailCoinViewProtocol.swift in Sources */,

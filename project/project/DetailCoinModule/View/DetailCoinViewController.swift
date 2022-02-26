@@ -62,6 +62,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     }
     
     
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
