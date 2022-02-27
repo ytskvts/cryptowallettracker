@@ -25,4 +25,6 @@ protocol CoinAddViewProtocol: AnyObject {
     func setupFields(viewData: CoinTableViewCellViewModel)
     
     func didActionWithErrorLabel(errorLabelCondition: ErrorLabelCondition, typeOfError: ErrorType?)
+    
+    //func getTextfieldsText() -> (price: String?, quantity: String?)
 }

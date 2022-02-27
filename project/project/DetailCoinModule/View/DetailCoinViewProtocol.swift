@@ -13,5 +13,5 @@ protocol DetailCoinViewProtocol: AnyObject {
     //func setupView(detailCoinView: DetailCoinView)
     func setupFields(viewData: CoinTableViewCellViewModel)
     
-    func showVC()
+    func showVC(data: CoinTableViewCellViewModel)
 }

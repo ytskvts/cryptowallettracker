@@ -51,10 +51,10 @@ struct CoinModel: Codable {
     let price_change_24h: Double?
     let price_change_percentage_24h: Double?
 //    let circulating_supply: Int
-//    let ath: Double
+    let ath: Double
 //    let ath_change_percentage: Double
 //    let ath_date: String
-//    let atl: Double
+    let atl: Double
 //    let atl_change_percentage: Double
 //    let atl_date: String
     let lastUpdated: String?

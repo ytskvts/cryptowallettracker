@@ -22,17 +22,22 @@ class CoinAddViewPresenter: CoinAddViewPresenterProtocol {
          !(priceText ?? "").isEmpty && !(quantityText ?? "").isEmpty
     }
     
-    func checkIsInRange(number: String?, range: Range<Double>) -> Bool {
+    func checkIsInRange(number: String?, range: ClosedRange<Double>) -> Bool {
         guard let number = number,
                   let convertNum = Double(number) else {return false}
         return range.contains(convertNum)
     }
     
     func alertAction(price: String?, quantity: String?) {
+        print("nice man, go home")
+        guard let viewData = viewData else {return}
         view?.didActionWithErrorLabel(errorLabelCondition: .hide, typeOfError: nil)
         if checkForFilledFills(priceText: price, quantityText: quantity) {
-            if checkIsInRange(number: price, range: [viewData.atl...viewData.ath]) && checkIsInRange(number: quantity, range: [0.0...]) {
+            if checkIsInRange(number: price, range: viewData.atl...viewData.ath) && checkIsInRange(number: quantity, range: 0.0...Double.infinity) {
+                print("send data")
                 //sendData to firebase
+                //if good then view.dismiss
+                //else view.showErrorAlert
             } else {
                 view?.didActionWithErrorLabel(errorLabelCondition: .show, typeOfError: .outOfRange)
             }

@@ -46,19 +46,15 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         detailCoinViewPresenter?.addToPortfolioButtonAction()
     }
     
-    func showVC() {
+    func showVC(data: CoinTableViewCellViewModel) {
         #warning("dodelatb")
-//        let vc = UIViewController()
-//        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: self.view.bounds.width / 6)
-//        typeOfSortPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 10, height: self.view.bounds.height / 6)
-//        vc.view.addSubview(typeOfSortPicker)
-//        typeOfSortPicker.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
-//        typeOfSortPicker.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
-//
-//        let alert = UIAlertController(title: "Select type of sort", message: "", preferredStyle: .actionSheet)
-//        alert.setValue(vc, forKey: "contentViewController")
-//        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//        self.present(alert, animated: true, completion: nil)
+        let vc = CoinAddViewController()
+        vc.configure(data: data)
+        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: 200)
+        let alert = UIAlertController(title: "Fill the fields", message: "", preferredStyle: .actionSheet)
+        alert.setValue(vc, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in vc.alertAction()}))
+        self.present(alert, animated: true, completion: nil)
     }
     
     

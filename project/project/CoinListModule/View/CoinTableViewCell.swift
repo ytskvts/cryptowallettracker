@@ -20,6 +20,8 @@ struct CoinTableViewCellViewModel {
     let priceChangePercentageDay: Double
     let lastUpdated: String?
     let sparklineIn7D: SparklineIn7D?
+    let ath: Double
+    let atl: Double
 }
 
 class CoinTableViewCell: UITableViewCell {
