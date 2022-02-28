@@ -8,6 +8,40 @@ import UIKit
 
 class CoinAddModuleTextField: UITextField {
     
+    var textPadding = UIEdgeInsets(
+            top: 5,
+            left: 10,
+            bottom: 5,
+            right: 10
+    )
+    
+    override init(frame: CGRect) {
+        super .init(frame: frame)
+        setupStyle()
+    }
+    
+    required init?(coder: NSCoder) {
+        super .init(coder: coder)
+        setupStyle()
+    }
+    
+    func setupStyle() {
+        self.layer.borderWidth = 1
+        self.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        self.layer.cornerRadius = 3
+    }
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+    
     override func caretRect(for position: UITextPosition) -> CGRect {
         return CGRect.zero
     }

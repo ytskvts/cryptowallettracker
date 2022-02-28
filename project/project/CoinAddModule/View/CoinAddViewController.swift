@@ -12,6 +12,15 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     
     var coinAddViewPresenter: CoinAddViewPresenterProtocol?
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        coinAddViewPresenter = CoinAddViewPresenter(view: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: Alert elements emplement start
     
     private let alertDescribePriceLabel: UILabel = {
@@ -75,6 +84,12 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         let textField = CoinAddModuleTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "$"
+        textField.textAlignment = .center
+//        textField.layer.borderWidth = 1
+//        textField.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        textField.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        textField.layer.cornerRadius = 3
+        
         textField.keyboardType = .decimalPad
         textField.returnKeyType = UIReturnKeyType.next
         return textField
@@ -83,6 +98,12 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     private let alertChosenQuantityTextField: UITextField = {
         let textField = CoinAddModuleTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.textAlignment = .center
+//        textField.layer.borderWidth = 1
+//        textField.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        textField.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        textField.layer.cornerRadius = 3
+        
         textField.keyboardType = .decimalPad
         textField.returnKeyType = UIReturnKeyType.done
         return textField
@@ -102,7 +123,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        coinAddViewPresenter = CoinAddViewPresenter(view: self)
+        //coinAddViewPresenter = CoinAddViewPresenter(view: self)
         alertChosenPriceTextField.delegate = self
         alertChosenQuantityTextField.delegate = self
         // Do any additional setup after loading the view.
@@ -128,12 +149,16 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     }
     
     func configure(data: CoinTableViewCellViewModel) {
+        print("1")
         coinAddViewPresenter?.configure(with: data)
+        print("2")
     }
     
     func setupFields(viewData: CoinTableViewCellViewModel) {
         alertMaxPriceLabel.text = "\(viewData.ath)"
         alertMinimalPriceLabel.text = "\(viewData.atl)"
+        print(viewData.ath)
+        print("asfg")
     }
     
     func alertAction() {
@@ -159,7 +184,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertDescribePriceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             alertDescribePriceLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            alertDescribePriceLabel.widthAnchor.constraint(equalToConstant: 70),
+            alertDescribePriceLabel.widthAnchor.constraint(equalToConstant: 140),
             alertDescribePriceLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
@@ -168,7 +193,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertMaxPriceLabel.topAnchor.constraint(equalTo: alertDescribePriceLabel.bottomAnchor, constant: 10),
             alertMaxPriceLabel.leftAnchor.constraint(equalTo: alertDescribePriceLabel.leftAnchor),
-            alertMaxPriceLabel.widthAnchor.constraint(equalToConstant: 70),
+            alertMaxPriceLabel.widthAnchor.constraint(equalToConstant: 140),
             alertMaxPriceLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
@@ -177,8 +202,8 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertChosenPriceTextField.topAnchor.constraint(equalTo: alertMaxPriceLabel.bottomAnchor, constant: 10),
             alertChosenPriceTextField.leftAnchor.constraint(equalTo: alertMaxPriceLabel.leftAnchor),
-            alertChosenPriceTextField.widthAnchor.constraint(equalToConstant: 70),
-            alertChosenPriceTextField.heightAnchor.constraint(equalToConstant: 20)
+            alertChosenPriceTextField.widthAnchor.constraint(equalToConstant: 140),
+            alertChosenPriceTextField.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -186,7 +211,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertMinimalPriceLabel.topAnchor.constraint(equalTo: alertChosenPriceTextField.bottomAnchor, constant: 10),
             alertMinimalPriceLabel.leftAnchor.constraint(equalTo: alertChosenPriceTextField.leftAnchor),
-            alertMinimalPriceLabel.widthAnchor.constraint(equalToConstant: 70),
+            alertMinimalPriceLabel.widthAnchor.constraint(equalToConstant: 140),
             alertMinimalPriceLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
@@ -195,7 +220,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertDescribeQuantityLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             alertDescribeQuantityLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            alertDescribeQuantityLabel.widthAnchor.constraint(equalToConstant: 70),
+            alertDescribeQuantityLabel.widthAnchor.constraint(equalToConstant: 140),
             alertDescribeQuantityLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
@@ -204,7 +229,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertMaxQuantityLabel.topAnchor.constraint(equalTo: alertDescribeQuantityLabel.bottomAnchor, constant: 10),
             alertMaxQuantityLabel.rightAnchor.constraint(equalTo: alertDescribeQuantityLabel.rightAnchor),
-            alertMaxQuantityLabel.widthAnchor.constraint(equalToConstant: 70),
+            alertMaxQuantityLabel.widthAnchor.constraint(equalToConstant: 140),
             alertMaxQuantityLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
@@ -213,8 +238,8 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertChosenQuantityTextField.topAnchor.constraint(equalTo: alertMaxQuantityLabel.bottomAnchor, constant: 10),
             alertChosenQuantityTextField.rightAnchor.constraint(equalTo: alertMaxQuantityLabel.rightAnchor),
-            alertChosenQuantityTextField.widthAnchor.constraint(equalToConstant: 70),
-            alertChosenQuantityTextField.heightAnchor.constraint(equalToConstant: 20)
+            alertChosenQuantityTextField.widthAnchor.constraint(equalToConstant: 140),
+            alertChosenQuantityTextField.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -222,7 +247,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         NSLayoutConstraint.activate([
             alertMinimalQuantityLabel.topAnchor.constraint(equalTo: alertChosenQuantityTextField.bottomAnchor, constant: 10),
             alertMinimalQuantityLabel.rightAnchor.constraint(equalTo: alertChosenQuantityTextField.rightAnchor),
-            alertMinimalQuantityLabel.widthAnchor.constraint(equalToConstant: 70),
+            alertMinimalQuantityLabel.widthAnchor.constraint(equalToConstant: 140),
             alertMinimalQuantityLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }

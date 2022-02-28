@@ -48,8 +48,10 @@ class CoinAddViewPresenter: CoinAddViewPresenterProtocol {
     }
     
     func configure(with data: CoinTableViewCellViewModel) {
+        print("configure in presenter")
         viewData = data
         guard let viewData = viewData else {return}
+        print("before setup fields")
         view?.setupFields(viewData: viewData)
     }
     
