@@ -10,6 +10,7 @@ import UIKit
 #warning("Correct this")
 struct CoinTableViewCellViewModel {
     
+    let id: String
     let name: String
     let symbol: String
     let currentPrice: String

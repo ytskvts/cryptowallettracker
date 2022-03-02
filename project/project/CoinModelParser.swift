@@ -31,7 +31,8 @@ struct CoinModelParser {
                 let imageData = try Data(contentsOf: URL(string: $0.image)!)
                 let image = UIImage(data: imageData)
                 print("vkusnp")
-                return CoinTableViewCellViewModel(name: $0.name,
+                return CoinTableViewCellViewModel(id: $0.id,
+                                                  name: $0.name,
                                                   symbol: $0.symbol,
                                                   currentPrice: convertPrice + " $",
                                                   image: image ?? UIImage(systemName: "eye")!,

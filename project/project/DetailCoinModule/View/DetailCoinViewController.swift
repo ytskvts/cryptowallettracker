@@ -37,7 +37,9 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         button.translatesAutoresizingMaskIntoConstraints = false
 //        let imageConfig = UIImage.SymbolConfiguration(scale: .large)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
-        button.setImage(UIImage(systemName: "plus.square", withConfiguration: imageConfig), for: .normal)
+        //bag.badge.plus
+        //plus.square
+        button.setImage(UIImage(systemName: "bag.badge.plus", withConfiguration: imageConfig), for: .normal)
         button.addTarget(self, action: #selector(addToPortfolioButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -47,14 +49,22 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     }
     
     func showVC(data: CoinTableViewCellViewModel) {
-        #warning("dodelatb")
+//        #warning("dodelatb")
+//        let vc = CoinAddViewController()
+//        vc.configure(data: data)
+//        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: 200)
+//        let alert = UIAlertController(title: "Fill the fields", message: "", preferredStyle: .actionSheet)
+//        alert.setValue(vc, forKey: "contentViewController")
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in vc.alertAction()}))
+//        self.present(alert, animated: true, completion: nil)
+        
+        let panelTransition = PanelTransition()
         let vc = CoinAddViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = panelTransition
         vc.configure(data: data)
-        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: 200)
-        let alert = UIAlertController(title: "Fill the fields", message: "", preferredStyle: .actionSheet)
-        alert.setValue(vc, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in vc.alertAction()}))
-        self.present(alert, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
+        
     }
     
     

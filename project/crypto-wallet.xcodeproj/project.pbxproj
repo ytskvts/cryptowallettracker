@@ -48,6 +48,11 @@
 		0182436927CA39F600338512 /* CoinAddViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436827CA39F600338512 /* CoinAddViewProtocol.swift */; };
 		0182436B27CA3A1C00338512 /* CoinAddViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436A27CA3A1B00338512 /* CoinAddViewPresenter.swift */; };
 		0182436D27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436C27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift */; };
+		0182436F27CE060C00338512 /* WalletViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182436E27CE060C00338512 /* WalletViewProtocol.swift */; };
+		0182437127CE062700338512 /* WalletViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182437027CE062700338512 /* WalletViewPresenter.swift */; };
+		0182437327CE063900338512 /* WalletViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182437227CE063900338512 /* WalletViewPresenterProtocol.swift */; };
+		0182437527CE138B00338512 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182437427CE138B00338512 /* WalletTableViewCell.swift */; };
+		0182437727CFC23600338512 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182437627CFC23500338512 /* Transition.swift */; };
 		0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */; };
 		8967B11E1FB6797C9E5ADB6F /* Pods_project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEAF44201DDA84358A03231 /* Pods_project.framework */; };
 /* End PBXBuildFile section */
@@ -96,6 +101,11 @@
 		0182436827CA39F600338512 /* CoinAddViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewProtocol.swift; sourceTree = "<group>"; };
 		0182436A27CA3A1B00338512 /* CoinAddViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewPresenter.swift; sourceTree = "<group>"; };
 		0182436C27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinAddViewPresenterProtocol.swift; sourceTree = "<group>"; };
+		0182436E27CE060C00338512 /* WalletViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewProtocol.swift; sourceTree = "<group>"; };
+		0182437027CE062700338512 /* WalletViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewPresenter.swift; sourceTree = "<group>"; };
+		0182437227CE063900338512 /* WalletViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewPresenterProtocol.swift; sourceTree = "<group>"; };
+		0182437427CE138B00338512 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
+		0182437627CFC23500338512 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenterProtocol.swift; sourceTree = "<group>"; };
 		4C1352745AD678EDD988A64A /* Pods-project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project.debug.xcconfig"; path = "Target Support Files/Pods-project/Pods-project.debug.xcconfig"; sourceTree = "<group>"; };
 		8DEAF44201DDA84358A03231 /* Pods_project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,6 +244,7 @@
 		0159E62A277C86A300411F96 /* CustomUIElements */ = {
 			isa = PBXGroup;
 			children = (
+				0182437627CFC23500338512 /* Transition.swift */,
 				0159E62C277C86D200411F96 /* TextFields */,
 				0159E62B277C86B200411F96 /* Buttons */,
 			);
@@ -271,6 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				016AE4092784A03800D7D3CB /* WalletViewController.swift */,
+				0182436E27CE060C00338512 /* WalletViewProtocol.swift */,
+				0182437427CE138B00338512 /* WalletTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -278,6 +291,8 @@
 		016AE40527849A3A00D7D3CB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				0182437027CE062700338512 /* WalletViewPresenter.swift */,
+				0182437227CE063900338512 /* WalletViewPresenterProtocol.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -572,6 +587,7 @@
 			files = (
 				0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */,
 				0182435727C651C400338512 /* Date.swift in Sources */,
+				0182437327CE063900338512 /* WalletViewPresenterProtocol.swift in Sources */,
 				0182435B27C65B5E00338512 /* Double.swift in Sources */,
 				0159E633277C881E00411F96 /* AuthorizationButton.swift in Sources */,
 				0159E62F277C877700411F96 /* AuthorizationTextField.swift in Sources */,
@@ -592,6 +608,7 @@
 				0159E631277C87D400411F96 /* PasswordTextField.swift in Sources */,
 				0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */,
 				0172B13327451707008617DE /* AppDelegate.swift in Sources */,
+				0182437527CE138B00338512 /* WalletTableViewCell.swift in Sources */,
 				0174625327B80E3B0076E9D8 /* CoinsListViewPresenter.swift in Sources */,
 				016576692779A89B00BAF64B /* SignInViewProtocol.swift in Sources */,
 				0182435927C6573C00338512 /* Color.swift in Sources */,
@@ -603,7 +620,10 @@
 				0182436727CA39E300338512 /* CoinAddViewController.swift in Sources */,
 				0182435E27C67CAB00338512 /* DetailCoinViewPresenter.swift in Sources */,
 				016D70BD275E30BE0048D540 /* APICaller.swift in Sources */,
+				0182436F27CE060C00338512 /* WalletViewProtocol.swift in Sources */,
 				0182436227C67D2400338512 /* DetailCoinViewProtocol.swift in Sources */,
+				0182437127CE062700338512 /* WalletViewPresenter.swift in Sources */,
+				0182437727CFC23600338512 /* Transition.swift in Sources */,
 				01654FF627B651540030ADEB /* TypeOfSortTextField.swift in Sources */,
 				017A659A27B90EF50072F2BA /* CoinsListViewProtocol.swift in Sources */,
 				016D70BF275E321D0048D540 /* Constants.swift in Sources */,

@@ -119,10 +119,23 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         return label
     }()
     
+    private let addCoinToPortfolioButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.5942070484, blue: 0.9925900102, alpha: 1)
+        button.layer.cornerRadius = 3
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Add", for: .normal)
+        button.addTarget(self, action: #selector(didTapAddCoinToPortfolioButton), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    
     //Mark: Alert elements emplement end
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         //coinAddViewPresenter = CoinAddViewPresenter(view: self)
         alertChosenPriceTextField.delegate = self
         alertChosenQuantityTextField.delegate = self
@@ -137,6 +150,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         view.addSubview(alertChosenQuantityTextField)
         view.addSubview(alertMinimalQuantityLabel)
         view.addSubview(alertErrorLabel)
+        view.addSubview(addCoinToPortfolioButton)
         createAlertDescribePriceLabelConstraint()
         createAlertMaxPriceLabelConstraint()
         createAlertChosenPriceTextFieldConstraint()
@@ -146,12 +160,34 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         createAlertChosenQuantityTextFieldConstraint()
         createAlertMinimalQuantityLabelConstraint()
         createAlertErrorLabelConstraint()
+        createAddCoinToPortfolioButtonConstraint()
+    }
+    
+    @objc func didTapAddCoinToPortfolioButton() {
+        alertAction()
+    }
+    
+    func alertAction() {
+        coinAddViewPresenter?.alertAction(price: alertChosenPriceTextField.text, quantity: alertChosenQuantityTextField.text)
     }
     
     func configure(data: CoinTableViewCellViewModel) {
         print("1")
         coinAddViewPresenter?.configure(with: data)
         print("2")
+    }
+    
+    func dismissController() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func transitionToWalletScreen(model: FirebaseModel) {
+        let vc = WalletViewController()
+        
+        //vc.modalPresentationStyle = .fullScreen
+        vc.configureForTransition(model: model)
+        //dismissController()
+        present(vc, animated: true, completion: nil)
     }
     
     func setupFields(viewData: CoinTableViewCellViewModel) {
@@ -161,9 +197,9 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         print("asfg")
     }
     
-    func alertAction() {
-        coinAddViewPresenter?.alertAction(price: alertChosenPriceTextField.text, quantity: alertChosenQuantityTextField.text)
-    }
+    
+    
+    
     
     func didActionWithErrorLabel(errorLabelCondition: ErrorLabelCondition, typeOfError: ErrorType?) {
         switch errorLabelCondition {
@@ -174,6 +210,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         case .hide:
             alertErrorLabel.isHidden = true
         }
+        
     }
 
 //    func getTextfieldsText() -> (price: String?, quantity: String?) {
@@ -182,7 +219,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     
     func createAlertDescribePriceLabelConstraint() {
         NSLayoutConstraint.activate([
-            alertDescribePriceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            alertDescribePriceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
             alertDescribePriceLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             alertDescribePriceLabel.widthAnchor.constraint(equalToConstant: 140),
             alertDescribePriceLabel.heightAnchor.constraint(equalToConstant: 20)
@@ -218,7 +255,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     
     func createAlertDescribeQuantityLabelConstraint() {
         NSLayoutConstraint.activate([
-            alertDescribeQuantityLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            alertDescribeQuantityLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
             alertDescribeQuantityLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             alertDescribeQuantityLabel.widthAnchor.constraint(equalToConstant: 140),
             alertDescribeQuantityLabel.heightAnchor.constraint(equalToConstant: 20)
@@ -258,7 +295,16 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
             alertErrorLabel.rightAnchor.constraint(equalTo: alertMinimalQuantityLabel.rightAnchor),
             alertErrorLabel.leftAnchor.constraint(equalTo: alertMinimalPriceLabel.leftAnchor),
             alertErrorLabel.heightAnchor.constraint(equalToConstant: 20),
-            alertErrorLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            //alertErrorLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+        ])
+    }
+    
+    func createAddCoinToPortfolioButtonConstraint() {
+        NSLayoutConstraint.activate([
+            addCoinToPortfolioButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addCoinToPortfolioButton.widthAnchor.constraint(equalToConstant: 80),
+            addCoinToPortfolioButton.heightAnchor.constraint(equalToConstant: 30),
+            addCoinToPortfolioButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         ])
     }
 

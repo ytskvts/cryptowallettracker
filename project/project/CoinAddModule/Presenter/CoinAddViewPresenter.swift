@@ -25,8 +25,10 @@ class CoinAddViewPresenter: CoinAddViewPresenterProtocol {
     func checkIsInRange(number: String?, range: ClosedRange<Double>) -> Bool {
         guard let number = number,
                   let convertNum = Double(number) else {return false}
+        if convertNum == 0 { return false}
         return range.contains(convertNum)
     }
+    
     
     func alertAction(price: String?, quantity: String?) {
         print("nice man, go home")
@@ -35,8 +37,15 @@ class CoinAddViewPresenter: CoinAddViewPresenterProtocol {
         if checkForFilledFills(priceText: price, quantityText: quantity) {
             if checkIsInRange(number: price, range: viewData.atl...viewData.ath) && checkIsInRange(number: quantity, range: 0.0...Double.infinity) {
                 print("send data")
-                //sendData to firebase
+                guard let quantity = Double(quantity!),
+                      let price = Double(price!)  else { return }
+
+                let dataForSending = FirebaseModel(id: viewData.id, quantity: quantity, priceOfBuying: price)
+                view?.transitionToWalletScreen(model: dataForSending)
                 //if good then view.dismiss
+//                print("before dismss")
+//                view?.dismissController()
+//                print("after dismss")
                 //else view.showErrorAlert
             } else {
                 view?.didActionWithErrorLabel(errorLabelCondition: .show, typeOfError: .outOfRange)

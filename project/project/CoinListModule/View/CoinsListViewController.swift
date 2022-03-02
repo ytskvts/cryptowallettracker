@@ -198,9 +198,18 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     }
     
     func showDetailVC(data: CoinTableViewCellViewModel) {
+//        let panelTransition = PanelTransition()
+//        let vc = DetailCoinViewController()
+//        vc.modalPresentationStyle = .custom
+//        vc.transitioningDelegate = panelTransition
+//        vc.configure(with: data)
+//        present(vc, animated: true, completion: nil)
+        
         let vc = DetailCoinViewController()
         vc.configure(with: data)
+        //navigationController?.pushViewController(vc, animated: true)
         present(vc, animated: true, completion: nil)
+        
     }
     
     
