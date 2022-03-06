@@ -205,6 +205,15 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
 //        vc.configure(with: data)
 //        present(vc, animated: true, completion: nil)
         
+        
+        
+//        FirebaseManager.shared.getPortfolio { portfolio in
+//            guard let portfolio = portfolio else {return}
+//            print(portfolio)
+//            print(portfolio.coins[0].id)
+//        }
+        
+        
         let vc = DetailCoinViewController()
         vc.configure(with: data)
         //navigationController?.pushViewController(vc, animated: true)

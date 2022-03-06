@@ -186,6 +186,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         
         //vc.modalPresentationStyle = .fullScreen
         vc.configureForTransition(model: model)
+        
         //dismissController()
         present(vc, animated: true, completion: nil)
     }

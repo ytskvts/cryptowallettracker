@@ -72,6 +72,17 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
         self.view = view
     }
     
+    func getData() {
+        FirebaseManager.shared.getPortfolio { portfolio in
+            var convertData = [FirebaseModel]()
+            guard let portfolio = portfolio else {return}
+            for coin in portfolio.coins {
+                convertData.append(FirebaseModel(id: coin.id, quantity: Double(coin.quantity) ?? 0.0, priceOfBuying: Double(coin.price) ?? 0.0))
+            }
+            self.data = convertData
+        }
+    }
+    
     func configureForTransition(model: FirebaseModel) {
         data.append(model)
     }

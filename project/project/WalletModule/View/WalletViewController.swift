@@ -71,7 +71,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         createBagLabelConstraint()
         createTotalCostLabelConstraint()
         createPriceChangeLabelConstraint()
-        
+        walletViewPresenter?.getData()
         // Do any additional setup after loading the view.
     }
 
@@ -83,6 +83,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     func configure(totalCost: String, priceChange: String) {
         totalCostLabel.text = totalCost + " $"
         priceChangeLabel.text = priceChange + " $"
+        tableViewReloadData()
     }
     
     func tableViewReloadData() {
@@ -94,7 +95,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     
     func createBagLabelConstraint() {
         NSLayoutConstraint.activate([
-            bagLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            bagLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             bagLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             bagLabel.widthAnchor.constraint(equalToConstant: 50),
             bagLabel.heightAnchor.constraint(equalToConstant: 50)

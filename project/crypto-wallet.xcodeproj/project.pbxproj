@@ -32,6 +32,8 @@
 		0172B13C27451709008617DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0172B13B27451709008617DE /* Assets.xcassets */; };
 		0172B13F27451709008617DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0172B13D27451709008617DE /* LaunchScreen.storyboard */; };
 		0174625327B80E3B0076E9D8 /* CoinsListViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0174625227B80E3B0076E9D8 /* CoinsListViewPresenter.swift */; };
+		017A283327D10F0C001F1803 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017A283227D10F0C001F1803 /* FirebaseManager.swift */; };
+		017A283627D1102A001F1803 /* FirebaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017A283527D1102A001F1803 /* FirebaseModel.swift */; };
 		017A659827B90AFB0072F2BA /* CoinsListViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017A659727B90AFB0072F2BA /* CoinsListViewPresenterProtocol.swift */; };
 		017A659A27B90EF50072F2BA /* CoinsListViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017A659927B90EF50072F2BA /* CoinsListViewProtocol.swift */; };
 		017A659C27B9381B0072F2BA /* CoinModelParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017A659B27B9381B0072F2BA /* CoinModelParser.swift */; };
@@ -85,6 +87,8 @@
 		0172B13E27451709008617DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0172B14027451709008617DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0174625227B80E3B0076E9D8 /* CoinsListViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListViewPresenter.swift; sourceTree = "<group>"; };
+		017A283227D10F0C001F1803 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		017A283527D1102A001F1803 /* FirebaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseModel.swift; sourceTree = "<group>"; };
 		017A659727B90AFB0072F2BA /* CoinsListViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListViewPresenterProtocol.swift; sourceTree = "<group>"; };
 		017A659927B90EF50072F2BA /* CoinsListViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListViewProtocol.swift; sourceTree = "<group>"; };
 		017A659B27B9381B0072F2BA /* CoinModelParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModelParser.swift; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				0172B13127451707008617DE /* project */,
+				0173EB0227833ACD006BD79A /* Application */,
 				0172B13027451707008617DE /* Products */,
 				730F6D7DD575478BF1AEAE69 /* Pods */,
 				23F78EE086B787BF77D67AF1 /* Frameworks */,
@@ -352,7 +357,6 @@
 			children = (
 				0182436327CA38E800338512 /* CoinAddModule */,
 				016AE40D2784AF0400D7D3CB /* TabBarModule */,
-				0173EB0227833ACD006BD79A /* Application */,
 				0159E620277C511400411F96 /* SignInModule */,
 				0159E623277C521400411F96 /* SignUpModule */,
 				0159E627277C63F400411F96 /* CoinListModule */,
@@ -363,6 +367,7 @@
 				0182435527C6519000338512 /* Extensions */,
 				0159E62A277C86A300411F96 /* CustomUIElements */,
 				0173EB0327833B51006BD79A /* Resources */,
+				017A283427D1100B001F1803 /* Firebase */,
 				016D70BA275E2B290048D540 /* CoinModel.swift */,
 				016D70BC275E30BE0048D540 /* APICaller.swift */,
 				016D70BE275E321D0048D540 /* Constants.swift */,
@@ -389,6 +394,15 @@
 				0172B13B27451709008617DE /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		017A283427D1100B001F1803 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				017A283227D10F0C001F1803 /* FirebaseManager.swift */,
+				017A283527D1102A001F1803 /* FirebaseModel.swift */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 		017BCF2C27C505B500295578 /* SwiftUIView */ = {
@@ -597,7 +611,9 @@
 				016807A4275F89020057CAFC /* DetailCoinViewController.swift in Sources */,
 				017BCF2E27C5060D00295578 /* ChartView.swift in Sources */,
 				0182436D27CA3A3900338512 /* CoinAddViewPresenterProtocol.swift in Sources */,
+				017A283327D10F0C001F1803 /* FirebaseManager.swift in Sources */,
 				016AE40A2784A03800D7D3CB /* WalletViewController.swift in Sources */,
+				017A283627D1102A001F1803 /* FirebaseModel.swift in Sources */,
 				0182436927CA39F600338512 /* CoinAddViewProtocol.swift in Sources */,
 				017A659C27B9381B0072F2BA /* CoinModelParser.swift in Sources */,
 				016D70C3275E44D10048D540 /* CoinTableViewCell.swift in Sources */,
