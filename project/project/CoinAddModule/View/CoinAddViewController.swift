@@ -181,15 +181,15 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func transitionToWalletScreen(model: FirebaseModel) {
-        let vc = WalletViewController()
-        
-        //vc.modalPresentationStyle = .fullScreen
-        vc.configureForTransition(model: model)
-        
-        //dismissController()
-        present(vc, animated: true, completion: nil)
-    }
+//    func transitionToWalletScreen(model: FirebaseModel) {
+//        let vc = WalletViewController()
+//        
+//        //vc.modalPresentationStyle = .fullScreen
+//        vc.configureForTransition(model: model)
+//        
+//        //dismissController()
+//        present(vc, animated: true, completion: nil)
+//    }
     
     func setupFields(viewData: CoinTableViewCellViewModel) {
         alertMaxPriceLabel.text = "\(viewData.ath)"

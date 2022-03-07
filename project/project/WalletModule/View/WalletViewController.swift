@@ -20,27 +20,40 @@ class WalletViewController: UIViewController, WalletViewProtocol {
 //        fatalError("init(coder:) has not been implemented")
 //    }
     
-    private let bagLabel: UILabel = {
-        let label = UILabel()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
-        let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(systemName: "bag", withConfiguration: imageConfig)?.withTintColor(.white)
-        imageAttachment.adjustsImageSizeForAccessibilityContentSizeCategory = true
-        let fullString = NSMutableAttributedString(string: "")
-        fullString.append(NSAttributedString(attachment: imageAttachment))
-        label.attributedText = fullString
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+//    private let bagLabel: UILabel = {
+//        let label = UILabel()
+//        //let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
+//        let imageAttachment = NSTextAttachment()
+////        imageAttachment.image = UIImage(systemName: "bag", withConfiguration: imageConfig)?.withTintColor(.white)
+//        imageAttachment.image = UIImage(systemName: "bag")?.withTintColor(.white)
+//        imageAttachment.adjustsImageSizeForAccessibilityContentSizeCategory = true
+//        let fullString = NSMutableAttributedString(string: "")
+//        fullString.append(NSAttributedString(attachment: imageAttachment))
+//        label.attributedText = fullString
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
+    
+    private let bagImage: UIImageView = {
+        let image = UIImage(systemName: "bag")
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = .white
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     private let totalCostLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 22, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let priceChangeLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .right
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -48,11 +61,13 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     private let walletCoinsListTableView: UITableView = {
         let tableView = UITableView()
         //tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        //tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.register(WalletTableViewCell.self, forCellReuseIdentifier: WalletTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,28 +77,41 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         view.backgroundColor = .systemBlue
         walletCoinsListTableView.dataSource = self
         walletCoinsListTableView.delegate = self
+        
         view.addSubview(walletCoinsListTableView)
-        view.addSubview(bagLabel)
+        view.addSubview(bagImage)
         view.addSubview(totalCostLabel)
         view.addSubview(priceChangeLabel)
         
-        createWalletCoinsListTableViewConstraint()
-        createBagLabelConstraint()
+        
+        createBagImageConstraint()
         createTotalCostLabelConstraint()
         createPriceChangeLabelConstraint()
+        createWalletCoinsListTableViewConstraint()
         walletViewPresenter?.getData()
         // Do any additional setup after loading the view.
     }
+    
 
     
-    func configureForTransition(model: FirebaseModel) {
-        walletViewPresenter?.configureForTransition(model: model)
-    }
+//    func configureForTransition(model: FirebaseModel) {
+//        walletViewPresenter?.configureForTransition(model: model)
+//    }
     
-    func configure(totalCost: String, priceChange: String) {
-        totalCostLabel.text = totalCost + " $"
-        priceChangeLabel.text = priceChange + " $"
-        tableViewReloadData()
+    func configure(totalCost: String, priceChange: String, labelColor: ColorOfLabel) {
+        DispatchQueue.main.async { [self] in
+            totalCostLabel.text = totalCost + " $"
+            //priceChangeLabel.text = priceChange + " $"
+            if labelColor == .green {
+                priceChangeLabel.textColor = .systemGreen
+                priceChangeLabel.text = priceChange + " $"
+            } else {
+                priceChangeLabel.textColor = .systemRed
+                priceChangeLabel.text = "-" + priceChange + " $"
+            }
+            walletCoinsListTableView.reloadData()
+        }
+        
     }
     
     func tableViewReloadData() {
@@ -93,36 +121,36 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         }
     }
     
-    func createBagLabelConstraint() {
+    func createBagImageConstraint() {
         NSLayoutConstraint.activate([
-            bagLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            bagLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            bagLabel.widthAnchor.constraint(equalToConstant: 50),
-            bagLabel.heightAnchor.constraint(equalToConstant: 50)
+            bagImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            bagImage.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            bagImage.widthAnchor.constraint(equalToConstant: 40),
+            bagImage.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
     func createTotalCostLabelConstraint() {
         NSLayoutConstraint.activate([
             totalCostLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            totalCostLabel.leftAnchor.constraint(equalTo: bagLabel.rightAnchor, constant: 20),
-            totalCostLabel.widthAnchor.constraint(equalToConstant: 100),
-            totalCostLabel.heightAnchor.constraint(equalToConstant: 50)
+            totalCostLabel.leftAnchor.constraint(equalTo: bagImage.rightAnchor, constant: 10),
+            totalCostLabel.widthAnchor.constraint(equalToConstant: 150),
+            totalCostLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
     func createPriceChangeLabelConstraint() {
         NSLayoutConstraint.activate([
             priceChangeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            priceChangeLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 20),
-            priceChangeLabel.widthAnchor.constraint(equalToConstant: 100),
-            priceChangeLabel.heightAnchor.constraint(equalToConstant: 50)
+            priceChangeLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            priceChangeLabel.widthAnchor.constraint(equalToConstant: 140),
+            priceChangeLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
     func createWalletCoinsListTableViewConstraint() {
         NSLayoutConstraint.activate([
-            walletCoinsListTableView.topAnchor.constraint(equalTo: bagLabel.bottomAnchor, constant: 10),
+            walletCoinsListTableView.topAnchor.constraint(equalTo: bagImage.bottomAnchor, constant: 10),
             walletCoinsListTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             walletCoinsListTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             walletCoinsListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)

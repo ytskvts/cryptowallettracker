@@ -88,13 +88,13 @@ class FirebaseManager {
         }
     }
     
-    func delete(coinForDelete: Coin) {
+    func delete(id: String) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         let db = configureFB()
         getPortfolio { portfolio in
             guard var portfolio = portfolio else {return}
             for i in 0...portfolio.coins.count - 1 {
-                if portfolio.coins[i].id == coinForDelete.id {
+                if portfolio.coins[i].id == id {
                     portfolio.coins.remove(at: i)
                     var dataForSending = [Dictionary<String, String>]()
                     for coin in portfolio.coins {

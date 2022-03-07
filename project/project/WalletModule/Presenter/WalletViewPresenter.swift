@@ -14,6 +14,8 @@ struct FirebaseModel {
 }
 
 
+
+
 class WalletViewPresenter: WalletViewPresenterProtocol {
     
     weak var view: WalletViewProtocol?
@@ -28,9 +30,14 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
                 totalCostCurrent += data.totalCoinPrice
             }
             for el in data {
-                totalCostOfBuying = el.quantity * el.priceOfBuying
+                totalCostOfBuying += el.quantity * el.priceOfBuying
             }
-            view?.configure(totalCost: "\(totalCostCurrent)", priceChange: "\(totalCostOfBuying)")
+            let color: ColorOfLabel
+            color = totalCostCurrent > totalCostOfBuying ? .green : .red
+            let priceChange = abs(totalCostCurrent - totalCostOfBuying)
+            print(priceChange)
+            view?.configure(totalCost: "\(totalCostCurrent)", priceChange: "\(priceChange)", labelColor: color)
+            //view?.tableViewReloadData()
         }
     }
     
@@ -77,14 +84,21 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
             var convertData = [FirebaseModel]()
             guard let portfolio = portfolio else {return}
             for coin in portfolio.coins {
-                convertData.append(FirebaseModel(id: coin.id, quantity: Double(coin.quantity) ?? 0.0, priceOfBuying: Double(coin.price) ?? 0.0))
+                convertData.append(FirebaseModel(id: coin.id, quantity: Double(coin.quantity) ?? 1.0, priceOfBuying: Double(coin.price) ?? 1.0))
             }
             self.data = convertData
         }
     }
     
-    func configureForTransition(model: FirebaseModel) {
-        data.append(model)
+//    func configureForTransition(model: FirebaseModel) {
+//        data.append(model)
+//    }
+    
+    
+    
+    func deleteCoinFromPortfolio(index: IndexPath) {
+        let id = data[index.row].id
+        FirebaseManager.shared.delete(id: id)
     }
     
     

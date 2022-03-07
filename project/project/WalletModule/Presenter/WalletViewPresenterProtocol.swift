@@ -11,7 +11,9 @@ protocol WalletViewPresenterProtocol {
     
     var viewCellData: [WalletTableViewCellModel] { get set }
     
-    func configureForTransition(model: FirebaseModel)
+    //func configureForTransition(model: FirebaseModel)
+    
+    func deleteCoinFromPortfolio(index: IndexPath)
     
     func getData()
 }

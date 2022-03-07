@@ -34,7 +34,7 @@ struct CoinModelParser {
                 return CoinTableViewCellViewModel(id: $0.id,
                                                   name: $0.name,
                                                   symbol: $0.symbol,
-                                                  currentPrice: convertPrice + " $",
+                                                  currentPrice: convertPrice,
                                                   image: image ?? UIImage(systemName: "eye")!,
                                                   highDayPrice: $0.high_24h ?? 0,
                                                   lowDayPrice: $0.low_24h ?? 0,

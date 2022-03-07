@@ -81,7 +81,7 @@ class CoinTableViewCell: UITableViewCell {
     func configure(with viewModel: CoinTableViewCellViewModel) {
         nameLabel.text = viewModel.name
         symbolLabel.text = viewModel.symbol
-        currentPriceLabel.text = viewModel.currentPrice
+        currentPriceLabel.text = viewModel.currentPrice + " $"
         coinImageView.image = viewModel.image
     }
     

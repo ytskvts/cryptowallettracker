@@ -116,9 +116,9 @@ class WalletTableViewCell: UITableViewCell {
     func createTotalCoinPriceLabelConstraint() {
         NSLayoutConstraint.activate([
             totalCoinPriceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            totalCoinPriceLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 10),
+            totalCoinPriceLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
             totalCoinPriceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
-            totalCoinPriceLabel.widthAnchor.constraint(equalToConstant: 70) //40 height
+            totalCoinPriceLabel.leftAnchor.constraint(equalTo: quantityOfCoinLabel.rightAnchor, constant: 10) //40 height
         ])
     }
 

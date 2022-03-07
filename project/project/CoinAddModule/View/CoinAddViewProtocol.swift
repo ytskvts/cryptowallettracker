@@ -26,7 +26,7 @@ protocol CoinAddViewProtocol: AnyObject {
     
     func didActionWithErrorLabel(errorLabelCondition: ErrorLabelCondition, typeOfError: ErrorType?)
     
-    func transitionToWalletScreen(model: FirebaseModel)
+    //func transitionToWalletScreen(model: FirebaseModel)
     
     func dismissController()
     

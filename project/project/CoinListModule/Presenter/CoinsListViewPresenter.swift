@@ -123,7 +123,10 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
                 self.viewData = models
             }
         case .cancel:
-            viewData = tempViewData
+            if !tempViewData.isEmpty {
+                viewData = tempViewData
+            }
+            //viewData = tempViewData
             guard let tempChosenTypeOfSort = tempChosenTypeOfSort else {
                 return
             }
