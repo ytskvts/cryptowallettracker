@@ -60,20 +60,23 @@ class FirebaseManager {
         getPortfolio { portfolio in
             guard var portfolio = portfolio else {return}
             var isCoinExist = false
-            for i in 0...portfolio.coins.count - 1 {
-                if portfolio.coins[i].id == coinForAdding.id {
-                    let coinPrice = Double(portfolio.coins[i].price) ?? 0.0
-                    let coinQuantity = Double(portfolio.coins[i].quantity) ?? 0.0
-                    let coinForAddingPrice = Double(coinForAdding.price) ?? 0.0
-                    let coinForAddingQuantity = Double(coinForAdding.quantity) ?? 0.0
-                    let resultQuantity = coinQuantity + coinForAddingQuantity
-                    let resultPrice = (coinPrice * coinQuantity + coinForAddingPrice * coinForAddingQuantity) / resultQuantity
-                    portfolio.coins[i].price = "\(resultPrice)"
-                    portfolio.coins[i].quantity = "\(resultQuantity)"
-                    isCoinExist = true
-                    break
+            if portfolio.coins.count >= 1 {
+                for i in 0...portfolio.coins.count - 1 {
+                    if portfolio.coins[i].id == coinForAdding.id {
+                        let coinPrice = Double(portfolio.coins[i].price) ?? 0.0
+                        let coinQuantity = Double(portfolio.coins[i].quantity) ?? 0.0
+                        let coinForAddingPrice = Double(coinForAdding.price) ?? 0.0
+                        let coinForAddingQuantity = Double(coinForAdding.quantity) ?? 0.0
+                        let resultQuantity = coinQuantity + coinForAddingQuantity
+                        let resultPrice = (coinPrice * coinQuantity + coinForAddingPrice * coinForAddingQuantity) / resultQuantity
+                        portfolio.coins[i].price = "\(resultPrice)"
+                        portfolio.coins[i].quantity = "\(resultQuantity)"
+                        isCoinExist = true
+                        break
+                    }
                 }
             }
+            
             if !isCoinExist {
                 portfolio.coins.append(coinForAdding)
             }

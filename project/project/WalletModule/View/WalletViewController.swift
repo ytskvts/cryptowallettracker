@@ -67,7 +67,25 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         return tableView
     }()
     
+    private var refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        //rc.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        rc.attributedTitle = NSAttributedString(string: "Refresh table...", attributes: nil)
+        return rc
+    }()
     
+    func setRefreshControl() {
+        if #available(iOS 10.0, *) {
+            walletCoinsListTableView.refreshControl = refreshControl
+        } else {
+            walletCoinsListTableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshControlAction), for: .valueChanged)
+    }
+    
+    @objc func refreshControlAction() {
+        walletViewPresenter?.getData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +100,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         view.addSubview(bagImage)
         view.addSubview(totalCostLabel)
         view.addSubview(priceChangeLabel)
-        
+        setRefreshControl()
         
         createBagImageConstraint()
         createTotalCostLabelConstraint()
@@ -107,9 +125,10 @@ class WalletViewController: UIViewController, WalletViewProtocol {
                 priceChangeLabel.text = priceChange + " $"
             } else {
                 priceChangeLabel.textColor = .systemRed
-                priceChangeLabel.text = "-" + priceChange + " $"
+                priceChangeLabel.text = priceChange == "0.0" ? priceChange + " $" : "-" + priceChange + " $"
             }
             walletCoinsListTableView.reloadData()
+            self.walletCoinsListTableView.refreshControl?.endRefreshing()
         }
         
     }
@@ -188,5 +207,9 @@ extension WalletViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        walletViewPresenter?.deleteCoinFromPortfolio(index: indexPath)
     }
 }

@@ -134,12 +134,22 @@ final class APICaller {
             return "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=\(sortBy.rawValue)&per_page=20&page=\(numberOfPage)&sparkline=true"
         case .favouriteCoins(let IDs):
             var requestString = ""
-            for id in IDs {
-                requestString += "\(id)%2C"
+            if IDs.count > 1 {
+                for id in IDs {
+                    requestString += "\(id)%2C"
+                }
+                let index = requestString.index(requestString.endIndex, offsetBy: -3)
+                requestString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+                
+            } else {
+                for id in IDs {
+                    requestString += "\(id)"
+                }
+                requestString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString)&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+                
             }
-            let index = requestString.index(requestString.endIndex, offsetBy: -3)
-            requestString = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=\(requestString[..<index])&order=market_cap_desc&per_page=100&page=1&sparkline=false"
             print("favourite coins request url: \(requestString)")
+            
             return requestString
         }
     }

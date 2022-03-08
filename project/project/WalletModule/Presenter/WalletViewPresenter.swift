@@ -98,6 +98,7 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
     
     func deleteCoinFromPortfolio(index: IndexPath) {
         let id = data[index.row].id
+        data.remove(at: index.row)
         FirebaseManager.shared.delete(id: id)
     }
     
