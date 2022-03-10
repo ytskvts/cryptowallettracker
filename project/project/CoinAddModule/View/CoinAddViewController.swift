@@ -151,6 +151,12 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         view.addSubview(alertMinimalQuantityLabel)
         view.addSubview(alertErrorLabel)
         view.addSubview(addCoinToPortfolioButton)
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { nc in
+            self.view.frame.origin.y = 200
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { nc in
+            self.view.frame.origin.y = 0
+        }
         createAlertDescribePriceLabelConstraint()
         createAlertMaxPriceLabelConstraint()
         createAlertChosenPriceTextFieldConstraint()

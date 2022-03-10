@@ -76,12 +76,7 @@ class SignInViewController: UIViewController {
         
         configureTapGesture()
         
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { nc in
-            self.view.frame.origin.y = -200
-        }
-        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { nc in
-            self.view.frame.origin.y = 0
-        }
+    
         NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: nil, queue: nil) { nc in
             self.checkForEnableLogInButton()
         }
