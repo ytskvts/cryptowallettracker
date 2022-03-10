@@ -6,369 +6,373 @@
 //
 
 import UIKit
+import SwiftUI
 
-class DetailCoinViewController: UIViewController {
+class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     
-    private var detailCoinView = DetailCoinView()
-//    private let nameLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .center
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let currentPriceLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .systemGreen
-//        label.textAlignment = .center
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.font = .systemFont(ofSize: 18, weight: .semibold)
-//        label.textAlignment = .center
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let symbolLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .regular)
-//        label.textAlignment = .center
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let coinImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        let image = UIImage()
-//        imageView.image = image
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
-//
-//    private let priceChangeDayLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .regular)
-//        label.textAlignment = .center
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let priceChangeDayPercentLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .regular)
-//        label.textAlignment = .center
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let lowPriceDayLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .regular)
-//        label.textAlignment = .center
-//        label.textColor = .systemRed
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let highPriceDayLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .regular)
-//        label.textAlignment = .center
-//        label.textColor = .systemGreen
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let nameDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Name:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let currentPriceDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Price:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let symbolDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Shortname:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let priceChangeDayDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Price change 24h:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let priceChangeDayPercentDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Price change 24h:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let lowPriceDayDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Lowest price 24h:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    private let highPriceDayDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Highest price 24h:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
+    var detailCoinViewPresenter: DetailCoinViewPresenterProtocol?
     
-    override func loadView() {
-        view = detailCoinView
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var chartViewController: UIHostingController<ChartView>?
+    
+    func setupChartViewController() {
+        guard let chartViewController = chartViewController else {return}
+        addChild(chartViewController)
+        view.addSubview(chartViewController.view)
+        chartViewController.didMove(toParent: self)
+        chartViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        chartViewController.view.backgroundColor = .black
+    }
+    
+    private let addToPortfolioButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+//        let imageConfig = UIImage.SymbolConfiguration(scale: .large)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
+        //bag.badge.plus
+        //plus.square
+        button.setImage(UIImage(systemName: "bag.badge.plus", withConfiguration: imageConfig), for: .normal)
+        button.addTarget(self, action: #selector(addToPortfolioButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func addToPortfolioButtonTapped() {
+        detailCoinViewPresenter?.addToPortfolioButtonAction()
+    }
+    
+    func showVC(data: CoinTableViewCellViewModel) {
+//        #warning("dodelatb")
+//        let vc = CoinAddViewController()
+//        vc.configure(data: data)
+//        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: 200)
+//        let alert = UIAlertController(title: "Fill the fields", message: "", preferredStyle: .actionSheet)
+//        alert.setValue(vc, forKey: "contentViewController")
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in vc.alertAction()}))
+//        self.present(alert, animated: true, completion: nil)
         
+        let panelTransition = PanelTransition()
+        let vc = CoinAddViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = panelTransition
+        vc.configure(data: data)
+        present(vc, animated: true, completion: nil)
         
     }
+    
+    
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let currentPriceLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .systemGreen
+        label.textAlignment = .center
+        label.layer.borderWidth = 1
+        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        label.layer.cornerRadius = 3
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let symbolLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let coinImageView: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage()
+        imageView.image = image
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let priceChangeDayLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textAlignment = .center
+        label.layer.borderWidth = 1
+        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        label.layer.cornerRadius = 3
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let priceChangeDayPercentLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textAlignment = .center
+        label.layer.borderWidth = 1
+        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        label.layer.cornerRadius = 3
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let lowPriceDayLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textAlignment = .center
+        label.textColor = .systemRed
+        label.layer.borderWidth = 1
+        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        label.layer.cornerRadius = 3
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let highPriceDayLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.textAlignment = .center
+        label.textColor = .systemGreen
+        label.layer.borderWidth = 1
+        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        label.layer.cornerRadius = 3
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let currentPriceDecribeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .left
+        label.text = "Price:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let priceChangeDayDecribeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .left
+        label.text = "Price change 24h:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let priceChangeDayPercentDecribeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .left
+        label.text = "Price change 24h:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let lowPriceDayDecribeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .left
+        label.text = "Lowest price 24h:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let highPriceDayDecribeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .left
+        label.text = "Highest price 24h:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let labelsColumnStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution = UIStackView.Distribution.equalSpacing
+        stackView.alignment = UIStackView.Alignment.leading
+        stackView.spacing = 20
+//        stackView.addArrangedSubview(currentPriceDecribeLabel)
+//        stackView.addArrangedSubview(priceChangeDayDecribeLabel)
+//        stackView.addArrangedSubview(priceChangeDayPercentDecribeLabel)
+//        stackView.addArrangedSubview(highPriceDayDecribeLabel)
+//        stackView.addArrangedSubview(lowPriceDayDecribeLabel)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let valuesColumnStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution = UIStackView.Distribution.equalSpacing
+        stackView.alignment = UIStackView.Alignment.fill
+        stackView.spacing = 20
+        //stackView.addArrangedSubview(nameLabel)
+        //stackView.addArrangedSubview(symbolLabel)
+//        stackView.addArrangedSubview(currentPriceLabel)
+//        stackView.addArrangedSubview(priceChangeDayLabel)
+//        stackView.addArrangedSubview(priceChangeDayPercentLabel)
+//        stackView.addArrangedSubview(highPriceDayLabel)
+//        stackView.addArrangedSubview(lowPriceDayLabel)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    func configureStackViews() {
+        labelsColumnStackView.addArrangedSubview(currentPriceDecribeLabel)
+        labelsColumnStackView.addArrangedSubview(priceChangeDayDecribeLabel)
+        labelsColumnStackView.addArrangedSubview(priceChangeDayPercentDecribeLabel)
+        labelsColumnStackView.addArrangedSubview(highPriceDayDecribeLabel)
+        labelsColumnStackView.addArrangedSubview(lowPriceDayDecribeLabel)
+        valuesColumnStackView.addArrangedSubview(currentPriceLabel)
+        valuesColumnStackView.addArrangedSubview(priceChangeDayLabel)
+        valuesColumnStackView.addArrangedSubview(priceChangeDayPercentLabel)
+        valuesColumnStackView.addArrangedSubview(highPriceDayLabel)
+        valuesColumnStackView.addArrangedSubview(lowPriceDayLabel)
+    }
+    //lazy var detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
+    
+//    //var detailCoinView = DetailCoinView()
+//
+//
+//    override func loadView() {
+//        //view = detailCoinView
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        view.backgroundColor = .black
-//        
-//        view.addSubview(nameLabel)
-//        view.addSubview(currentPriceLabel)
-//        view.addSubview(symbolLabel)
-//        view.addSubview(coinImageView)
-//        view.addSubview(priceChangeDayLabel)
-//        view.addSubview(priceChangeDayPercentLabel)
-//        view.addSubview(lowPriceDayLabel)
-//        view.addSubview(highPriceDayLabel)
-//        view.addSubview(nameDecribeLabel)
-//        view.addSubview(currentPriceDecribeLabel)
-//        view.addSubview(symbolDecribeLabel)
-//        view.addSubview(priceChangeDayDecribeLabel)
-//        view.addSubview(priceChangeDayPercentDecribeLabel)
-//        view.addSubview(lowPriceDayDecribeLabel)
-//        view.addSubview(highPriceDayDecribeLabel)
-//        
-//        createCoinImageViewConstraint()
-//        createNameLabelConstraint()
-//        createSymbolLabelConstraint()
-//        createCurrentPriceLabelConstraint()
-//        createPriceChangeDayLabelConstraint()
-//        createPriceChangeDayPercentLabelConstraint()
-//        createLowPriceDayLabelConstraint()
-//        createHighPriceDayLabelConstraint()
-//        createNameDecribeLabelConstraint()
-//        createSymbolDecribeLabelConstraint()
-//        createCurrentPriceDecribeLabelConstraint()
-//        createPriceChangeDayDecribeLabelConstraint()
-//        createPriceChangeDayPercentDecribeLabelConstraint()
-//        createLowPriceDayDecribeLabelConstraint()
-//        createHighPriceDayDecribeLabelConstraint()
+        //detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
+        view.backgroundColor = .black
+        setupChartViewController()
+        configureStackViews()
+        view.addSubview(coinImageView)
+        view.addSubview(addToPortfolioButton)
+        view.addSubview(nameLabel)
+        view.addSubview(symbolLabel)
+        view.addSubview(labelsColumnStackView)
+        view.addSubview(valuesColumnStackView)
+        createCoinImageViewConstraint()
+        createAddToPortfolioButtonConstraint()
+        createNameLabelConstraint()
+        createSymbolLabelConstraint()
+        createChartViewConstraint()
+        createLabelsColumnStackViewConstraint()
+        createLabelsValuesColumnStackViewConstraint()
         
     }
     
-//    //MARK: Constraints
-//    func createCoinImageViewConstraint() {
-//        NSLayoutConstraint.activate([
-//            coinImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-//            coinImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            coinImageView.widthAnchor.constraint(equalToConstant: 200),
-//            coinImageView.heightAnchor.constraint(equalToConstant: 200)
-//        ])
-//    }
-//
-//    func createNameLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            nameLabel.topAnchor.constraint(equalTo: coinImageView.bottomAnchor, constant: 40),
-//            nameLabel.widthAnchor.constraint(equalToConstant: 100),
-//            nameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-//            nameLabel.heightAnchor.constraint(equalToConstant: 20)
-//        ])
-//    }
-//
-//    func createSymbolLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            symbolLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 30),
-//            symbolLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            symbolLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor),
-//            symbolLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createCurrentPriceLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            currentPriceLabel.topAnchor.constraint(equalTo: symbolLabel.bottomAnchor, constant: 30),
-//            currentPriceLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            currentPriceLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor),
-//            currentPriceLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createPriceChangeDayLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            priceChangeDayLabel.topAnchor.constraint(equalTo: currentPriceLabel.bottomAnchor, constant: 30),
-//            priceChangeDayLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            priceChangeDayLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor),
-//            priceChangeDayLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createPriceChangeDayPercentLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            priceChangeDayPercentLabel.topAnchor.constraint(equalTo: priceChangeDayLabel.bottomAnchor, constant: 30),
-//            priceChangeDayPercentLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            priceChangeDayPercentLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor),
-//            priceChangeDayPercentLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createLowPriceDayLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            lowPriceDayLabel.topAnchor.constraint(equalTo: highPriceDayLabel.bottomAnchor, constant: 30),
-//            lowPriceDayLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            lowPriceDayLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor),
-//            lowPriceDayLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createHighPriceDayLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            highPriceDayLabel.topAnchor.constraint(equalTo: priceChangeDayPercentLabel.bottomAnchor, constant: 30),
-//            highPriceDayLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            highPriceDayLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor),
-//            highPriceDayLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createNameDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            nameDecribeLabel.topAnchor.constraint(equalTo: coinImageView.bottomAnchor, constant: 40),
-//            nameDecribeLabel.widthAnchor.constraint(equalToConstant: 200),
-//            nameDecribeLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-//            nameDecribeLabel.heightAnchor.constraint(equalToConstant: 20)
-//        ])
-//    }
-//
-//    func createSymbolDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            symbolDecribeLabel.topAnchor.constraint(equalTo: nameDecribeLabel.bottomAnchor, constant: 30),
-//            symbolDecribeLabel.widthAnchor.constraint(equalTo: nameDecribeLabel.widthAnchor),
-//            symbolDecribeLabel.leftAnchor.constraint(equalTo: nameDecribeLabel.leftAnchor),
-//            symbolDecribeLabel.heightAnchor.constraint(equalTo: nameDecribeLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createCurrentPriceDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            currentPriceDecribeLabel.topAnchor.constraint(equalTo: symbolDecribeLabel.bottomAnchor, constant: 30),
-//            currentPriceDecribeLabel.widthAnchor.constraint(equalTo: nameDecribeLabel.widthAnchor),
-//            currentPriceDecribeLabel.leftAnchor.constraint(equalTo: nameDecribeLabel.leftAnchor),
-//            currentPriceDecribeLabel.heightAnchor.constraint(equalTo: nameDecribeLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createPriceChangeDayDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            priceChangeDayDecribeLabel.topAnchor.constraint(equalTo: currentPriceDecribeLabel.bottomAnchor, constant: 30),
-//            priceChangeDayDecribeLabel.widthAnchor.constraint(equalTo: nameDecribeLabel.widthAnchor),
-//            priceChangeDayDecribeLabel.leftAnchor.constraint(equalTo: nameDecribeLabel.leftAnchor),
-//            priceChangeDayDecribeLabel.heightAnchor.constraint(equalTo: nameDecribeLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createPriceChangeDayPercentDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            priceChangeDayPercentDecribeLabel.topAnchor.constraint(equalTo: priceChangeDayDecribeLabel.bottomAnchor, constant: 30),
-//            priceChangeDayPercentDecribeLabel.widthAnchor.constraint(equalTo: nameDecribeLabel.widthAnchor),
-//            priceChangeDayPercentDecribeLabel.leftAnchor.constraint(equalTo: nameDecribeLabel.leftAnchor),
-//            priceChangeDayPercentDecribeLabel.heightAnchor.constraint(equalTo: nameDecribeLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createLowPriceDayDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            lowPriceDayDecribeLabel.topAnchor.constraint(equalTo: highPriceDayDecribeLabel.bottomAnchor, constant: 30),
-//            lowPriceDayDecribeLabel.widthAnchor.constraint(equalTo: nameDecribeLabel.widthAnchor),
-//            lowPriceDayDecribeLabel.leftAnchor.constraint(equalTo: nameDecribeLabel.leftAnchor),
-//            lowPriceDayDecribeLabel.heightAnchor.constraint(equalTo: nameDecribeLabel.heightAnchor)
-//        ])
-//    }
-//
-//    func createHighPriceDayDecribeLabelConstraint() {
-//        NSLayoutConstraint.activate([
-//            highPriceDayDecribeLabel.topAnchor.constraint(equalTo: priceChangeDayPercentDecribeLabel.bottomAnchor, constant: 30),
-//            highPriceDayDecribeLabel.widthAnchor.constraint(equalTo: nameDecribeLabel.widthAnchor),
-//            highPriceDayDecribeLabel.leftAnchor.constraint(equalTo: nameDecribeLabel.leftAnchor),
-//            highPriceDayDecribeLabel.heightAnchor.constraint(equalTo: nameDecribeLabel.heightAnchor)
-//        ])
+    func createAddToPortfolioButtonConstraint() {
+        NSLayoutConstraint.activate([
+            addToPortfolioButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            addToPortfolioButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            addToPortfolioButton.widthAnchor.constraint(equalToConstant: 50),
+            addToPortfolioButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    func createChartViewConstraint() {
+        guard let chartView = chartViewController?.view else {return}
+        NSLayoutConstraint.activate([
+            chartView.topAnchor.constraint(equalTo: coinImageView.bottomAnchor, constant: 10),
+            chartView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            chartView.heightAnchor.constraint(equalToConstant: 230)
+        ])
+    }
+    
+    func createLabelsColumnStackViewConstraint() {
+        guard let chartView = chartViewController?.view else {return}
+        NSLayoutConstraint.activate([
+            labelsColumnStackView.topAnchor.constraint(equalTo: chartView.bottomAnchor, constant: 10),
+            labelsColumnStackView.widthAnchor.constraint(equalToConstant: 200),
+            labelsColumnStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            labelsColumnStackView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    
+    func createLabelsValuesColumnStackViewConstraint() {
+        
+        NSLayoutConstraint.activate([
+            valuesColumnStackView.topAnchor.constraint(equalTo: labelsColumnStackView.topAnchor),
+            valuesColumnStackView.widthAnchor.constraint(equalToConstant: 100),
+            valuesColumnStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            valuesColumnStackView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    
+    func createCoinImageViewConstraint() {
+        
+        NSLayoutConstraint.activate([
+            coinImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            coinImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            coinImageView.widthAnchor.constraint(equalToConstant: 50),
+            coinImageView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    func createNameLabelConstraint() {
+        
+        NSLayoutConstraint.activate([
+            nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            nameLabel.leftAnchor.constraint(equalTo: coinImageView.rightAnchor, constant: 20),
+            nameLabel.rightAnchor.constraint(equalTo: addToPortfolioButton.leftAnchor, constant: -10),
+            nameLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
+    func createSymbolLabelConstraint() {
+        
+        NSLayoutConstraint.activate([
+            symbolLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            symbolLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor),
+            symbolLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
+            symbolLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor)
+        ])
+    }
+
+//    func configure(with viewModel: CoinTableViewCellViewModel) {
+//        detailCoinView.configureDetailVC(with: viewModel)
 //    }
     
-//    func configure(with viewModel: CoinTableViewCellViewModel) {
-//        detailCoinView
-//        nameLabel.text = viewModel.name
-//        symbolLabel.text = viewModel.symbol
-//        currentPriceLabel.text = viewModel.currentPrice
-//        coinImageView.image = viewModel.image
-//        if viewModel.priceChangeDay > 0 {
-//            priceChangeDayLabel.textColor = .systemGreen
-//            priceChangeDayPercentLabel.textColor = .systemGreen
-//        } else {
-//            priceChangeDayLabel.textColor = .systemRed
-//            priceChangeDayPercentLabel.textColor = .systemRed
-//        }
-//        priceChangeDayLabel.text = "\(viewModel.priceChangeDay) $"
-//        priceChangeDayPercentLabel.text = "\(viewModel.priceChangePercentageDay) %"
-//        lowPriceDayLabel.text = "\(viewModel.lowDayPrice) $"
-//        highPriceDayLabel.text = "\(viewModel.highDayPrice) $"
+//    func setupView(detailCoinView: DetailCoinView) {
+//        view = detailCoinView
 //    }
-    func configure(with viewModel: CoinTableViewCellViewModel) {
-        detailCoinView.configureDetailVC(with: viewModel)
+    
+    func configure(with data: CoinTableViewCellViewModel) {
+        detailCoinViewPresenter?.configure(data: data)
+    }
+    
+    func setupFields(viewData: CoinTableViewCellViewModel) {
+        nameLabel.text = viewData.name
+        symbolLabel.text = viewData.symbol
+        currentPriceLabel.text = viewData.currentPrice
+        coinImageView.image = viewData.image
+        if viewData.priceChangeDay > 0 {
+            priceChangeDayLabel.textColor = .systemGreen
+            priceChangeDayPercentLabel.textColor = .systemGreen
+        } else {
+            priceChangeDayLabel.textColor = .systemRed
+            priceChangeDayPercentLabel.textColor = .systemRed
+        }
+        priceChangeDayLabel.text = "\(viewData.priceChangeDay) $"
+        priceChangeDayPercentLabel.text = "\(viewData.priceChangePercentageDay) %"
+        lowPriceDayLabel.text = "\(viewData.lowDayPrice) $"
+        highPriceDayLabel.text = "\(viewData.highDayPrice) $"
+        chartViewController = UIHostingController(rootView: ChartView(coin: viewData))
     }
 }

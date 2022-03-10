@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Coin: Codable {
+struct CoinModel: Codable {
 //    {
 //        "id": "bitcoin",
 //        "symbol": "btc",
@@ -46,16 +46,21 @@ struct Coin: Codable {
 //    let market_cap_rank: Int
 //    let fully_diluted_valuation: Int
 //    let total_volume: Int
-    let high_24h: Double
-    let low_24h: Double
-    let price_change_24h: Double
-    let price_change_percentage_24h: Double
+    let high_24h: Double?
+    let low_24h: Double?
+    let price_change_24h: Double?
+    let price_change_percentage_24h: Double?
 //    let circulating_supply: Int
-//    let ath: Double
+    let ath: Double
 //    let ath_change_percentage: Double
 //    let ath_date: String
-//    let atl: Double
+    let atl: Double
 //    let atl_change_percentage: Double
 //    let atl_date: String
-//    let last_updated: String
+    let lastUpdated: String?
+    let sparkline_in_7d: SparklineIn7D?
+}
+
+struct SparklineIn7D: Codable {
+    let price: [Double]?
 }

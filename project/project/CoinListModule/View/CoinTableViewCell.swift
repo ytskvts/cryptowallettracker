@@ -10,6 +10,7 @@ import UIKit
 #warning("Correct this")
 struct CoinTableViewCellViewModel {
     
+    let id: String
     let name: String
     let symbol: String
     let currentPrice: String
@@ -18,6 +19,10 @@ struct CoinTableViewCellViewModel {
     let lowDayPrice: Double
     let priceChangeDay: Double
     let priceChangePercentageDay: Double
+    let lastUpdated: String?
+    let sparklineIn7D: SparklineIn7D?
+    let ath: Double
+    let atl: Double
 }
 
 class CoinTableViewCell: UITableViewCell {
@@ -76,7 +81,7 @@ class CoinTableViewCell: UITableViewCell {
     func configure(with viewModel: CoinTableViewCellViewModel) {
         nameLabel.text = viewModel.name
         symbolLabel.text = viewModel.symbol
-        currentPriceLabel.text = viewModel.currentPrice
+        currentPriceLabel.text = viewModel.currentPrice + " $"
         coinImageView.image = viewModel.image
     }
     

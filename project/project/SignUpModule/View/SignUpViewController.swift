@@ -168,6 +168,7 @@ class SignUpViewController: UIViewController {
                         strongSelf.cleanInputSignUpFields()
                         strongSelf.emailTextField.becomeFirstResponder()
                     } ))
+                    
                     strongSelf.present(alert, animated: true)
                     return
                 }
@@ -176,10 +177,13 @@ class SignUpViewController: UIViewController {
                 let vc = CoinsListViewController()
                 vc.modalPresentationStyle = .fullScreen
                 strongSelf.present(vc, animated: true, completion: nil)
+                #warning("сбда добавить создание поля монет в firestore")
+                FirebaseManager.shared.createUserDocumentAndCoinsArrayInDB()
                 // save email and password
                 // strongSelf.cleanInputSignUpFields()
                 // maybe do transiton on SignIn screen
             })
+            
         } else {
             errorLabel.text = isValid.isValidInput().1
             errorLabel.isHidden = false
