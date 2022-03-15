@@ -174,9 +174,10 @@ class SignUpViewController: UIViewController {
                 }
                 print("You have sign up in")
                 //fix
-                let vc = CoinsListViewController()
-                vc.modalPresentationStyle = .fullScreen
-                strongSelf.present(vc, animated: true, completion: nil)
+//                let vc = CoinsListViewController()
+//                vc.modalPresentationStyle = .fullScreen
+//                strongSelf.present(vc, animated: true, completion: nil)
+                strongSelf.navigateToMainScreen()
                 #warning("сбда добавить создание поля монет в firestore")
                 FirebaseManager.shared.createUserDocumentAndCoinsArrayInDB()
                 // save email and password
@@ -193,6 +194,12 @@ class SignUpViewController: UIViewController {
             checkForEnableSignUpButton()
             emailTextField.becomeFirstResponder()
         }
+    }
+    
+    func navigateToMainScreen() {
+        let vc = TabBarController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     //hide keyboard
