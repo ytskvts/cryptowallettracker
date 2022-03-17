@@ -4,11 +4,21 @@
 //
 //  Created by Dzmitry on 4.01.22.
 //
-import FirebaseAuth
+
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, SettingsViewProtocol {
 
+    var settingsViewPresenter: SettingsViewPresenterProtocol?
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        settingsViewPresenter = SettingsViewPresenter(view: self)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let SignOutButton : AuthorizationButton = {
         let button = AuthorizationButton()
@@ -34,21 +44,19 @@ class SettingsViewController: UIViewController {
 
     
     @objc private func didTapSignOutButton() {
-        do {
-            try Auth.auth().signOut()
-            print("Sign Out")
-            let vc = SignInViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        } catch {
-            print(error)
-            
-            let ac = UIAlertController(title: "Sign Out unavailable", message: "Something wrong. Check your connection and try again.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-            
-        }
-        
+        settingsViewPresenter?.signOut()
+    }
+    
+    func transitionToSignInScreen() {
+        let vc = SignInViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func presentErrorAlert() {
+        let ac = UIAlertController(title: "Sign Out unavailable", message: "Something wrong. Check your connection and try again.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     func createSignOutButtonConstraint() {

@@ -57,6 +57,9 @@
 		0182437727CFC23600338512 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182437627CFC23500338512 /* Transition.swift */; };
 		0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */; };
 		8967B11E1FB6797C9E5ADB6F /* Pods_project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEAF44201DDA84358A03231 /* Pods_project.framework */; };
+		D5FFA33B27E39BDF0032FEB1 /* SettingsViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFA33A27E39BDF0032FEB1 /* SettingsViewProtocol.swift */; };
+		D5FFA33D27E39CDF0032FEB1 /* SettingsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFA33C27E39CDF0032FEB1 /* SettingsViewPresenter.swift */; };
+		D5FFA33F27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFA33E27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +116,9 @@
 		0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenterProtocol.swift; sourceTree = "<group>"; };
 		4C1352745AD678EDD988A64A /* Pods-project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project.debug.xcconfig"; path = "Target Support Files/Pods-project/Pods-project.debug.xcconfig"; sourceTree = "<group>"; };
 		8DEAF44201DDA84358A03231 /* Pods_project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5FFA33A27E39BDF0032FEB1 /* SettingsViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewProtocol.swift; sourceTree = "<group>"; };
+		D5FFA33C27E39CDF0032FEB1 /* SettingsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewPresenter.swift; path = project/SettingsModule/View/SettingsViewPresenter.swift; sourceTree = SOURCE_ROOT; };
+		D5FFA33E27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewPresenterProtocol.swift; path = project/SettingsModule/View/SettingsViewPresenterProtocol.swift; sourceTree = SOURCE_ROOT; };
 		DED9EC7705B3E6B020354CFF /* Pods-project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project.release.xcconfig"; path = "Target Support Files/Pods-project/Pods-project.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -314,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				016AE40B2784A05300D7D3CB /* SettingsViewController.swift */,
+				D5FFA33A27E39BDF0032FEB1 /* SettingsViewProtocol.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -321,6 +328,8 @@
 		016AE40827849FFF00D7D3CB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				D5FFA33C27E39CDF0032FEB1 /* SettingsViewPresenter.swift */,
+				D5FFA33E27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -621,10 +630,13 @@
 				017A659827B90AFB0072F2BA /* CoinsListViewPresenterProtocol.swift in Sources */,
 				016576672779A75800BAF64B /* SignInPresenter.swift in Sources */,
 				0172B13727451707008617DE /* SignInViewController.swift in Sources */,
+				D5FFA33B27E39BDF0032FEB1 /* SettingsViewProtocol.swift in Sources */,
 				0159E631277C87D400411F96 /* PasswordTextField.swift in Sources */,
 				0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */,
 				0172B13327451707008617DE /* AppDelegate.swift in Sources */,
+				D5FFA33D27E39CDF0032FEB1 /* SettingsViewPresenter.swift in Sources */,
 				0182437527CE138B00338512 /* WalletTableViewCell.swift in Sources */,
+				D5FFA33F27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift in Sources */,
 				0174625327B80E3B0076E9D8 /* CoinsListViewPresenter.swift in Sources */,
 				016576692779A89B00BAF64B /* SignInViewProtocol.swift in Sources */,
 				0182435927C6573C00338512 /* Color.swift in Sources */,
