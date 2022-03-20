@@ -129,7 +129,19 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         return button
     }()
     
+    private let cancelButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.5942070484, blue: 0.9925900102, alpha: 1)
+        button.layer.cornerRadius = 3
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Cancel", for: .normal)
+        button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        return button
+    }()
     
+    @objc func didTapCancelButton() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     //Mark: Alert elements emplement end
 
@@ -151,6 +163,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         view.addSubview(alertMinimalQuantityLabel)
         view.addSubview(alertErrorLabel)
         view.addSubview(addCoinToPortfolioButton)
+        view.addSubview(cancelButton)
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { nc in
             self.view.frame.origin.y = 200
         }
@@ -167,6 +180,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         createAlertMinimalQuantityLabelConstraint()
         createAlertErrorLabelConstraint()
         createAddCoinToPortfolioButtonConstraint()
+        createCancelButtonConstraint()
     }
     
     @objc func didTapAddCoinToPortfolioButton() {
@@ -308,10 +322,19 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     
     func createAddCoinToPortfolioButtonConstraint() {
         NSLayoutConstraint.activate([
-            addCoinToPortfolioButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addCoinToPortfolioButton.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
             addCoinToPortfolioButton.widthAnchor.constraint(equalToConstant: 80),
             addCoinToPortfolioButton.heightAnchor.constraint(equalToConstant: 30),
             addCoinToPortfolioButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+        ])
+    }
+    
+    func createCancelButtonConstraint() {
+        NSLayoutConstraint.activate([
+            cancelButton.rightAnchor.constraint(equalTo: view.centerXAnchor, constant: -20),
+            cancelButton.widthAnchor.constraint(equalToConstant: 80),
+            cancelButton.heightAnchor.constraint(equalToConstant: 30),
+            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
         ])
     }
 
