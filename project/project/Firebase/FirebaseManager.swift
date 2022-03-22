@@ -24,14 +24,7 @@ class FirebaseManager {
         return db
     }
     
-//    func getPost(collection: String, docName: String, completion: @escaping (Document?) -> Void) {
-//        let db = configureFB()
-//        db.collection(collection).document(docName).getDocument(completion: { (document, error) in
-//            guard error == nil else {completion(nil); return}
-//            let doc = Document(priceOfBuying: document?.get("price_of_buying") as! Double, quantity: document?.get("quantity") as! Double)
-//            completion(doc)
-//        })
-//    }
+
     
     func getPortfolio(completion: @escaping (Portfolio?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
@@ -117,7 +110,7 @@ class FirebaseManager {
     
     func createUserDocumentAndCoinsArrayInDB() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
-        print(Auth.auth().currentUser?.uid ?? "fuck")
+        print(Auth.auth().currentUser?.uid ?? "can't print uiid")
         let db = configureFB()
         let usersRef = db.collection("users")
         usersRef.document(userId).setData(["coins" : [] ])

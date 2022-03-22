@@ -13,10 +13,6 @@ class DetailCoinView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
         label.textAlignment = .left
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,10 +35,6 @@ class DetailCoinView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .left
-//        label.layer.borderWidth = 1
-//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        label.layer.cornerRadius = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -105,15 +97,6 @@ class DetailCoinView: UIView {
         return label
     }()
     
-//    private let nameDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Name:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-    
     private let currentPriceDecribeLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .medium)
@@ -122,15 +105,6 @@ class DetailCoinView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-//    private let symbolDecribeLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .systemFont(ofSize: 18, weight: .medium)
-//        label.textAlignment = .left
-//        label.text = "Shortname:"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
     
     private let priceChangeDayDecribeLabel: UILabel = {
         let label = UILabel()
@@ -174,8 +148,6 @@ class DetailCoinView: UIView {
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.leading
         stackView.spacing = 40
-        //stackView.addArrangedSubview(nameDecribeLabel)
-        //stackView.addArrangedSubview(symbolDecribeLabel)
         stackView.addArrangedSubview(currentPriceDecribeLabel)
         stackView.addArrangedSubview(priceChangeDayDecribeLabel)
         stackView.addArrangedSubview(priceChangeDayPercentDecribeLabel)
@@ -191,8 +163,6 @@ class DetailCoinView: UIView {
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.fill
         stackView.spacing = 40
-        //stackView.addArrangedSubview(nameLabel)
-        //stackView.addArrangedSubview(symbolLabel)
         stackView.addArrangedSubview(currentPriceLabel)
         stackView.addArrangedSubview(priceChangeDayLabel)
         stackView.addArrangedSubview(priceChangeDayPercentLabel)

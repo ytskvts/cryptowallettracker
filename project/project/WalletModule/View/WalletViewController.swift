@@ -11,28 +11,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     
     var walletViewPresenter: WalletViewPresenterProtocol?
     
-//    init() {
-//        super.init(nibName: nil, bundle: nil)
-//        walletViewPresenter = WalletViewPresenter(view: self)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-//    private let bagLabel: UILabel = {
-//        let label = UILabel()
-//        //let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
-//        let imageAttachment = NSTextAttachment()
-////        imageAttachment.image = UIImage(systemName: "bag", withConfiguration: imageConfig)?.withTintColor(.white)
-//        imageAttachment.image = UIImage(systemName: "bag")?.withTintColor(.white)
-//        imageAttachment.adjustsImageSizeForAccessibilityContentSizeCategory = true
-//        let fullString = NSMutableAttributedString(string: "")
-//        fullString.append(NSAttributedString(attachment: imageAttachment))
-//        label.attributedText = fullString
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
+
     
     private let bagImage: UIImageView = {
         let image = UIImage(systemName: "bag")
@@ -60,8 +39,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     
     private let walletCoinsListTableView: UITableView = {
         let tableView = UITableView()
-        //tableView.translatesAutoresizingMaskIntoConstraints = false
-        //tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         tableView.register(WalletTableViewCell.self, forCellReuseIdentifier: WalletTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -69,7 +47,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     
     private var refreshControl: UIRefreshControl = {
         let rc = UIRefreshControl()
-        //rc.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        
         rc.attributedTitle = NSAttributedString(string: "Refresh table...", attributes: nil)
         return rc
     }()
@@ -107,19 +85,14 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         createPriceChangeLabelConstraint()
         createWalletCoinsListTableViewConstraint()
         walletViewPresenter?.getData()
-        // Do any additional setup after loading the view.
+        
     }
     
 
-    
-//    func configureForTransition(model: FirebaseModel) {
-//        walletViewPresenter?.configureForTransition(model: model)
-//    }
-    
     func configure(totalCost: String, priceChange: String, labelColor: ColorOfLabel) {
         DispatchQueue.main.async { [self] in
             totalCostLabel.text = totalCost + " $"
-            //priceChangeLabel.text = priceChange + " $"
+            
             if labelColor == .green {
                 priceChangeLabel.textColor = .systemGreen
                 priceChangeLabel.text = priceChange + " $"
@@ -136,7 +109,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     func tableViewReloadData() {
         DispatchQueue.main.async {
             self.walletCoinsListTableView.reloadData()
-            //self.coinsListTableView.refreshControl?.endRefreshing()
+            
         }
     }
     
@@ -182,14 +155,6 @@ extension WalletViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //coinsListViewPresenter.didSelectRow(at: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        //coinsListViewPresenter.willDisplay(forRowAt: indexPath)
     }
 }
 

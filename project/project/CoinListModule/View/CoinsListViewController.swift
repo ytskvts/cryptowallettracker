@@ -33,8 +33,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         let fullString = NSMutableAttributedString(string: "")
         fullString.append(NSAttributedString(attachment: imageAttachment))
         label.attributedText = fullString
-        //label.layer.borderWidth = 1
-        //label.layer.borderColor = UIColor.white.cgColor
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -42,8 +40,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     
     private let typeOfSortLabel: UILabel = {
         let label = UILabel()
-        //label.layer.borderWidth = 1
-        //label.layer.borderColor = UIColor.white.cgColor
         label.textAlignment = .left
         label.numberOfLines = 1
         label.sizeToFit()
@@ -53,18 +49,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         return label
     }()
     
-//    private let typeOfSortTextField: UITextField = {
-//        let textField = TypeOfSortTextField()
-//        textField.text = "Market capitalization"
-////        textField.addTarget(self, action: #selector(CoinsListViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        let image = UIImageView(image: UIImage(systemName: "chevron.down"))
-////        let rightView = UIView()
-////        rightView.addSubview(image!)
-//        textField.rightView = image
-//        textField.rightViewMode = .always
-//        return textField
-//    }()
     
     var typeOfSortPicker: UIPickerView = {
         let pickerView = UIPickerView()
@@ -97,7 +81,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     
     private var refreshControl: UIRefreshControl = {
         let rc = UIRefreshControl()
-        //rc.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         rc.attributedTitle = NSAttributedString(string: "Refresh table...", attributes: nil)
         return rc
     }()
@@ -120,7 +103,6 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
                                           y: .zero,
                                           width: coinsListTableView.frame.width,
                                           height: 30))
-//        coinsListTableView.tableHeaderView = headerView
         setGestures(for: [describeTypeOfSortLabel, typeOfSortLabel])
         headerView.addSubview(typeOfSortLabel)
         headerView.addSubview(describeTypeOfSortLabel)
@@ -154,11 +136,8 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         coinsListViewPresenter = CoinsListViewPresenter(view: self)
         title = coinsListViewPresenter.getNavigationTitle()
         view.addSubview(coinsListTableView)
-//        view.addSubview(describeTypeOfSortLabel)
-//        view.addSubview(typeOfSortTextField)
         coinsListTableView.dataSource = self
         coinsListTableView.delegate = self
-        //coinsListTableView.prefetchDataSource = self
         typeOfSortPicker.delegate = self
         typeOfSortPicker.dataSource = self
         setRefreshControl()
@@ -198,25 +177,9 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     }
     
     func showDetailVC(data: CoinTableViewCellViewModel) {
-//        let panelTransition = PanelTransition()
-//        let vc = DetailCoinViewController()
-//        vc.modalPresentationStyle = .custom
-//        vc.transitioningDelegate = panelTransition
-//        vc.configure(with: data)
-//        present(vc, animated: true, completion: nil)
-        
-        
-        
-//        FirebaseManager.shared.getPortfolio { portfolio in
-//            guard let portfolio = portfolio else {return}
-//            print(portfolio)
-//            print(portfolio.coins[0].id)
-//        }
-        
-        
+
         let vc = DetailCoinViewController()
         vc.configure(with: data)
-        //navigationController?.pushViewController(vc, animated: true)
         present(vc, animated: true, completion: nil)
         
     }
@@ -270,11 +233,6 @@ extension CoinsListViewController: UITableViewDataSource {
     }
 }
 
-//extension CoinsListViewController: UITableViewDataSourcePrefetching {
-//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-//        coinsListViewPresenter.prefetchRows(at: indexPaths)
-//    }
-//}
 
 extension CoinsListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

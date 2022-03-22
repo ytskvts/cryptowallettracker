@@ -37,13 +37,13 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
             let priceChange = abs(totalCostCurrent - totalCostOfBuying)
             print(priceChange)
             view?.configure(totalCost: "\(totalCostCurrent)", priceChange: "\(priceChange)", labelColor: color)
-            //view?.tableViewReloadData()
+            
         }
     }
     
     var viewData: [CoinTableViewCellViewModel] = [] {
         didSet {
-            print("WalletViewPresenter viewData didset")
+            //print("WalletViewPresenter viewData didset")
             var newViewCellData: [WalletTableViewCellModel] = []
             viewData.forEach { model in
                 for firebaseModel in data {
@@ -64,7 +64,7 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
     
     var data: [FirebaseModel] = [] {
         didSet {
-            //загрузить на firebase
+            
             var idsArray: [String] = []
             data.forEach { coin in
                 idsArray.append(coin.id)
@@ -90,9 +90,6 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
         }
     }
     
-//    func configureForTransition(model: FirebaseModel) {
-//        data.append(model)
-//    }
     
     
     

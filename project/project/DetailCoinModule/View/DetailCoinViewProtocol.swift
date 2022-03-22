@@ -9,8 +9,6 @@ import Foundation
 
 protocol DetailCoinViewProtocol: AnyObject {
     
-    //var detailCoinView: DetailCoinView {get set}
-    //func setupView(detailCoinView: DetailCoinView)
     func setupFields(viewData: CoinTableViewCellViewModel)
     
     func showVC(data: CoinTableViewCellViewModel)

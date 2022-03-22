@@ -30,7 +30,7 @@ struct CoinModelParser {
             do {
                 let imageData = try Data(contentsOf: URL(string: $0.image)!)
                 let image = UIImage(data: imageData)
-                print("vkusnp")
+                //print("vkusnp")
                 return CoinTableViewCellViewModel(id: $0.id,
                                                   name: $0.name,
                                                   symbol: $0.symbol,

@@ -14,7 +14,6 @@ enum ColorOfLabel {
 
 protocol WalletViewProtocol: AnyObject {
     
-    //func configureForTransition(model: FirebaseModel)
     
     func configure(totalCost: String, priceChange: String, labelColor: ColorOfLabel)
     

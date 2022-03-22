@@ -35,10 +35,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     private let addToPortfolioButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-//        let imageConfig = UIImage.SymbolConfiguration(scale: .large)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
-        //bag.badge.plus
-        //plus.square
         button.setImage(UIImage(systemName: "bag.badge.plus", withConfiguration: imageConfig), for: .normal)
         button.addTarget(self, action: #selector(addToPortfolioButtonTapped), for: .touchUpInside)
         return button
@@ -49,15 +46,6 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     }
     
     func showVC(data: CoinTableViewCellViewModel) {
-//        #warning("dodelatb")
-//        let vc = CoinAddViewController()
-//        vc.configure(data: data)
-//        vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: 200)
-//        let alert = UIAlertController(title: "Fill the fields", message: "", preferredStyle: .actionSheet)
-//        alert.setValue(vc, forKey: "contentViewController")
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in vc.alertAction()}))
-//        self.present(alert, animated: true, completion: nil)
-        
         let panelTransition = PanelTransition()
         let vc = CoinAddViewController()
         vc.modalPresentationStyle = .custom
@@ -208,11 +196,6 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.leading
         stackView.spacing = 20
-//        stackView.addArrangedSubview(currentPriceDecribeLabel)
-//        stackView.addArrangedSubview(priceChangeDayDecribeLabel)
-//        stackView.addArrangedSubview(priceChangeDayPercentDecribeLabel)
-//        stackView.addArrangedSubview(highPriceDayDecribeLabel)
-//        stackView.addArrangedSubview(lowPriceDayDecribeLabel)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -223,13 +206,6 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         stackView.distribution = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.fill
         stackView.spacing = 20
-        //stackView.addArrangedSubview(nameLabel)
-        //stackView.addArrangedSubview(symbolLabel)
-//        stackView.addArrangedSubview(currentPriceLabel)
-//        stackView.addArrangedSubview(priceChangeDayLabel)
-//        stackView.addArrangedSubview(priceChangeDayPercentLabel)
-//        stackView.addArrangedSubview(highPriceDayLabel)
-//        stackView.addArrangedSubview(lowPriceDayLabel)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -246,18 +222,10 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         valuesColumnStackView.addArrangedSubview(highPriceDayLabel)
         valuesColumnStackView.addArrangedSubview(lowPriceDayLabel)
     }
-    //lazy var detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
-    
-//    //var detailCoinView = DetailCoinView()
-//
-//
-//    override func loadView() {
-//        //view = detailCoinView
-//    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //detailCoinViewPresenter = DetailCoinViewPresenter(view: self)
         view.backgroundColor = .black
         setupChartViewController()
         configureStackViews()
@@ -345,13 +313,6 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         ])
     }
 
-//    func configure(with viewModel: CoinTableViewCellViewModel) {
-//        detailCoinView.configureDetailVC(with: viewModel)
-//    }
-    
-//    func setupView(detailCoinView: DetailCoinView) {
-//        view = detailCoinView
-//    }
     
     func configure(with data: CoinTableViewCellViewModel) {
         detailCoinViewPresenter?.configure(data: data)

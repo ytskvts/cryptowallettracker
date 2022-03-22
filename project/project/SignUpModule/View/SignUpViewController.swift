@@ -95,10 +95,6 @@ class SignUpViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //faceid
-        //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) == true { ... }
-        //else emailTextField.becomeFirstResponder()
-        
     }
     
 //MARK: Constraints
@@ -157,7 +153,6 @@ class SignUpViewController: UIViewController {
               let confirmPassword = confirmPasswordTextField.text else {return}
         
         let isValid = Validation(email: email, password: password, confirmPassword: confirmPassword)
-        // isValidInput return (isHaveMistake Bool, errorLabelText String)
         if isValid.isValidInput().0 {
             FirebaseAuth.Auth.auth().createUser(withEmail: isValid.email, password: isValid.password,
                                                 completion: { [weak self] result, error in
@@ -173,16 +168,8 @@ class SignUpViewController: UIViewController {
                     return
                 }
                 print("You have sign up in")
-                //fix
-//                let vc = CoinsListViewController()
-//                vc.modalPresentationStyle = .fullScreen
-//                strongSelf.present(vc, animated: true, completion: nil)
                 strongSelf.navigateToMainScreen()
-                #warning("сбда добавить создание поля монет в firestore")
                 FirebaseManager.shared.createUserDocumentAndCoinsArrayInDB()
-                // save email and password
-                // strongSelf.cleanInputSignUpFields()
-                // maybe do transiton on SignIn screen
             })
             
         } else {

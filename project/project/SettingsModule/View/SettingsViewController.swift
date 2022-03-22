@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, SettingsViewProtocol {
         title = "Settings"
         view.backgroundColor = .black
         view.addSubview(SignOutButton)
-        // Do any additional setup after loading the view.
+        
     }
     
     override func viewDidLayoutSubviews() {

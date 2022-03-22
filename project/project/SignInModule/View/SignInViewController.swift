@@ -94,13 +94,8 @@ class SignInViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         biometric()
-        //faceid
-        //if (isAuthorized && (userDefaults.email.isEmpty && userDefaults.email) == false) { ... }
-        //else emailTextField.becomeFirstResponder()
-        
     }
     
-// MARK: Bad setup for constraints, in future change for stackview
     func createEmailTextFieldConstraint() {
         NSLayoutConstraint.activate([
             emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
@@ -231,13 +226,13 @@ class SignInViewController: UIViewController {
         var error: NSError?
         
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Identify yourself!"
+            let reason = "Identify yourself."
             
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, authenticationError in
                 DispatchQueue.main.async {
                     if success {
                         if Auth.auth().currentUser != nil {
-                            print("user is signed in")
+                            print("User is signed in.")
                             guard let self = self else {return}
                             self.navigateToMainScreen()
                         }
@@ -283,11 +278,6 @@ extension SignInViewController: UITextFieldDelegate {
 }
 
 extension SignInViewController: SignInViewProtocol {
-//    func navigateToMainScreen() {
-//        let vc = CoinsListViewController()
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: true, completion: nil)
-//    }
     
     func navigateToMainScreen() {
         let vc = TabBarController()
@@ -297,7 +287,7 @@ extension SignInViewController: SignInViewProtocol {
     
     func showAlert() {
         let alert = UIAlertController(title: "Error", message: "Unable to login", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Try once more", style: .default, handler: {_ in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
             self.cleanInputSignInFields()
             self.emailTextField.becomeFirstResponder()
         } ))

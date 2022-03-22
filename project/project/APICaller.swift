@@ -38,7 +38,6 @@ enum TypeOfSort: String {
 
 enum TypeOfRequest {
     case searchingRequest(searchingText: String, sortBy: TypeOfSort)
-    //надо будет в префетчинг чекнуть не изменился ли searchingText в сравнении с searchingTextTemp если изменился, то numberOfPage = 1
     case allCurrencies(sortBy: TypeOfSort, numberOfPage: Int)
     case favouriteCoins(IDs: [String])
 }
@@ -50,9 +49,7 @@ struct SearchingModel: Codable {
     let coins: [SearchingCoin]
 }
 
-//struct SearchingModel: Codable {
-//    let id: String
-//}
+
 
 final class APICaller {
     static let shared = APICaller()
@@ -156,9 +153,9 @@ final class APICaller {
     
     public func doRequest(requestType: TypeOfRequest, completion: @escaping (Result<[CoinModel], Error>) -> Void) {
         let urlString = buildURLString(requestType: requestType)
-        //print(urlString)
+        
         guard let url = URL(string: urlString) else {return}
-        print("build url from urlString successfull")
+        //print("build url from urlString successfull")
         let task = URLSession.shared.dataTask(with: url) {data, _, error in
             guard let data = data, error == nil else {return}
             do {

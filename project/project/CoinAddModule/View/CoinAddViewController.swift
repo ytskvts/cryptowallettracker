@@ -85,11 +85,6 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "$"
         textField.textAlignment = .center
-//        textField.layer.borderWidth = 1
-//        textField.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        textField.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        textField.layer.cornerRadius = 3
-        
         textField.keyboardType = .decimalPad
         textField.returnKeyType = UIReturnKeyType.next
         return textField
@@ -99,11 +94,6 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         let textField = CoinAddModuleTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textAlignment = .center
-//        textField.layer.borderWidth = 1
-//        textField.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-//        textField.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-//        textField.layer.cornerRadius = 3
-        
         textField.keyboardType = .decimalPad
         textField.returnKeyType = UIReturnKeyType.done
         return textField
@@ -115,7 +105,6 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
-        //label.text = "Incorrect input."
         return label
     }()
     
@@ -148,7 +137,6 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        //coinAddViewPresenter = CoinAddViewPresenter(view: self)
         alertChosenPriceTextField.delegate = self
         alertChosenQuantityTextField.delegate = self
         // Do any additional setup after loading the view.
@@ -201,26 +189,12 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         self.dismiss(animated: true, completion: nil)
     }
     
-//    func transitionToWalletScreen(model: FirebaseModel) {
-//        let vc = WalletViewController()
-//        
-//        //vc.modalPresentationStyle = .fullScreen
-//        vc.configureForTransition(model: model)
-//        
-//        //dismissController()
-//        present(vc, animated: true, completion: nil)
-//    }
-    
     func setupFields(viewData: CoinTableViewCellViewModel) {
         alertMaxPriceLabel.text = "\(viewData.ath)"
         alertMinimalPriceLabel.text = "\(viewData.atl)"
         print(viewData.ath)
         print("asfg")
     }
-    
-    
-    
-    
     
     func didActionWithErrorLabel(errorLabelCondition: ErrorLabelCondition, typeOfError: ErrorType?) {
         switch errorLabelCondition {
@@ -233,10 +207,6 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         }
         
     }
-
-//    func getTextfieldsText() -> (price: String?, quantity: String?) {
-//        return (alertChosenPriceTextField.text, alertChosenQuantityTextField.text)
-//    }
     
     func createAlertDescribePriceLabelConstraint() {
         NSLayoutConstraint.activate([
@@ -316,7 +286,6 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
             alertErrorLabel.rightAnchor.constraint(equalTo: alertMinimalQuantityLabel.rightAnchor),
             alertErrorLabel.leftAnchor.constraint(equalTo: alertMinimalPriceLabel.leftAnchor),
             alertErrorLabel.heightAnchor.constraint(equalToConstant: 20),
-            //alertErrorLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         ])
     }
     

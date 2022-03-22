@@ -43,11 +43,6 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         }
     }
     
-//    func prepareDetailVC(indexPath: IndexPath) -> DetailCoinViewController {
-//        let detailVC = DetailCoinViewController()
-//        detailVC.detailCoinViewPresenter?.configure(data: viewData[indexPath.row])
-//        return detailVC
-//    }
     
     func didSelectRow(at indexPath: IndexPath) {
         view?.showDetailVC(data: viewData[indexPath.row])
@@ -126,7 +121,7 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
             if !tempViewData.isEmpty {
                 viewData = tempViewData
             }
-            //viewData = tempViewData
+            
             guard let tempChosenTypeOfSort = tempChosenTypeOfSort else {
                 return
             }
@@ -140,26 +135,11 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         return true
     }
     
-//    func prefetchRows(at indexPaths: [IndexPath]) {
-//        guard let lastIndexPath = indexPaths.last,
-//              viewData.count - 1 > lastIndexPath.row else { return }
-//        if !self.isSearching {
-//            if self.numberOfPage < 58 {
-//                self.numberOfPage += 1
-//            }
-//        }
-//    }
     
     func updateViewData(with data: [CoinTableViewCellViewModel]) {
         viewData.append(contentsOf: data)
     }
     
-//    func didSelectRow(at indexPath: IndexPath) {
-//        //view?.showDetailVC(indexPath: indexPath)
-//        //переделать
-//    }
-    
-    //func refreshTable()
     
     func willDisplay(forRowAt indexPath: IndexPath) {
         if !isSearching && numberOfPage < 58 {
