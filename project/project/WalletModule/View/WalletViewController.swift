@@ -74,9 +74,17 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     }
     
     func transitionToChartScreen(data: [WalletTableViewCellModel]) {
+//        let vc = PieChartViewController()
+//        vc.configure(data: data)
+//        present(vc, animated: true)
         let vc = PieChartViewController()
+        vc.preferredContentSize = CGSize(width: self.view.bounds.width, height: self.view.bounds.width)
         vc.configure(data: data)
-        present(vc, animated: true)
+        
+        let alert = UIAlertController(title: "Chart", message: "", preferredStyle: .actionSheet)
+        alert.setValue(vc, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {

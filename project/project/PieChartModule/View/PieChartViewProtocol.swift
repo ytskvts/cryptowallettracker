@@ -10,4 +10,8 @@ import Foundation
 protocol PieChartViewProtocol: AnyObject {
     
     func configure(data: [WalletTableViewCellModel])
+    
+    func updateChartData(totalCost: String)
+    
+    func addChartDataEntry(cost: Double, symbol: String)
 }
