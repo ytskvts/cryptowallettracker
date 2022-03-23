@@ -12,21 +12,7 @@ struct CoinModelParser {
     func parseToViewModels(models: [CoinModel]) -> [CoinTableViewCellViewModel] {
         models.compactMap({
             // use Numberformatter instead of this
-            var currentPrice = $0.current_price
-            var convertPrice: String
-            if currentPrice.truncatingRemainder(dividingBy: 1) != 0 {
-                currentPrice = Double(round(currentPrice * 1000) / 1000)
-                convertPrice = String(format: "%.2f", currentPrice)
-                for letter in String(convertPrice.reversed()) {
-                    if letter == "0" || letter == "." {
-                        convertPrice.removeLast()
-                    } else {
-                        break
-                    }
-                }
-            } else {
-                convertPrice = "\(Int(currentPrice))"
-            }
+            
             do {
                 let imageData = try Data(contentsOf: URL(string: $0.image)!)
                 let image = UIImage(data: imageData)
@@ -34,12 +20,12 @@ struct CoinModelParser {
                 return CoinTableViewCellViewModel(id: $0.id,
                                                   name: $0.name,
                                                   symbol: $0.symbol,
-                                                  currentPrice: convertPrice,
+                                                  currentPrice: cutString(data: $0.current_price),
                                                   image: image ?? UIImage(systemName: "eye")!,
                                                   highDayPrice: $0.high_24h ?? 0,
                                                   lowDayPrice: $0.low_24h ?? 0,
-                                                  priceChangeDay: $0.price_change_24h ?? 0,
-                                                  priceChangePercentageDay: $0.price_change_percentage_24h ?? 0,
+                                                  priceChangeDay: Double(cutString(data: $0.price_change_24h ?? 0)) ?? 0,
+                                                  priceChangePercentageDay: Double(cutString(data: $0.price_change_percentage_24h ?? 0)) ?? 0,
                                                   lastUpdated: $0.lastUpdated ?? nil,
                                                   sparklineIn7D: $0.sparkline_in_7d ?? nil,
                                                   ath: $0.ath,
@@ -53,20 +39,20 @@ struct CoinModelParser {
     
     func cutString(data: Double) -> String {
         var number = data
-        var convertPrice: String
+        var convertData: String
         if number.truncatingRemainder(dividingBy: 1) != 0 {
             number = Double(round(number * 1000) / 1000)
-            convertPrice = String(format: "%.2f", number)
-            for letter in String(convertPrice.reversed()) {
+            convertData = String(format: "%.2f", number)
+            for letter in String(convertData.reversed()) {
                 if letter == "0" || letter == "." {
-                    convertPrice.removeLast()
+                    convertData.removeLast()
                 } else {
                     break
                 }
             }
         } else {
-            convertPrice = "\(Int(number))"
+            convertData = "\(Int(number))"
         }
-        return convertPrice
+        return convertData
     }
 }

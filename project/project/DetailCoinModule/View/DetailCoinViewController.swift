@@ -321,7 +321,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
     func setupFields(viewData: CoinTableViewCellViewModel) {
         nameLabel.text = viewData.name
         symbolLabel.text = viewData.symbol
-        currentPriceLabel.text = viewData.currentPrice
+        currentPriceLabel.text = viewData.currentPrice + " $"
         coinImageView.image = viewData.image
         if viewData.priceChangeDay > 0 {
             priceChangeDayLabel.textColor = .systemGreen
