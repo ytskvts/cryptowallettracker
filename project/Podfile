@@ -7,6 +7,7 @@ target 'project' do
   pod 'RealmSwift'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Charts'
   # Pods for project
 
 end

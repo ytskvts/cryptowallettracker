@@ -629,7 +629,7 @@ import Realm.Private
      :nodoc:
      */
     public func delete<Element: ObjectBase>(_ objects: Results<Element>) {
-        rlmRealm.deleteObjects(objects.rlmResults)
+        rlmRealm.deleteObjects(objects.collection)
     }
 
     /**
@@ -650,7 +650,7 @@ import Realm.Private
 
      - returns: A `Results` containing the objects.
      */
-    public func objects<Element: Object>(_ type: Element.Type) -> Results<Element> {
+    public func objects<Element: RealmFetchable>(_ type: Element.Type) -> Results<Element> {
         return Results(RLMGetObjects(rlmRealm, type.className(), nil))
     }
 
@@ -915,6 +915,22 @@ import Realm.Private
     }
 
     /**
+     Writes a copy of the Realm to a given location specified by a given configuration.
+
+     If the configuration supplied is derived from a `User` then this Realm will be copied with
+     sync functionality enabled.
+
+     The destination file cannot already exist.
+
+     - parameter configuration: A Realm Configuration.
+
+     - throws: An `NSError` if the copy could not be written.
+     */
+    public func writeCopy(configuration: Realm.Configuration) throws {
+        try rlmRealm.writeCopy(for: configuration.rlmConfiguration)
+    }
+
+    /**
      Checks if the Realm file for the given configuration exists locally on disk.
 
      For non-synchronized, non-in-memory Realms, this is equivalent to
@@ -960,6 +976,23 @@ import Realm.Private
     }
 }
 
+// MARK: Sync Subscriptions
+
+extension Realm {
+    /**
+     Returns an instance of `SyncSubscriptionSet`, representing the active subscriptions
+     for this realm, which can be used to add/remove/update and search flexible sync subscriptions.
+     Getting the subscriptions from a local or partition-based configured realm will thrown an exception.
+
+     - returns: A `SyncSubscriptionSet`.
+     - Warning: This feature is currently in beta and its API is subject to change.
+     */
+    @available(*, message: "This feature is currently in beta.")
+    public var subscriptions: SyncSubscriptionSet {
+        return SyncSubscriptionSet(rlmRealm.subscriptions)
+    }
+}
+
 // MARK: Equatable
 
 extension Realm: Equatable {
@@ -1001,7 +1034,7 @@ extension Realm {
 /// The type of a block to run for notification purposes when the data in a Realm is modified.
 public typealias NotificationBlock = (_ notification: Realm.Notification, _ realm: Realm) -> Void
 
-#if swift(>=5.5) && canImport(_Concurrency)
+#if swift(>=5.5.2) && canImport(_Concurrency)
 @available(macOS 12.0, tvOS 15.0, iOS 15.0, watchOS 8.0, *)
 extension Realm {
     /// Options for when to download all data from the server before opening
@@ -1071,3 +1104,20 @@ extension Realm {
     }
 }
 #endif // swift(>=5.5)
+
+/**
+ Objects which can be feched from the Realm - Object or Projection
+ */
+public protocol RealmFetchable: RealmCollectionValue {
+    /// :nodoc:
+    static func className() -> String
+}
+/// :nodoc:
+extension Object: RealmFetchable {}
+/// :nodoc:
+extension Projection: RealmFetchable {
+    /// :nodoc:
+    public static func className() -> String {
+        return Root.className()
+    }
+}

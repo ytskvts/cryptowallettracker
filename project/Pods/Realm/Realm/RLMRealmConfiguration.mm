@@ -159,9 +159,15 @@ NSString *RLMRealmPathForFile(NSString *fileName) {
         @throw RLMException(@"In-memory identifier must not be empty");
     }
     _config.sync_config = nullptr;
+    _seedFilePath = nil;
 
     RLMNSStringToStdString(_config.path, [NSTemporaryDirectory() stringByAppendingPathComponent:inMemoryIdentifier]);
     _config.in_memory = true;
+}
+
+- (void)setSeedFilePath:(NSURL *)seedFilePath {
+    _seedFilePath = seedFilePath;
+    _config.in_memory = false;
 }
 
 - (NSData *)encryptionKey {
@@ -179,7 +185,7 @@ NSString *RLMRealmPathForFile(NSString *fileName) {
 }
 
 - (BOOL)readOnly {
-    return _config.immutable() || _config.read_only_alternative();
+    return _config.immutable() || _config.read_only();
 }
 
 static bool isSync(realm::Realm::Config const& config) {
@@ -196,7 +202,7 @@ static bool isSync(realm::Realm::Config const& config) {
         }
     }
     else if (self.readOnly) {
-        _config.schema_mode = isSync(_config) ? realm::SchemaMode::ReadOnlyAlternative : realm::SchemaMode::Immutable;
+        _config.schema_mode = isSync(_config) ? realm::SchemaMode::ReadOnly : realm::SchemaMode::Immutable;
     }
     else if (isSync(_config)) {
         if (_customSchema) {
@@ -218,7 +224,7 @@ static bool isSync(realm::Realm::Config const& config) {
         } else if (self.shouldCompactOnLaunch) {
             @throw RLMException(@"Cannot set `readOnly` when `shouldCompactOnLaunch` is set.");
         }
-        _config.schema_mode = isSync(_config) ? realm::SchemaMode::ReadOnlyAlternative : realm::SchemaMode::Immutable;
+        _config.schema_mode = isSync(_config) ? realm::SchemaMode::ReadOnly : realm::SchemaMode::Immutable;
     }
     else if (self.readOnly) {
         _config.schema_mode = realm::SchemaMode::Automatic;
@@ -238,7 +244,7 @@ static bool isSync(realm::Realm::Config const& config) {
 }
 
 - (BOOL)deleteRealmIfMigrationNeeded {
-    return _config.schema_mode == realm::SchemaMode::ResetFile;
+    return _config.schema_mode == realm::SchemaMode::SoftResetFile;
 }
 
 - (void)setDeleteRealmIfMigrationNeeded:(BOOL)deleteRealmIfMigrationNeeded {
@@ -249,7 +255,7 @@ static bool isSync(realm::Realm::Config const& config) {
         if (isSync(_config)) {
             @throw RLMException(@"Cannot set 'deleteRealmIfMigrationNeeded' when sync is enabled ('syncConfig' is set).");
         }
-        _config.schema_mode = realm::SchemaMode::ResetFile;
+        _config.schema_mode = realm::SchemaMode::SoftResetFile;
     }
     else if (self.deleteRealmIfMigrationNeeded) {
         _config.schema_mode = realm::SchemaMode::Automatic;

@@ -58,10 +58,10 @@ class SessionWrapper;
 /// either void async_wait_for_download_completion(WaitOperCompletionHandler) or
 /// bool wait_for_download_complete_or_client_stopped().
 struct ClientReset {
-    bool seamless_loss = false;
+    bool discard_local = false;
     DBRef fresh_copy;
-    util::UniqueFunction<void(TransactionRef local, TransactionRef remote)> notify_before_client_reset;
-    util::UniqueFunction<void(TransactionRef local)> notify_after_client_reset;
+    util::UniqueFunction<void(std::string path)> notify_before_client_reset;
+    util::UniqueFunction<void(std::string path, VersionID before_version)> notify_after_client_reset;
 };
 
 /// \brief Protocol errors discovered by the client.
@@ -276,12 +276,6 @@ struct ClientConfig {
     /// transaction. Log compaction increeses CPU usage and memory
     /// consumption.
     bool disable_upload_compaction = false;
-
-    /// Set the `TCP_NODELAY` option on all TCP/IP sockets. This disables
-    /// the Nagle algorithm. Disabling it, can in some cases be used to
-    /// decrease latencies, but possibly at the expense of scalability. Be
-    /// sure to research the subject before you enable this option.
-    bool tcp_no_delay = false;
 
     /// The specified function will be called whenever a PONG message is
     /// received on any connection. The round-trip time in milliseconds will
