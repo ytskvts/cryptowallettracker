@@ -14,8 +14,6 @@ struct FirebaseModel {
 }
 
 
-
-
 class WalletViewPresenter: WalletViewPresenterProtocol {
     
     weak var view: WalletViewProtocol?
@@ -35,7 +33,7 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
             let color: ColorOfLabel
             color = totalCostCurrent > totalCostOfBuying ? .green : .red
             let priceChange = abs(totalCostCurrent - totalCostOfBuying)
-            print(priceChange)
+            //print(priceChange)
             view?.configure(totalCost: "\(totalCostCurrent)", priceChange: "\(priceChange)", labelColor: color)
             
         }
