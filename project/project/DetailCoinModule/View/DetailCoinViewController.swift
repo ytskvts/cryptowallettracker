@@ -29,7 +29,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         view.addSubview(chartViewController.view)
         chartViewController.didMove(toParent: self)
         chartViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        chartViewController.view.backgroundColor = .black
+        chartViewController.view.backgroundColor = .systemBackground
     }
     
     private let addToPortfolioButton: UIButton = {
@@ -69,10 +69,10 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         let label = UILabel()
         label.textColor = .systemGreen
         label.textAlignment = .center
-        label.layer.borderWidth = 1
-        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-        label.layer.cornerRadius = 3
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        //label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        label.layer.cornerRadius = 3
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -99,10 +99,10 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .center
-        label.layer.borderWidth = 1
-        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-        label.layer.cornerRadius = 3
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        //label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        label.layer.cornerRadius = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -111,10 +111,10 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .center
-        label.layer.borderWidth = 1
-        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-        label.layer.cornerRadius = 3
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        //label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        label.layer.cornerRadius = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -124,10 +124,10 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .center
         label.textColor = .systemRed
-        label.layer.borderWidth = 1
-        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-        label.layer.cornerRadius = 3
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        //label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        label.layer.cornerRadius = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -137,10 +137,10 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textAlignment = .center
         label.textColor = .systemGreen
-        label.layer.borderWidth = 1
-        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-        label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
-        label.layer.cornerRadius = 3
+//        label.layer.borderWidth = 1
+//        label.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
+//        //label.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+//        label.layer.cornerRadius = 3
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -226,7 +226,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
         setupChartViewController()
         configureStackViews()
         view.addSubview(coinImageView)
@@ -277,7 +277,7 @@ class DetailCoinViewController: UIViewController, DetailCoinViewProtocol {
         
         NSLayoutConstraint.activate([
             valuesColumnStackView.topAnchor.constraint(equalTo: labelsColumnStackView.topAnchor),
-            valuesColumnStackView.widthAnchor.constraint(equalToConstant: 100),
+            valuesColumnStackView.widthAnchor.constraint(equalToConstant: 150),
             valuesColumnStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             valuesColumnStackView.heightAnchor.constraint(equalToConstant: 200)
         ])

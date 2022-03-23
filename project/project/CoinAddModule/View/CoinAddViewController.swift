@@ -62,7 +62,7 @@ class CoinAddViewController: UIViewController, CoinAddViewProtocol {
         label.font = .systemFont(ofSize: 18, weight: .medium)
         label.textAlignment = .center
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(systemName: "infinity")?.withTintColor(.white)
+        imageAttachment.image = UIImage(systemName: "infinity")?.withTintColor(.label)
         imageAttachment.adjustsImageSizeForAccessibilityContentSizeCategory = true
         let fullString = NSMutableAttributedString(string: "")
         fullString.append(NSAttributedString(attachment: imageAttachment))

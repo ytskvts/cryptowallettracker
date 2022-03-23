@@ -28,11 +28,12 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     private let describeTypeOfSortLabel: UILabel = {
         let label = UILabel()
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(systemName: "arrow.up.arrow.down")?.withTintColor(.white)
+        imageAttachment.image = UIImage(systemName: "arrow.up.arrow.down")?.withTintColor(.label)
         imageAttachment.adjustsImageSizeForAccessibilityContentSizeCategory = true
         let fullString = NSMutableAttributedString(string: "")
         fullString.append(NSAttributedString(attachment: imageAttachment))
         label.attributedText = fullString
+        label.textColor = .label
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -43,6 +44,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         label.textAlignment = .left
         label.numberOfLines = 1
         label.sizeToFit()
+        label.textColor = .label
         label.adjustsFontSizeToFitWidth = true
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +59,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     
     private let coinsListTableView: UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .systemBackground
         //tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.register(CoinTableViewCell.self, forCellReuseIdentifier: CoinTableViewCell.identifier)
@@ -102,7 +105,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
         headerView = UIView(frame: CGRect(x: .zero,
                                           y: .zero,
                                           width: coinsListTableView.frame.width,
-                                          height: 30))
+                                          height: 35))
         setGestures(for: [describeTypeOfSortLabel, typeOfSortLabel])
         headerView.addSubview(typeOfSortLabel)
         headerView.addSubview(describeTypeOfSortLabel)
@@ -117,7 +120,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     }
     
     @objc func headerViewElementTapped() {
-        print("mm")
+        //print("mm")
         let vc = UIViewController()
         vc.preferredContentSize = CGSize(width: self.view.bounds.width - 10, height: self.view.bounds.width / 6)
         typeOfSortPicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width - 10, height: self.view.bounds.height / 6)
@@ -134,6 +137,7 @@ class CoinsListViewController: UIViewController, CoinsListViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         coinsListViewPresenter = CoinsListViewPresenter(view: self)
+        view.backgroundColor = .systemBackground
         title = coinsListViewPresenter.getNavigationTitle()
         view.addSubview(coinsListTableView)
         coinsListTableView.dataSource = self

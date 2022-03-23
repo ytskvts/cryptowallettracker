@@ -34,9 +34,9 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
     var tempViewData: [CoinTableViewCellViewModel] = []
     var chosenTypeOfSort: TypeOfSort = .marketCap {
         didSet {
-            //обновить название лейбла сортирoвки
+            
             view?.setTitleForTypeOfSortLabel(name: chosenTypeOfSort.name)
-            #warning("возможно понадобится сделать во вьюхе метод, который будет чекать изменится ли значение лэйбла сортировки, но это если при выборе в пикере той сортировки, которая уже стоит всё равно срабатывает дидсет и тогда не нужно обнулять numberOfPage")
+            
             if !isSearching {
                 resetPageNumber(oldChosenTypeOfSort: oldValue)
             }
@@ -84,7 +84,7 @@ class CoinsListViewPresenter: CoinsListViewPresenterProtocol {
         }
     }
     
-    #warning("вызвать в вьюдидлоад")
+    
     func setDefaults() {
         chosenTypeOfSort = .marketCap
         numberOfPage = 1

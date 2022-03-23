@@ -59,12 +59,11 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .systemBackground
         emailTextField.delegate = self
         passwordTextField.delegate = self
         confirmPasswordTextField.delegate = self
         
-        view.backgroundColor = .black
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(confirmPasswordTextField)

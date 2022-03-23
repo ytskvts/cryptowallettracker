@@ -39,6 +39,7 @@ class PasswordTextField: AuthorizationTextField {
     
     private func setup() {
         self.isSecureTextEntry = true
+        self.backgroundColor = .secondarySystemBackground
         //show/hide button
         let button = UIButton(frame: CGRect(x: self.frame.size.width - 25, y: 5, width: 30, height: 30))
         button.setImage(UIImage(systemName: "eye"), for: .normal)

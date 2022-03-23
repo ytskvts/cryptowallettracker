@@ -50,4 +50,23 @@ struct CoinModelParser {
             }
         })
     }
+    
+    func cutString(data: Double) -> String {
+        var number = data
+        var convertPrice: String
+        if number.truncatingRemainder(dividingBy: 1) != 0 {
+            number = Double(round(number * 1000) / 1000)
+            convertPrice = String(format: "%.2f", number)
+            for letter in String(convertPrice.reversed()) {
+                if letter == "0" || letter == "." {
+                    convertPrice.removeLast()
+                } else {
+                    break
+                }
+            }
+        } else {
+            convertPrice = "\(Int(number))"
+        }
+        return convertPrice
+    }
 }

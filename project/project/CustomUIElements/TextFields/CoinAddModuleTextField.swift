@@ -27,8 +27,9 @@ class CoinAddModuleTextField: UITextField {
     
     func setupStyle() {
         self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 0.1335558891, green: 0.1335814297, blue: 0.1335502863, alpha: 1)
-        self.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 0, green: 0.5942070484, blue: 0.9925900102, alpha: 1)
+        //self.backgroundColor = #colorLiteral(red: 0.07139258832, green: 0.07140973955, blue: 0.07138884813, alpha: 1)
+        self.backgroundColor = .secondarySystemBackground
         self.layer.cornerRadius = 3
     }
     

@@ -53,7 +53,8 @@ class WalletTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        contentView.backgroundColor = .secondarySystemBackground
+        contentView.layer.cornerRadius = 8
         contentView.addSubview(coinImageView)
         contentView.addSubview(coinSymbolLabel)
         contentView.addSubview(quantityOfCoinLabel)

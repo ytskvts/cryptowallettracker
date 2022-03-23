@@ -24,6 +24,7 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     private let totalCostLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
+        label.textColor = .white
         label.font = .systemFont(ofSize: 22, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -39,7 +40,6 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     
     private let walletCoinsListTableView: UITableView = {
         let tableView = UITableView()
-        
         tableView.register(WalletTableViewCell.self, forCellReuseIdentifier: WalletTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -70,6 +70,8 @@ class WalletViewController: UIViewController, WalletViewProtocol {
         walletViewPresenter = WalletViewPresenter(view: self)
         
         title = "Wallet"
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
         view.backgroundColor = .systemBlue
         walletCoinsListTableView.dataSource = self
         walletCoinsListTableView.delegate = self

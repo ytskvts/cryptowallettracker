@@ -67,7 +67,7 @@ class SignInViewController: UIViewController {
         
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
+        view.backgroundColor = .systemBackground
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(errorLabel)
