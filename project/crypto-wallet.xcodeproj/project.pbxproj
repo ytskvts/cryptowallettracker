@@ -57,6 +57,10 @@
 		0182437727CFC23600338512 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0182437627CFC23500338512 /* Transition.swift */; };
 		0197EC122775FC960051A77D /* SignInPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */; };
 		8967B11E1FB6797C9E5ADB6F /* Pods_project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEAF44201DDA84358A03231 /* Pods_project.framework */; };
+		D578D28027EAF51C0036FB8C /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578D27F27EAF51C0036FB8C /* PieChartViewController.swift */; };
+		D578D28227EAF54B0036FB8C /* PieChartViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578D28127EAF54B0036FB8C /* PieChartViewPresenter.swift */; };
+		D578D28427EB118A0036FB8C /* PieChartViewPresenterProrocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578D28327EB118A0036FB8C /* PieChartViewPresenterProrocol.swift */; };
+		D578D28627EB11DE0036FB8C /* PieChartViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578D28527EB11DE0036FB8C /* PieChartViewProtocol.swift */; };
 		D5FFA33B27E39BDF0032FEB1 /* SettingsViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFA33A27E39BDF0032FEB1 /* SettingsViewProtocol.swift */; };
 		D5FFA33D27E39CDF0032FEB1 /* SettingsViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFA33C27E39CDF0032FEB1 /* SettingsViewPresenter.swift */; };
 		D5FFA33F27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFA33E27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift */; };
@@ -116,6 +120,10 @@
 		0197EC112775FC960051A77D /* SignInPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenterProtocol.swift; sourceTree = "<group>"; };
 		4C1352745AD678EDD988A64A /* Pods-project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project.debug.xcconfig"; path = "Target Support Files/Pods-project/Pods-project.debug.xcconfig"; sourceTree = "<group>"; };
 		8DEAF44201DDA84358A03231 /* Pods_project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D578D27F27EAF51C0036FB8C /* PieChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
+		D578D28127EAF54B0036FB8C /* PieChartViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewPresenter.swift; sourceTree = "<group>"; };
+		D578D28327EB118A0036FB8C /* PieChartViewPresenterProrocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewPresenterProrocol.swift; sourceTree = "<group>"; };
+		D578D28527EB11DE0036FB8C /* PieChartViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewProtocol.swift; sourceTree = "<group>"; };
 		D5FFA33A27E39BDF0032FEB1 /* SettingsViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewProtocol.swift; sourceTree = "<group>"; };
 		D5FFA33C27E39CDF0032FEB1 /* SettingsViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewPresenter.swift; path = project/SettingsModule/View/SettingsViewPresenter.swift; sourceTree = SOURCE_ROOT; };
 		D5FFA33E27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewPresenterProtocol.swift; path = project/SettingsModule/View/SettingsViewPresenterProtocol.swift; sourceTree = SOURCE_ROOT; };
@@ -364,6 +372,7 @@
 		0172B13127451707008617DE /* project */ = {
 			isa = PBXGroup;
 			children = (
+				D578D27C27EAF4BB0036FB8C /* PieChartModule */,
 				0182436327CA38E800338512 /* CoinAddModule */,
 				016AE40D2784AF0400D7D3CB /* TabBarModule */,
 				0159E620277C511400411F96 /* SignInModule */,
@@ -491,6 +500,33 @@
 				DED9EC7705B3E6B020354CFF /* Pods-project.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D578D27C27EAF4BB0036FB8C /* PieChartModule */ = {
+			isa = PBXGroup;
+			children = (
+				D578D27D27EAF4C90036FB8C /* View */,
+				D578D27E27EAF4D40036FB8C /* Presenter */,
+			);
+			path = PieChartModule;
+			sourceTree = "<group>";
+		};
+		D578D27D27EAF4C90036FB8C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D578D27F27EAF51C0036FB8C /* PieChartViewController.swift */,
+				D578D28527EB11DE0036FB8C /* PieChartViewProtocol.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D578D27E27EAF4D40036FB8C /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				D578D28127EAF54B0036FB8C /* PieChartViewPresenter.swift */,
+				D578D28327EB118A0036FB8C /* PieChartViewPresenterProrocol.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -634,6 +670,7 @@
 				0159E631277C87D400411F96 /* PasswordTextField.swift in Sources */,
 				0165766B2779AC5F00BAF64B /* ValidationProviderProtocol.swift in Sources */,
 				0172B13327451707008617DE /* AppDelegate.swift in Sources */,
+				D578D28227EAF54B0036FB8C /* PieChartViewPresenter.swift in Sources */,
 				D5FFA33D27E39CDF0032FEB1 /* SettingsViewPresenter.swift in Sources */,
 				0182437527CE138B00338512 /* WalletTableViewCell.swift in Sources */,
 				D5FFA33F27E39D3B0032FEB1 /* SettingsViewPresenterProtocol.swift in Sources */,
@@ -644,14 +681,17 @@
 				0157D3052750E22D00859472 /* SignUpViewController.swift in Sources */,
 				016D70BB275E2B290048D540 /* CoinModel.swift in Sources */,
 				016D70C1275E43B40048D540 /* CoinsListViewController.swift in Sources */,
+				D578D28027EAF51C0036FB8C /* PieChartViewController.swift in Sources */,
 				016AE40F2784AF4700D7D3CB /* TabBarController.swift in Sources */,
 				0182436727CA39E300338512 /* CoinAddViewController.swift in Sources */,
 				0182435E27C67CAB00338512 /* DetailCoinViewPresenter.swift in Sources */,
+				D578D28427EB118A0036FB8C /* PieChartViewPresenterProrocol.swift in Sources */,
 				016D70BD275E30BE0048D540 /* APICaller.swift in Sources */,
 				0182436F27CE060C00338512 /* WalletViewProtocol.swift in Sources */,
 				0182436227C67D2400338512 /* DetailCoinViewProtocol.swift in Sources */,
 				0182437127CE062700338512 /* WalletViewPresenter.swift in Sources */,
 				0182437727CFC23600338512 /* Transition.swift in Sources */,
+				D578D28627EB11DE0036FB8C /* PieChartViewProtocol.swift in Sources */,
 				01654FF627B651540030ADEB /* CoinAddModuleTextField.swift in Sources */,
 				017A659A27B90EF50072F2BA /* CoinsListViewProtocol.swift in Sources */,
 				016D70BF275E321D0048D540 /* Constants.swift in Sources */,

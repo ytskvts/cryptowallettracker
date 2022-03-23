@@ -77,6 +77,11 @@ class WalletViewPresenter: WalletViewPresenterProtocol {
         self.view = view
     }
     
+    
+    func prepareForTransitionToChartScreen() {
+        view?.transitionToChartScreen(data: viewCellData)
+    }
+    
     func getData() {
         FirebaseManager.shared.getPortfolio { portfolio in
             var convertData = [FirebaseModel]()

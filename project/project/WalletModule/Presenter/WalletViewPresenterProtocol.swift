@@ -14,5 +14,7 @@ protocol WalletViewPresenterProtocol {
     
     func deleteCoinFromPortfolio(index: IndexPath)
     
+    func prepareForTransitionToChartScreen()
+    
     func getData()
 }

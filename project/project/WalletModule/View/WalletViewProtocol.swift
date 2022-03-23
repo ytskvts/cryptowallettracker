@@ -18,4 +18,6 @@ protocol WalletViewProtocol: AnyObject {
     func configure(totalCost: String, priceChange: String, labelColor: ColorOfLabel)
     
     func tableViewReloadData()
+    
+    func transitionToChartScreen(data: [WalletTableViewCellModel])
 }

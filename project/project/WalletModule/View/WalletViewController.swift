@@ -64,11 +64,26 @@ class WalletViewController: UIViewController, WalletViewProtocol {
     @objc func refreshControlAction() {
         walletViewPresenter?.getData()
     }
+    
+    @objc func transitionToChartScreenButtonTapped() {
+        guard let walletViewPresenter = walletViewPresenter else {
+            return
+        }
+        walletViewPresenter.prepareForTransitionToChartScreen()
+        print("chartscreen")
+    }
+    
+    func transitionToChartScreen(data: [WalletTableViewCellModel]) {
+        let vc = PieChartViewController()
+        vc.configure(data: data)
+        present(vc, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         walletViewPresenter = WalletViewPresenter(view: self)
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chart.pie"), style: .plain, target: self, action: #selector(transitionToChartScreenButtonTapped))
+        navigationItem.rightBarButtonItem?.tintColor = .white
         title = "Wallet"
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
